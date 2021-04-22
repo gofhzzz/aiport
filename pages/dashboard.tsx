@@ -14,17 +14,18 @@ const sections = [
     links: [
       {
         name: 'Create New',
-        href: '#',
+        href: '/dataset/upload',
         icon: PlusIcon,
       },
       {
         name: 'View All',
-        href: '#',
+        href: '/dataset',
         icon: ViewGridIcon,
       },
       {
         name: 'Marketplace',
-        href: '#',
+        href: '/marketplace?sort=dataset',
+        as: '/marketplace',
         icon: ShoppingCartIcon,
       },
     ],
@@ -35,17 +36,18 @@ const sections = [
     links: [
       {
         name: 'Create New',
-        href: '#',
+        href: '/model/upload',
         icon: PlusIcon,
       },
       {
         name: 'View All',
-        href: '#',
+        href: '/model',
         icon: ViewGridIcon,
       },
       {
         name: 'Marketplace',
-        href: '#',
+        href: '/marketplace?sort=model',
+        as: '/marketplace',
         icon: ShoppingCartIcon,
       },
     ],
@@ -56,17 +58,18 @@ const sections = [
     links: [
       {
         name: 'Create New',
-        href: '#',
+        href: '/project/upload',
         icon: PlusIcon,
       },
       {
         name: 'View All',
-        href: '#',
+        href: '/project',
         icon: ViewGridIcon,
       },
       {
         name: 'Marketplace',
-        href: '#',
+        href: '/marketplace?sort=project',
+        as: '/marketplace',
         icon: ShoppingCartIcon,
       },
       {
@@ -114,6 +117,7 @@ const DashboardPage = () => {
                   <Link
                     key={name}
                     href={href}
+                    as={item.as}
                     className="text-gray-600 hover:bg-gray-100 hover:text-gray-900 flex items-center px-3 py-2 text-sm font-medium rounded-md"
                   >
                     <item.icon
