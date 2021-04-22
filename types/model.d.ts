@@ -9,3 +9,9 @@ interface ModelInfo {
   star: number;
   created: string;
 }
+
+interface ModelInput {
+  name: string;
+  framework: string;
+  isPublic: boolean;
+}

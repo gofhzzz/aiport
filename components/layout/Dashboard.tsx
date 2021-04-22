@@ -189,6 +189,7 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                                 'group py-2 px-3 rounded-md flex items-center text-sm font-medium',
                               )}
                               aria-current={item.current ? 'page' : undefined}
+                              onClick={() => setMobileMenuOpen(false)}
                             >
                               <item.icon
                                 className={cn(

@@ -1,16 +1,12 @@
 import fetcher from './fetcher';
 
-const uploadModel: (model: {
-  name: string;
-  framework: string;
-  type: 'public' | 'private';
-}) => Promise<string> = async ({ name, framework, type }) => {
+const uploadModel: (model: ModelInput) => Promise<string> = async (model) => {
   const { modelId } = await fetcher('/api/model', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, framework, type }),
+    body: JSON.stringify(model),
   });
 
   return modelId;

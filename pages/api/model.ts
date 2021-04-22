@@ -18,7 +18,7 @@ const handler: (
   }
 
   if (req.method === 'POST') {
-    const { name, framework, isPublic, owner } = req.body;
+    const { name, framework, isPublic } = req.body;
 
     const { db } = await connectMongo();
 
@@ -26,7 +26,7 @@ const handler: (
       name,
       framework,
       isPublic,
-      owner,
+      owner: 'gjk287',
       collaborators: [],
       watch: 0,
       star: 0,
