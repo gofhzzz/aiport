@@ -27,7 +27,7 @@ const Common: React.FC = ({ children }) => {
       <header className={cn('sticky top-0 z-10', { shadow: hasScrolled })}>
         <CommonNavBar />
       </header>
-      <main className="relative" style={{ height: 'calc(100% - 32px)' }}>
+      <main className="relative" style={{ height: 'calc(100% - 64px)' }}>
         {children}
       </main>
       <Modal show={modalFlag} {...modalContent} />

@@ -3,8 +3,8 @@ import React from 'react';
 
 const ContactPage = () => {
   return (
-    <div>
-      <h1 className="text-4xl font-medium text-center my-64">Preparing...</h1>
+    <div className="py-64">
+      <h1 className="text-4xl font-medium text-center">Preparing...</h1>
     </div>
   );
 };
