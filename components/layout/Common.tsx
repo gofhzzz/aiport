@@ -23,13 +23,15 @@ const Common: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <div className="relative h-full w-full">
-      <header className={cn('sticky top-0 z-10', { shadow: hasScrolled })}>
-        <CommonNavBar />
-      </header>
-      <main className="relative" style={{ height: 'calc(100% - 64px)' }}>
-        {children}
-      </main>
+    <>
+      <div className="relative h-full w-full">
+        <header className={cn('sticky top-0 z-10', { shadow: hasScrolled })}>
+          <CommonNavBar />
+        </header>
+        <main className="relative" style={{ height: 'calc(100% - 64px)' }}>
+          {children}
+        </main>
+      </div>
       <Modal show={modalFlag} {...modalContent} />
       <Notification
         show={notiFlag}
@@ -38,7 +40,7 @@ const Common: React.FC = ({ children }) => {
         title={notiContent.title}
         content={notiContent.content}
       />
-    </div>
+    </>
   );
 };
 

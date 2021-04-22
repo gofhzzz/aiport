@@ -13,6 +13,7 @@ import {
 // components
 import Common from '@components/layout/Common';
 import Button from '@components/ui/Button';
+import useUser from '@lib/useUser';
 
 const features = [
   { name: 'Push to Deploy', icon: CloudUploadIcon },
@@ -24,6 +25,7 @@ const features = [
 ];
 
 const IndexPage = () => {
+  useUser({ redirectTo: '/dashboard', redirectIfFound: true });
   return (
     <div>
       <div className="bg-lightBlue-50">

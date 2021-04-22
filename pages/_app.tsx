@@ -37,7 +37,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <script type="text/javascript" src="/js/redirectIE.js" />
       </Head>
       <ManagedUIContext>
-        <Layout>
+        <Layout sidebar={(Component as any).Sidebar}>
           <Component {...pageProps} />
         </Layout>
       </ManagedUIContext>

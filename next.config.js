@@ -1,5 +1,15 @@
 module.exports = {
-  future: {
-    webpack5: true,
+  reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/signin',
+        destination: '/api/signin',
+      },
+      {
+        source: '/signout',
+        destination: '/api/signout',
+      },
+    ];
   },
 };
