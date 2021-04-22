@@ -27,16 +27,16 @@ import Button from '@components/ui/Button';
 
 const sidebarNavigation = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon, key: 'dashboard' },
-  { name: 'Projects', href: '#', icon: ViewGridIcon, key: 'projects' },
-  { name: 'Datasets', href: '#', icon: DatabaseIcon, key: 'datasets' },
-  { name: 'AI models', href: '#', icon: CollectionIcon, key: 'models' },
+  { name: 'Projects', href: '#', icon: ViewGridIcon, key: 'project' },
+  { name: 'Datasets', href: '#', icon: DatabaseIcon, key: 'dataset' },
+  { name: 'AI models', href: '/model', icon: CollectionIcon, key: 'model' },
   {
     name: 'Marketplace',
-    href: '#',
+    href: '/marketplace',
     icon: ShoppingCartIcon,
     key: 'marketplace',
   },
-  { name: 'Settings', href: '#', icon: CogIcon, key: 'settings' },
+  { name: 'Settings', href: '/settings', icon: CogIcon, key: 'settings' },
 ];
 const userNavigation = [
   // { name: 'Your Profile', href: '#' },
