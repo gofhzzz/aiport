@@ -19,9 +19,11 @@ const CommonNavBar: React.FC<Props> = ({ className }) => {
       <div className="px-8 w-full flex justify-between h-16">
         <Link className="flex-shrink-0 flex items-center space-x-2" href="/">
           <img className="h-8 w-auto" src="/logo.png" alt="" />
-          <span className="text-3xl font-serif font-medium">Aiport</span>
+          <span className="hidden md:inline text-3xl font-serif font-medium">
+            Aiport
+          </span>
         </Link>
-        <div className="ml-6 flex space-x-8">
+        <div className="ml-6 flex space-x-2 lg:space-x-8">
           <Link
             href="/contact"
             className={cn(
@@ -51,7 +53,7 @@ const CommonNavBar: React.FC<Props> = ({ className }) => {
               { hidden: Boolean(user) },
             )}
           >
-            Sign in
+            Sign&nbsp;in
           </Link>
         </div>
       </div>
