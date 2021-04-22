@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import NextLink from 'next/link';
 import { useDebounce } from 'react-use';
 import { SearchIcon } from '@heroicons/react/solid';
-import { CubeTransparentIcon } from '@heroicons/react/outline';
+import {
+  CubeTransparentIcon,
+  DocumentDuplicateIcon,
+  PlusIcon,
+} from '@heroicons/react/outline';
 
 // contexts
 import { useUI } from '@components/ui/context';
@@ -81,7 +85,7 @@ const ModelListPage = () => {
                 id="search"
                 name="search"
                 className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Search"
+                placeholder="Search models..."
                 type="search"
                 value={searchKey}
                 onChange={(e) => setSearchKey(e.target.value)}
@@ -100,10 +104,14 @@ const ModelListPage = () => {
                 showNoti({ variant: 'alert', title: '준비중인 기능입니다.' });
               }}
             >
-              Duplicate
+              <DocumentDuplicateIcon className="w-5 h-5 mr-2" />
+              <span>Duplicate</span>
             </Button>
             <NextLink href="/model/upload">
-              <Button size="sm">New Model</Button>
+              <Button size="sm">
+                <PlusIcon className="w-5 h-5 mr-2" />
+                <span>New Model</span>
+              </Button>
             </NextLink>
           </div>
         </div>

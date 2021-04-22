@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import { Dialog, Menu, Transition } from '@headlessui/react';
 import {
   CogIcon,
-  CollectionIcon,
+  CubeTransparentIcon,
   DatabaseIcon,
   HomeIcon,
   MenuIcon,
@@ -29,7 +29,12 @@ const sidebarNavigation = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon, key: 'dashboard' },
   { name: 'Projects', href: '/project', icon: ViewGridIcon, key: 'project' },
   { name: 'Datasets', href: '/dataset', icon: DatabaseIcon, key: 'dataset' },
-  { name: 'AI models', href: '/model', icon: CollectionIcon, key: 'model' },
+  {
+    name: 'AI models',
+    href: '/model',
+    icon: CubeTransparentIcon,
+    key: 'model',
+  },
   {
     name: 'Marketplace',
     href: '/marketplace',
