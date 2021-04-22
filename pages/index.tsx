@@ -1,27 +1,47 @@
 import React from 'react';
 // import cn from 'classnames';
 
-import {
-  CloudUploadIcon,
-  CogIcon,
-  LockClosedIcon,
-  RefreshIcon,
-  ServerIcon,
-  ShieldCheckIcon,
-} from '@heroicons/react/outline';
-
 // components
 import Common from '@components/layout/Common';
 import Button from '@components/ui/Button';
 import useUser from '@lib/useUser';
 
 const features = [
-  { name: 'Push to Deploy', icon: CloudUploadIcon },
-  { name: 'SSL Certificates', icon: LockClosedIcon },
-  { name: 'Simple Queues', icon: RefreshIcon },
-  { name: 'Advanced Security', icon: ShieldCheckIcon },
-  { name: 'Powerful API', icon: CogIcon },
-  { name: 'Database Backups', icon: ServerIcon },
+  {
+    title: 'Where the world builds AI',
+    content: "Focus on your data and model, we'll take care of the rest",
+    image_path: '/images/home/img1.png',
+  },
+  {
+    title: 'Scalable',
+    content:
+      'Enterprise-ready ML, built for rapid experimentation, reusable ML components, and production-ready infrastructure',
+    image_path: '/images/home/img2.png',
+  },
+  {
+    title: 'Collaborative',
+    content:
+      'Unify data science teams with a clear and collaborative management environment. Build a repository of ML components for easy reproducibility.',
+    image_path: '/images/home/img3.png',
+  },
+  {
+    title: 'End to End',
+    content:
+      'Automate, track and monitor your ML workflow from research to production',
+    image_path: '/images/home/img4.png',
+  },
+  {
+    title: 'Flexible',
+    content:
+      'Use any language, AI framework, and compute environment. Integrate and version any kind of data to reuse in any project, experiment, and/or notebook',
+    image_path: '/images/home/img5.png',
+  },
+  {
+    title: 'Interactive',
+    content:
+      'Use any development environment like JupyterLab, RStudio, and more with pre-installed dependencies and version control',
+    image_path: '/images/home/img6.png',
+  },
 ];
 
 const IndexPage = () => {
@@ -45,7 +65,7 @@ const IndexPage = () => {
           </div>
         </div>
       </div>
-      <div className="relative bg-white py-16 sm:py-24 lg:py-32">
+      <div className="relative bg-white py-8 sm:py-12 lg:py-16">
         <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
           <h2 className="text-base font-semibold tracking-wider text-lightBlue-600 uppercase">
             Deploy faster
@@ -61,23 +81,23 @@ const IndexPage = () => {
           <div className="mt-12">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((feature) => (
-                <div key={feature.name} className="pt-6">
-                  <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
-                    <div className="-mt-6">
+                <div key={feature.title} className="pt-6">
+                  <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8 shadow h-full">
+                    <div className="-mt-10">
                       <div>
-                        <span className="inline-flex items-center justify-center p-3 bg-lightBlue-500 rounded-md shadow-lg">
-                          <feature.icon
-                            className="h-6 w-6 text-white"
-                            aria-hidden="true"
+                        <span className="inline-flex items-center justify-center p-3 bg-white rounded-md shadow-lg">
+                          <img
+                            className="h-16 w-auto"
+                            src={feature.image_path}
+                            loading="lazy"
                           />
                         </span>
                       </div>
                       <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
-                        {feature.name}
+                        {feature.title}
                       </h3>
                       <p className="mt-5 text-base text-gray-500">
-                        Ac tincidunt sapien vehicula erat auctor pellentesque
-                        rhoncus. Et magna sit morbi lobortis.
+                        {feature.content}
                       </p>
                     </div>
                   </div>
