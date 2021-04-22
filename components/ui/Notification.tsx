@@ -29,7 +29,7 @@ const Notification: React.FC<Props> = ({
         aria-live="assertive"
         className={cn(
           className,
-          'fixed inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end',
+          'fixed inset-0 z-20 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end',
         )}
         {...props}
       >

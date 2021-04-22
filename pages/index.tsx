@@ -1,145 +1,87 @@
 import React from 'react';
-import Dropdown from '@components/ui/Dropdown';
+// import cn from 'classnames';
 
-import { ChevronDownIcon } from '@heroicons/react/solid';
-import { useUI } from '@components/ui/context';
+import {
+  CloudUploadIcon,
+  CogIcon,
+  LockClosedIcon,
+  RefreshIcon,
+  ServerIcon,
+  ShieldCheckIcon,
+} from '@heroicons/react/outline';
+
+// components
+import Common from '@components/layout/Common';
 import Button from '@components/ui/Button';
-import Select from '@components/ui/Select';
 
-const genders = [
-  {
-    key: 'gender0',
-    label: '선택',
-    value: null,
-  },
-  {
-    key: 'gender1',
-    label: '남성',
-    value: 'male',
-  },
-  {
-    key: 'gender2',
-    label: '여성',
-    value: 'female',
-  },
-  {
-    key: 'gender3',
-    label: '기타',
-    value: 'other',
-  },
+const features = [
+  { name: 'Push to Deploy', icon: CloudUploadIcon },
+  { name: 'SSL Certificates', icon: LockClosedIcon },
+  { name: 'Simple Queues', icon: RefreshIcon },
+  { name: 'Advanced Security', icon: ShieldCheckIcon },
+  { name: 'Powerful API', icon: CogIcon },
+  { name: 'Database Backups', icon: ServerIcon },
 ];
 
 const IndexPage = () => {
-  const { showModal, closeModal, showNoti } = useUI();
-  const [gender, setGender] = React.useState<{
-    key: string;
-    label: string;
-    value: string | null;
-  }>(genders[0]);
-
   return (
-    <div className="mx-auto max-w-screen-lg text-2xl pt-4 h-[1200px] flex justify-center">
-      {/* <p className="text-xl">hello world</p> */}
-      <div className="space-y-4">
-        <Dropdown
-          button={
-            <div className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-              options
-              <ChevronDownIcon
-                className="-mr-1 ml-2 h-5 w-5"
-                aria-hidden="true"
-              />
+    <div>
+      <div className="bg-lightBlue-50">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8 lg:flex lg:items-center lg:justify-between">
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">
+            <span className="block">Where the world builds AI</span>
+            <span className="block text-lightBlue-600 mt-4">
+              Focus on your data and model,
+              <br />
+              we’ll take care of the rest.
+            </span>
+          </h2>
+          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div className="inline-flex rounded-md shadow">
+              <Button>Start for free</Button>
             </div>
-          }
-          dropdownItems={[
-            { label: 'hello', onClick: () => {} },
-            { label: 'world', onClick: () => {} },
-          ]}
-        />
-        <Select
-          label="성별"
-          items={genders}
-          selectedValue={gender.value}
-          onSelect={(item) => setGender(item as never)}
-        />
-        <div>
-          <Button
-            onClick={() =>
-              showModal({
-                variant: 'alert',
-                title: '댓글을 완전히 삭제할까요?',
-                content:
-                  '삭제된 댓글은 복구할 수 없습니다. 댓글에 달린 모든 답글도 함께 삭제됩니다.',
-                actionButton: {
-                  label: '삭제',
-                  onClick: () => {
-                    closeModal();
-                  },
-                },
-                cancelButton: {
-                  label: '취소',
-                  onClick: () => closeModal(),
-                },
-              })
-            }
-          >
-            open alert modal
-          </Button>
+          </div>
         </div>
-
-        <div>
-          <Button
-            onClick={() =>
-              showModal({
-                title: '댓글을 완전히 복구?',
-                content:
-                  '복구된 댓글은 삭제할 수 없습니다. 댓글에 달린 모든 답글도 함께 복구됩니다.',
-                actionButton: {
-                  label: '복구',
-                  onClick: () => {
-                    closeModal();
-                  },
-                },
-                cancelButton: {
-                  label: '취소',
-                  onClick: () => closeModal(),
-                },
-              })
-            }
-          >
-            open modal
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={() => showNoti({ title: '알람입니다.', variant: 'alert' })}
-          >
-            alert Noti
-          </Button>
-        </div>
-        <div className="space-y-4">
-          <Button onClick={() => showNoti({ title: '기본입니다.' })}>
-            default Noti
-          </Button>
-          <div>
-            <Button size="sm">작은버튼</Button>
-          </div>
-          <div>
-            <Button size="base">기본버튼</Button>
-          </div>
-          <div>
-            <Button size="lg">큰버튼</Button>
-          </div>
-          <div>
-            <Button full>긴</Button>
-          </div>
-          <div>
-            <Button color="red" size="lg">
-              빨간샥버튼
-            </Button>
-          </div>
-          <div>
-            <Button color="white">하얀색버튼</Button>
+      </div>
+      <div className="relative bg-white py-16 sm:py-24 lg:py-32">
+        <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
+          <h2 className="text-base font-semibold tracking-wider text-lightBlue-600 uppercase">
+            Deploy faster
+          </h2>
+          <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
+            Everything you need to deploy your app
+          </p>
+          <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
+            Phasellus lorem quam molestie id quisque diam aenean nulla in.
+            Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend
+            condimentum id viverra nulla.
+          </p>
+          <div className="mt-12">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => (
+                <div key={feature.name} className="pt-6">
+                  <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                    <div className="-mt-6">
+                      <div>
+                        <span className="inline-flex items-center justify-center p-3 bg-lightBlue-500 rounded-md shadow-lg">
+                          <feature.icon
+                            className="h-6 w-6 text-white"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </div>
+                      <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
+                        {feature.name}
+                      </h3>
+                      <p className="mt-5 text-base text-gray-500">
+                        Ac tincidunt sapien vehicula erat auctor pellentesque
+                        rhoncus. Et magna sit morbi lobortis.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -147,4 +89,5 @@ const IndexPage = () => {
   );
 };
 
+IndexPage.Layout = Common;
 export default IndexPage;
