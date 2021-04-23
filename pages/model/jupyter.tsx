@@ -5,18 +5,14 @@ import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
 
 const ModelJupyterPage = () => {
-  return (
-    <div className="py-64">
-      <h1 className="text-4xl font-medium text-center">Preparing...</h1>
-    </div>
-  );
+  return <iframe src="http://147.46.94.88:8888" />;
 };
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">ResNet18</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2 bg-gray-200" href="#">
+      <Link className="flex px-4 py-2 bg-gray-200" href="/model/jupyter">
         <span>File</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
