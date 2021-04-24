@@ -5,7 +5,7 @@ import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
 
 const ModelJupyterPage = () => {
-  return <iframe src="http://147.46.94.88:8888" />;
+  return <iframe src="https://211.184.186.91:8888/lab" />;
 };
 
 const Sidebar = (

@@ -245,7 +245,7 @@ const ModalUploadPage = () => {
             )}
             <div>
               <Link
-                className="float-right text-lightBlue-400 underline hover:opacity-70"
+                className="float-right text-lightBlue-400 hover:underline hover:opacity-70"
                 href="/marketplace?sort=model"
                 as="/marketplace"
               >
