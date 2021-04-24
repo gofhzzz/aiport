@@ -239,7 +239,7 @@ const ProjectExperimentUploadPage = () => {
   }, [router]);
 
   return (
-    <div className="mx-auto max-w-screen-xl pt-8 md:pt-16 px-4 md:px-6 pb-32">
+    <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-32">
       <h1 className="text-3xl font-medium">New Experiments</h1>
 
       {/* General section */}
