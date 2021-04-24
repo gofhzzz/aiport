@@ -35,7 +35,7 @@ const ProjectUploadPage = () => {
   if (error !== null) return <div>{error}</div>;
 
   return (
-    <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
+    <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
       <h1 className="text-3xl font-medium">New Project</h1>
 
       {/* new project form */}
@@ -116,13 +116,13 @@ const ProjectUploadPage = () => {
               ))}
             </div>
           )}
-          <div className="mb-8">
+          <div className="pb-8 md:pb-4">
             <Link
               className="float-right text-lightBlue-400 hover:underline hover:opacity-70"
-              href="/marketplace?sort=model"
+              href="/marketplace?sort=project"
               as="/marketplace"
             >
-              Browse all AI models &gt;
+              Browse all AI projects &gt;
             </Link>
           </div>
         </div>
