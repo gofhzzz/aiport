@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import cn from 'classnames';
 
 import Link from '@components/ui/Link';
-import useUser from '@lib/useUser';
 
 interface Props {
   className?: string;
@@ -11,8 +10,6 @@ interface Props {
 
 const CommonNavBar: React.FC<Props> = ({ className }) => {
   const router = useRouter();
-
-  const { user } = useUser();
 
   return (
     <nav className={cn(className, 'bg-white')}>
@@ -49,8 +46,10 @@ const CommonNavBar: React.FC<Props> = ({ className }) => {
           <Link
             href="/signin"
             className={cn(
-              'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
-              { hidden: Boolean(user) },
+              'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
+              router.asPath === '/signin'
+                ? 'border-lightBlue-500 text-gray-900'
+                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700',
             )}
           >
             Sign&nbsp;in
