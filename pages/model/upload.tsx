@@ -15,7 +15,7 @@ import Link from '@components/ui/Link';
 
 // libraries
 import getModels from '@lib/getModels';
-import uploadModel from '@lib/uploadModel';
+// import uploadModel from '@lib/uploadModel';
 
 const frameworkList = [
   {
@@ -53,9 +53,11 @@ const ModalUploadPage = () => {
   } | null>(null);
   const [models, setModels] = useState<ModelInfo[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { showNoti, showModal, closeModal } = useUI();
+  const { showModal, closeModal } = useUI();
 
   useEffect(() => {
     getModels()
@@ -63,36 +65,61 @@ const ModalUploadPage = () => {
       .catch((err) => setError(err.message));
   }, []);
 
-  const handleSubmit = useCallback(
-    async (modelInput: ModelInput) => {
-      try {
-        await uploadModel(modelInput);
+  // const handleSubmit = useCallback(
+  //   async (modelInput: ModelInput) => {
+  //     try {
+  //       await uploadModel(modelInput);
 
-        showModal({
-          variant: 'default',
-          title: 'Upload Completed',
-          content: `Successfully ploaded new model '${modelInput.name}'. You can go to the detail page or go back to the list.`,
-          actionButton: {
-            label: 'Detils',
-            onClick: () => {
-              router.push('/model/jupyter');
-              closeModal();
-            },
+  //       showModal({
+  //         variant: 'default',
+  //         title: 'Upload Completed',
+  //         content: `Successfully ploaded new model '${modelInput.name}'. You can go to the detail page or go back to the list.`,
+  //         actionButton: {
+  //           label: 'Detils',
+  //           onClick: () => {
+  //             router.push('/model/jupyter');
+  //             closeModal();
+  //           },
+  //         },
+  //         cancelButton: {
+  //           label: 'Back to List',
+  //           onClick: () => {
+  //             router.push('/model');
+  //             closeModal();
+  //           },
+  //         },
+  //       });
+  //     } catch (err) {
+  //       showNoti({ variant: 'alert', title: err.message });
+  //     }
+  //   },
+  //   [showNoti, showModal, closeModal, router],
+  // );
+
+  const handleSubmit2 = useCallback(() => {
+    setLoading(true);
+    setTimeout(() => {
+      showModal({
+        variant: 'default',
+        title: 'Upload Completed',
+        content: `Successfully ploaded new model. You can go to the detail page or go back to the list.`,
+        actionButton: {
+          label: 'Detils',
+          onClick: () => {
+            router.push('/model/jupyter');
+            closeModal();
           },
-          cancelButton: {
-            label: 'Back to List',
-            onClick: () => {
-              router.push('/model');
-              closeModal();
-            },
+        },
+        cancelButton: {
+          label: 'Back to List',
+          onClick: () => {
+            router.push('/model');
+            closeModal();
           },
-        });
-      } catch (err) {
-        showNoti({ variant: 'alert', title: err.message });
-      }
-    },
-    [showNoti, showModal, closeModal, router],
-  );
+        },
+      });
+    }, 500);
+  }, [router, showModal, closeModal]);
 
   return (
     <div className="pb-32 lg:py-12 min-h-full flex flex-col justify-center items-stretch">
@@ -182,9 +209,15 @@ const ModalUploadPage = () => {
                 Back
               </Button>
               <Button
-                onClick={() => handleSubmit(modelInput)}
+                onClick={() => {
+                  // handleSubmit(modelInput);
+                  handleSubmit2();
+                }}
                 disabled={
-                  !modelInput.name || !modelInput.framework || !fileInfo
+                  !modelInput.name ||
+                  !modelInput.framework ||
+                  !fileInfo ||
+                  loading
                 }
               >
                 Upload
