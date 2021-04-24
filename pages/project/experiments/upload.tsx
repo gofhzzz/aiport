@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
-import cn from 'classnames';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
