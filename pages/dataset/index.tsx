@@ -16,6 +16,7 @@ import { useUI } from '@components/ui/context';
 import Dashboard from '@components/layout/Dashboard';
 import SectionTitle from '@components/core/SectionTitle';
 import Button from '@components/ui/Button';
+import Link from '@components/ui/Link';
 
 // libraries
 import getDatasets from '@lib/getDatasets';
@@ -246,12 +247,12 @@ const DatasetListPage = () => {
                             {new Date(dataset.created).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a
+                            <Link
                               href="/dataset/data"
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
                               Open
-                            </a>
+                            </Link>
                           </td>
                         </tr>
                       ))}

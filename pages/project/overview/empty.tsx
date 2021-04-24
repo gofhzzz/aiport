@@ -208,12 +208,15 @@ const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">Image Recognition Project</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2 bg-gray-200" href="/project/overview">
+      <Link
+        className="flex px-4 py-2 bg-gray-200"
+        href="/project/overview/empty"
+      >
         <span>Overview</span>
       </Link>
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"
-        href="/project/experiments"
+        href="/project/experiments/empty"
       >
         <span>Experiments</span>
       </Link>

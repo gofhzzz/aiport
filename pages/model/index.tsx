@@ -15,6 +15,7 @@ import { useUI } from '@components/ui/context';
 import Dashboard from '@components/layout/Dashboard';
 import SectionTitle from '@components/core/SectionTitle';
 import Button from '@components/ui/Button';
+import Link from '@components/ui/Link';
 
 // libraries
 import getModels from '@lib/getModels';
@@ -221,12 +222,12 @@ const ModelListPage = () => {
                             {new Date(model.created).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a
+                            <Link
                               href="/model/jupyter"
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
                               Edit
-                            </a>
+                            </Link>
                           </td>
                         </tr>
                       ))}

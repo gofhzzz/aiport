@@ -18,11 +18,14 @@ const Sidebar = (
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"
-        href="/project/overview"
+        href="/project/overview/empty"
       >
         <span>Overview</span>
       </Link>
-      <Link className="flex px-4 py-2 bg-gray-200" href="/project/experiments">
+      <Link
+        className="flex px-4 py-2 bg-gray-200"
+        href="/project/experiments/empty"
+      >
         <span>Experiments</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
