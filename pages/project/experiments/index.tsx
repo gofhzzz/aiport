@@ -68,7 +68,7 @@ const ProjectExperimentsPage = () => {
   if (error !== null) return <div>{error}</div>;
 
   return (
-    <div className="mx-auto max-w-screen-xl pt-8 md:pt-16 px-4 md:px-6">
+    <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
       <h1 className="text-3xl font-medium">Experiments</h1>
 
       {/* search and buttons section */}

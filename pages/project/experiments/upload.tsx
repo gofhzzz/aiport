@@ -53,7 +53,7 @@ const selectItems = {
 
   model: [
     {
-      name: 'ResNet18',
+      name: 'ImageModel',
       id: 'efwa-cvze-zdss',
       framework: 'Pytorch 1.8.1',
       public: false,
@@ -63,7 +63,37 @@ const selectItems = {
       star: 351,
       category: 'Image/BBox',
       created_at: '2021-04-20',
-      files: ['resnet18.py'],
+      files: [
+        'densenet.py',
+        'dla.py',
+        'dla_simple.py',
+        'dpn.py',
+        'efficientnet.py',
+        'googlenet.py',
+        'lenet.py',
+        'mobilenet.py',
+        'mobilenetv2.py',
+        'pnasnet.py',
+        'preact_resnet.py',
+        'regnet.py',
+        'resnet.py',
+        'resnext.py',
+        'senet.py',
+        'shufflenet.py',
+        'shufflenetv2.py',
+        'vgg.py',
+      ],
+      class_function: [
+        'BasicBlock',
+        'Bottleneck',
+        'ResNet',
+        'ResNet18',
+        'ResNet34',
+        'ResNet50',
+        'ResNet101',
+        'ResNet152',
+        'test',
+      ],
     },
     {
       name: 'ResNet32',
@@ -76,7 +106,35 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: ['resnet32.py'],
+      files: [
+        'densenet.py',
+        'dla.py',
+        'dla_simple.py',
+        'dpn.py',
+        'efficientnet.py',
+        'googlenet.py',
+        'lenet.py',
+        'mobilenet.py',
+        'mobilenetv2.py',
+        'pnasnet.py',
+        'preact_resnet.py',
+        'regnet.py',
+        'resnet.py',
+        'resnext.py',
+        'senet.py',
+        'shufflenet.py',
+        'shufflenetv2.py',
+        'vgg.py',
+      ],
+      class_function: [
+        'swish',
+        'drop_connect',
+        'SE',
+        'Block',
+        'EfficientNet',
+        'EfficientNetB0',
+        'test',
+      ],
     },
   ],
   trainer: {
@@ -166,6 +224,8 @@ const ProjectExperimentUploadPage = () => {
 
   const [selectedDataset, setSelectedDataset] = useState<string>('');
   const [selectedModel, setSelectedModel] = useState<string>('');
+  const [selectedFile, setSelectedFile] = useState<string>('');
+  const [selectedFunction, setSelectedFunction] = useState<string>('');
   const [selectedLoss, setSelectedLoss] = useState<string>('');
   const [selectedOptimizer, setSelectedOptimizer] = useState<string>('');
   const [selectedProccessor, setSelectedProccessor] = useState<string>('');
@@ -268,6 +328,44 @@ const ProjectExperimentUploadPage = () => {
                 selectedValue={selectedModel}
                 onSelect={(item) => setSelectedModel(item.value as string)}
               />
+              <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
+                <div>
+                  <Select
+                    label="File"
+                    items={[
+                      { key: '-', label: 'Select', value: '' },
+                      ...(selectItems.model
+                        .find((model) => selectedModel === model.name)
+                        ?.files.map((file) => ({
+                          key: file,
+                          label: file,
+                          value: file,
+                        })) ?? []),
+                    ]}
+                    selectedValue={selectedFile}
+                    onSelect={(item) => setSelectedFile(item.value as string)}
+                  />
+                </div>
+                <div>
+                  <Select
+                    label="Model Class/Function"
+                    items={[
+                      { key: '-', label: 'Select', value: '' },
+                      ...(selectItems.model
+                        .find((model) => selectedModel === model.name)
+                        ?.class_function.map((functionName) => ({
+                          key: functionName,
+                          label: functionName,
+                          value: functionName,
+                        })) ?? []),
+                    ]}
+                    selectedValue={selectedFunction}
+                    onSelect={(item) =>
+                      setSelectedFunction(item.value as string)
+                    }
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -385,7 +483,9 @@ const ProjectExperimentUploadPage = () => {
             disabled={
               loading ||
               !selectedDataset ||
+              !selectedFile ||
               !selectedFramework ||
+              !selectedFunction ||
               !selectedLoss ||
               !selectedModel ||
               !selectedOptimizer ||
