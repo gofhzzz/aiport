@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
+import cn from 'classnames';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
@@ -231,6 +232,7 @@ const ProjectExperimentUploadPage = () => {
   const [selectedProccessor, setSelectedProccessor] = useState<string>('');
   const [selectedFramework, setSelectedFramework] = useState<string>('');
 
+  const [parameterLength, setParameterLength] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = useCallback(() => {
@@ -428,7 +430,43 @@ const ProjectExperimentUploadPage = () => {
           </div>
         </div>
 
-        {/* Skipping Parameter Section */}
+        {/* Parameter Section */}
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Parameter
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                You can override all kinds of training parameters in this
+                section
+              </p>
+            </div>
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              {Array.from({ length: parameterLength }, (_, idx) => (
+                <div
+                  key={`parameter-${idx}`}
+                  className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
+                >
+                  <div>
+                    <Input label="Key" />
+                  </div>
+                  <div>
+                    <Input label="Value" />
+                  </div>
+                </div>
+              ))}
+              <Button
+                size="sm"
+                color="white"
+                full
+                onClick={() => setParameterLength((prev) => prev + 1)}
+              >
+                Add Parameter
+              </Button>
+            </div>
+          </div>
+        </div>
 
         {/* Environment Section */}
         <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
