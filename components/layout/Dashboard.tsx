@@ -215,7 +215,7 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                           size="sm"
                           src={user?.profile ?? undefined}
                         />
-                        <span>{user?.username}</span>
+                        <span>{user?.username || 'loading...'}</span>
                         <div className="flex-grow" aria-hidden="true" />
                         <Link href="/signout" className="hover:opacity-60">
                           Signout
