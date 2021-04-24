@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { useDebounce } from 'react-use';
 import { SearchIcon } from '@heroicons/react/solid';
 import {
-  DatabaseIcon,
+  // DatabaseIcon,
   DocumentDuplicateIcon,
   DownloadIcon,
   PlusIcon,
@@ -19,6 +19,9 @@ import Button from '@components/ui/Button';
 
 // libraries
 import getDatasets from '@lib/getDatasets';
+
+// icons
+import { DatabaseIcon } from '@components/icons';
 
 interface DatasetInfoWithChecked extends DatasetInfo {
   checked: boolean;

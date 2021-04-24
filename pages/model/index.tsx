@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 import { useDebounce } from 'react-use';
 import { SearchIcon } from '@heroicons/react/solid';
 import {
-  CubeTransparentIcon,
+  // CubeTransparentIcon,
   DocumentDuplicateIcon,
   PlusIcon,
 } from '@heroicons/react/outline';
@@ -18,6 +18,9 @@ import Button from '@components/ui/Button';
 
 // libraries
 import getModels from '@lib/getModels';
+
+// icons
+import { AIIcon } from '@components/icons';
 
 interface ModelInfoWithChecked extends ModelInfo {
   checked: boolean;
@@ -205,7 +208,7 @@ const ModelListPage = () => {
                             />
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
-                            <CubeTransparentIcon className="w-6 h-6" />
+                            <AIIcon className="w-6 h-6" />
                             <span>{model.name}</span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
