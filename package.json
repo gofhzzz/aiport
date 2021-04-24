@@ -1,7 +1,6 @@
 {
-  "name": "next-tailwindcss-typescript",
-  "version": "1.0.1",
-  "description": "template project",
+  "name": "aiport",
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
