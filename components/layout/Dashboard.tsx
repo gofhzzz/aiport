@@ -302,7 +302,7 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
             {/* Secondary column (hidden on smaller screens) */}
             <aside
               className={cn(
-                'hidden w-64 bg-white border-r border-gray-200 overflow-y-auto',
+                'hidden w-52 bg-white border-r border-gray-200 overflow-y-auto',
                 {
                   'lg:block': !!sidebar,
                 },

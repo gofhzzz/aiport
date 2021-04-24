@@ -4,7 +4,7 @@ import React from 'react';
 import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
 
-const ProjectExperimentsPage = () => {
+const ProjectExperimentsDetailsPage = () => {
   return (
     <div className="py-64">
       <h1 className="text-4xl font-medium text-center">Preparing...</h1>
@@ -32,6 +32,6 @@ const Sidebar = (
   </div>
 );
 
-ProjectExperimentsPage.Layout = Dashboard;
-ProjectExperimentsPage.Sidebar = Sidebar;
-export default ProjectExperimentsPage;
+ProjectExperimentsDetailsPage.Layout = Dashboard;
+ProjectExperimentsDetailsPage.Sidebar = Sidebar;
+export default ProjectExperimentsDetailsPage;
