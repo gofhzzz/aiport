@@ -103,7 +103,7 @@ const ProjectListPage = () => {
                 <div className="relative aspect-w-16 aspect-h-9 overflow-hidden">
                   <img
                     className="object-cover transform duration-300 transition-transform group-hover:scale-110"
-                    src={`/images/project/img${idx + 1}.jpg`}
+                    src={`/images/project/img${idx + 1}.png`}
                     loading="lazy"
                   />
                 </div>
