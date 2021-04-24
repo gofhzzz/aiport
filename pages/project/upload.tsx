@@ -29,7 +29,7 @@ const ProjectUploadPage = () => {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-    setTimeout(() => router.push('/project/overview/empty'));
+    setTimeout(() => router.push('/project/overview/empty'), 500);
   }, [router]);
 
   if (error !== null) return <div>{error}</div>;

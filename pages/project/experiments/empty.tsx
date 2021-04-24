@@ -4,7 +4,7 @@ import React from 'react';
 import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
 
-const ProjectOverviewPage = () => {
+const ProjectExperimentsPage = () => {
   return (
     <div className="py-64">
       <h1 className="text-4xl font-medium text-center">Preparing...</h1>
@@ -16,13 +16,13 @@ const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">Image Recognition Project</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2 bg-gray-200" href="/project/overview">
-        <span>Overview</span>
-      </Link>
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"
-        href="/project/experiments"
+        href="/project/overview"
       >
+        <span>Overview</span>
+      </Link>
+      <Link className="flex px-4 py-2 bg-gray-200" href="/project/experiments">
         <span>Experiments</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
@@ -32,6 +32,6 @@ const Sidebar = (
   </div>
 );
 
-ProjectOverviewPage.Layout = Dashboard;
-ProjectOverviewPage.Sidebar = Sidebar;
-export default ProjectOverviewPage;
+ProjectExperimentsPage.Layout = Dashboard;
+ProjectExperimentsPage.Sidebar = Sidebar;
+export default ProjectExperimentsPage;
