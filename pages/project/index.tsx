@@ -4,9 +4,6 @@ import { useDebounce } from 'react-use';
 import { SearchIcon } from '@heroicons/react/solid';
 import { PlusIcon } from '@heroicons/react/outline';
 
-// contexts
-import { useUI } from '@components/ui/context';
-
 // components
 import Dashboard from '@components/layout/Dashboard';
 import SectionTitle from '@components/core/SectionTitle';
@@ -22,8 +19,6 @@ const ProjectListPage = () => {
   const [projects, setProjects] = useState<ProjectInfo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
-
-  const { showNoti } = useUI();
 
   useDebounce(
     () => {
