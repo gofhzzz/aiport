@@ -20,8 +20,12 @@ import Link from '@components/ui/Link';
 // libraries
 import getModels from '@lib/getModels';
 
+// utilities
+import formatDate from '@utils/formatDate';
+
 // icons
 import { AIIcon } from '@components/icons';
+import LockIcon from '@components/icons/LockIcon';
 
 interface ModelInfoWithChecked extends ModelInfo {
   checked: boolean;
@@ -213,13 +217,36 @@ const ModelListPage = () => {
                             <span>{model.name}</span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {model.framework}
+                            {model.framework.includes('Pytorch') ? (
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-6">
+                                <img
+                                  className="h-6 w-auto"
+                                  src="/icon/pytorch_logo.png"
+                                />
+                                <span>{model.framework}</span>
+                              </div>
+                            ) : (
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-4">
+                                <img
+                                  className="h-6 w-auto mr-1"
+                                  src="/icon/tf_logo.png"
+                                />
+                                <span>{model.framework}</span>
+                              </div>
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {model.isPublic ? 'Public' : 'Private'}
+                            {!model.isPublic ? (
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-4">
+                                <LockIcon className="w-6 h-6" />
+                                <span>Private</span>
+                              </div>
+                            ) : (
+                              'Public'
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {new Date(model.created).toLocaleDateString()}
+                            {formatDate(model.created)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link

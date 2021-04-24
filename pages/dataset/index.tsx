@@ -5,7 +5,9 @@ import { SearchIcon } from '@heroicons/react/solid';
 import {
   // DatabaseIcon,
   DocumentDuplicateIcon,
+  DocumentTextIcon,
   DownloadIcon,
+  PhotographIcon,
   PlusIcon,
 } from '@heroicons/react/outline';
 
@@ -21,8 +23,12 @@ import Link from '@components/ui/Link';
 // libraries
 import getDatasets from '@lib/getDatasets';
 
+// utilities
+import formatDate from '@utils/formatDate';
+
 // icons
 import { DatabaseIcon } from '@components/icons';
+import MedalIcon from '@components/icons/MedalIcon';
 
 interface DatasetInfoWithChecked extends DatasetInfo {
   checked: boolean;
@@ -235,16 +241,33 @@ const DatasetListPage = () => {
                             <span>{dataset.name}</span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {dataset.type.split('/')[0]}
+                            {dataset.type.split('/')[0] === 'Image' ? (
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-4">
+                                <PhotographIcon className="w-6 h-6" />
+                                <span>Image</span>
+                              </div>
+                            ) : (
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-1">
+                                <DocumentTextIcon className="w-6 h-6" />
+                                <span>Language</span>
+                              </div>
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {dataset.isOriginal ? 'Original' : 'Duplicated'}
+                            {dataset.isOriginal ? (
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-6">
+                                <MedalIcon className="w-6 h-6" />
+                                <span>Original</span>
+                              </div>
+                            ) : (
+                              'Duplicated'
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {dataset.size.toLocaleString()} items
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {new Date(dataset.created).toLocaleDateString()}
+                            {formatDate(dataset.created)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
