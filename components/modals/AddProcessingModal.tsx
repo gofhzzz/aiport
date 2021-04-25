@@ -23,10 +23,10 @@ const processingOptions = {
       description: 'GrayScale',
     },
     {
-      name: 'HUe',
+      name: 'Hue',
       image_path: '/images/dataset/data/processing/img_level/hue.jpg',
       preprocessingOnly: false,
-      description: 'HUe',
+      description: 'Hue',
     },
     {
       name: 'Saturation',
