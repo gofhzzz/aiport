@@ -66,7 +66,7 @@ const DatasetDataListPage = () => {
 
   return (
     <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
-      <h1 className="text-3xl font-medium">COCO_AUG</h1>
+      <h1 className="text-3xl font-medium">CIFAR10</h1>
 
       {/* search and buttons section */}
       <section className="mt-8">
