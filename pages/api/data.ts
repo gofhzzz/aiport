@@ -8,7 +8,7 @@ const handler: (
   if (req.method === 'GET') {
     const { db } = await connectMongo();
 
-    const cursor = db.collection('data').find({}).sort({ created: -1 });
+    const cursor = db.collection('data').find({}).sort({ created: 1 });
 
     const dataList = (await cursor.toArray()) as DataInfo[];
 
