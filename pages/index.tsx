@@ -8,8 +8,8 @@ import useUser from '@lib/useUser';
 
 const features = [
   {
-    title: 'Where the world builds AI',
-    content: "Focus on your data and model, we'll take care of the rest",
+    title: 'Hybrid & Multi Cloud',
+    content: "Leverage your on premise and cloud resources with native Kubernetes cluster orchestration",
     image_path: '/images/home/img1.png',
   },
   {
@@ -68,15 +68,13 @@ const IndexPage = () => {
       <div className="relative bg-white py-8 sm:py-12 lg:py-16">
         <div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl">
           <h2 className="text-base font-semibold tracking-wider text-lightBlue-600 uppercase">
-            Deploy faster
+            Build Faster
           </h2>
           <p className="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">
-            Everything you need to deploy your app
+            Everything you need to build AI
           </p>
           <p className="mt-5 max-w-prose mx-auto text-xl text-gray-500">
-            Phasellus lorem quam molestie id quisque diam aenean nulla in.
-            Accumsan in quis quis nunc, ullamcorper malesuada. Eleifend
-            condimentum id viverra nulla.
+            Aiport was built by data scientists, for data scientists to streamline the machine learning process. Focus on your data and model, Aiport will take care of the rest.
           </p>
           <div className="mt-12">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
