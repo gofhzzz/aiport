@@ -13,7 +13,7 @@ import Button from '@components/ui/Button';
 import getProjects from '@lib/getProjects';
 import Link from '@components/ui/Link';
 
-const lastActiveText = ['3 hours', '11 days', '6 days'];
+const lastActiveText = ['2 min', '4 days', '10 days'];
 
 const ProjectListPage = () => {
   const [projects, setProjects] = useState<ProjectInfo[] | null>(null);

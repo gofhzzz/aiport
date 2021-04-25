@@ -238,6 +238,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'resnet.py'
       ],
       class_function: [
@@ -264,6 +265,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'efficientnet.py'
       ],
       class_function: [
@@ -318,6 +320,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'tresnet.py'
       ],
       class_function: [
@@ -342,6 +345,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'robert.py'
       ],
       class_function: [
@@ -366,6 +370,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'kobert.py'
       ],
       class_function: [
@@ -390,6 +395,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'xlnet.py'
       ],
       class_function: [
@@ -414,6 +420,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'alexnet.py'
       ],
       class_function: [
@@ -438,6 +445,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
+        '__init__.py',
         'albert.py'
       ],
       class_function: [

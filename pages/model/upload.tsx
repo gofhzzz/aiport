@@ -184,7 +184,7 @@ const ModalUploadPage = () => {
             <Input
               containerClassName="mt-6"
               label="Model Name"
-              placeholder="MyNetwork"
+              placeholder="Model name"
               value={modelInput.name}
               onChange={(e) =>
                 setModelInput((prev) => ({
