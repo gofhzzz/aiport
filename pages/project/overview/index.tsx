@@ -148,13 +148,13 @@ const ProjectOverviewPage = () => {
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell xl:hidden 2xl:table-cell"
                             >
-                              TrainL
+                              T-Loss
                             </th>
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell xl:hidden 2xl:table-cell"
                             >
-                              ValL
+                              V-Loss
                             </th>
                             <th
                               scope="col"

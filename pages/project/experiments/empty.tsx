@@ -27,16 +27,16 @@ const ProjectExperimentsPage = () => {
   const [experiments, setExperiments] = useState<ExperimentInfoWithChecked[]>([
     {
       _id: '-',
-      name: 'ResNet18_COCO',
+      name: 'hidden768_dropout0.3',
       status: 'Running',
       user: 'James',
       epoch: {
-        current: 1,
+        current: 0,
         total: 100,
       },
-      trainLoss: 2.113,
-      validationLoss: 3.759,
-      score: 78.3,
+      trainLoss: 0,
+      validationLoss: 0,
+      score: 0,
       checked: false,
     },
   ]);
@@ -297,7 +297,7 @@ const ProjectExperimentsPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition Project</h2>
+    <h2 className="px-4 font-semibold text-xl">img_clf</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"

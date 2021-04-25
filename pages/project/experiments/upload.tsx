@@ -264,7 +264,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'efficientnet.py'
       ],
       class_function: [
         'swish',
@@ -318,7 +318,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'tresnet.py'
       ],
       class_function: [
         'swish',
@@ -342,7 +342,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'robert.py'
       ],
       class_function: [
         'swish',
@@ -366,7 +366,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'kobert.py'
       ],
       class_function: [
         'swish',
@@ -390,7 +390,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'xlnet.py'
       ],
       class_function: [
         'swish',
@@ -414,7 +414,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'alexnet.py'
       ],
       class_function: [
         'swish',
@@ -438,7 +438,7 @@ const selectItems = {
       category: 'Image/BBox',
       created_at: '2021-04-13',
       files: [
-        'resnet.py'
+        'albert.py'
       ],
       class_function: [
         'swish',
@@ -589,7 +589,7 @@ const ProjectExperimentUploadPage = () => {
                 <div className="col-span-3 sm:col-span-2">
                   <Input
                     label="Experiment Name"
-                    placeholder="My First Experiment"
+                    placeholder="Please enter an experiment name"
                   />
                 </div>
               </div>
@@ -748,10 +748,10 @@ const ProjectExperimentUploadPage = () => {
               </div>
               <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
                 <div>
-                  <Input label="Batch Size" />
+                  <Input label="Batch Size" placeholder="32"/>
                 </div>
                 <div>
-                  <Input label="Epoch" />
+                  <Input label="Epoch" placeholder="50"/>
                 </div>
               </div>
             </div>
@@ -777,10 +777,10 @@ const ProjectExperimentUploadPage = () => {
                   className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
                 >
                   <div>
-                    <Input label="Key" />
+                    <Input label="Key" placeholder="Enter a variable name"/>
                   </div>
                   <div>
-                    <Input label="Value" />
+                    <Input label="Value" placeholder="Enter a value"/>
                   </div>
                 </div>
               ))}
@@ -868,7 +868,7 @@ const ProjectExperimentUploadPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition Project</h2>
+    <h2 className="px-4 font-semibold text-xl">img_clf</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"
