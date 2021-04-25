@@ -27,16 +27,52 @@ const frameworkList = [
     value: 'Pytorch 1.8.1',
   },
   {
-    label: 'Tensorflow 1.2.2',
-    value: 'Tensorflow 1.2.2',
+    label: 'Pytorch 1.7.1',
+    value: 'Pytorch 1.7.1',
   },
   {
-    label: 'Tensorflow 2.1',
-    value: 'Tensorflow 2.1',
+    label: 'Pytorch 1.6.0',
+    value: 'Pytorch 1.6.0',
   },
   {
-    label: 'Tensorflow 2.5',
-    value: 'Tensorflow 2.5',
+    label: 'Pytorch 1.5.1',
+    value: 'Pytorch 1.5.1',
+  },
+  {
+    label: 'Pytorch 1.4.0',
+    value: 'Pytorch 1.4.0',
+  },
+  {
+    label: 'Pytorch 1.3.1',
+    value: 'Pytorch 1.3.1',
+  },
+  {
+    label: 'Pytorch 1.2.0',
+    value: 'Pytorch 1.2.0',
+  },
+  {
+    label: 'Pytorch 1.1.0',
+    value: 'Pytorch 1.1.0',
+  },
+  {
+    label: 'Tensorflow 2.4.1',
+    value: 'Tensorflow 2.4.1',
+  },
+  {
+    label: 'Tensorflow 2.3.2',
+    value: 'Tensorflow 2.3.2',
+  },
+  {
+    label: 'Tensorflow 2.2.0',
+    value: 'Tensorflow 2.2.0',
+  },
+  {
+    label: 'Tensorflow 2.1.3',
+    value: 'Tensorflow 2.1.3',
+  },
+  {
+    label: 'Tensorflow 2.1.0',
+    value: 'Tensorflow 2.1.0',
   },
 ];
 
@@ -102,9 +138,9 @@ const ModalUploadPage = () => {
       showModal({
         variant: 'default',
         title: 'Upload Completed',
-        content: `Successfully ploaded new model. You can go to the detail page or go back to the list.`,
+        content: `Successfully uploaded a new model. You can go to the detail page or go back to the list.`,
         actionButton: {
-          label: 'Detils',
+          label: 'Details',
           onClick: () => {
             router.push('/model/jupyter');
             closeModal();
@@ -255,7 +291,7 @@ const ModalUploadPage = () => {
                         {model.name}
                       </h5>
                       <p className="mt-2 text-sm truncate">
-                        FW: {model.framework}
+                        {model.framework}
                       </p>
                       <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm">
                         <div className="flex items-center space-x-1">
