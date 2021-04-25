@@ -27,9 +27,9 @@ const ProjectExperimentsPage = () => {
   const [experiments, setExperiments] = useState<ExperimentInfoWithChecked[]>([
     {
       _id: '-',
-      name: 'hidden768_dropout0.3',
+      name: 'exp1',
       status: 'Running',
-      user: 'James',
+      user: 'Ahn',
       epoch: {
         current: 0,
         total: 100,
