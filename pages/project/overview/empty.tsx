@@ -10,7 +10,7 @@ import { PlusIcon } from '@heroicons/react/outline';
 const ProjectOverviewPage = () => {
   const project: ProjectInfo = {
     _id: '-',
-    name: 'Image Recognition Project',
+    name: 'img_clf',
     isPublic: true,
     owner: 'Admin',
     collaborators: [],
@@ -206,7 +206,7 @@ const ProjectOverviewPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition Project</h2>
+    <h2 className="px-4 font-semibold text-xl">img_clf</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 bg-gray-200"
