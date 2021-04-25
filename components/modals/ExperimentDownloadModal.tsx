@@ -141,7 +141,7 @@ const ExperimentDownloadModal: React.FC<Props> = ({ show, setShow }) => {
                   Cancel
                 </Button>
                 <a
-                  href="/download/ResNet18_MNIST-20210426.zip"
+                  href="/download/SST2_BERT_hidden1024_dropout0.1.zip"
                   download
                   onClick={() => {
                     setShow(false);
