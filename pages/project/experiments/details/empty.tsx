@@ -13,7 +13,7 @@ const ProjectExperimentsDetailsPage = () => {
     <>
       <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
         <div className="md:flex items-center justify-between">
-          <h1 className="text-3xl font-medium">ResNET18_COCO</h1>
+          <h1 className="text-3xl font-medium">hidden768_dropout0.2</h1>
           <div className="mt-4 md:mt-0 flex items-center space-x-4">
             <Button color="white" onClick={() => setShow(true)}>
               Download
@@ -45,7 +45,7 @@ const ProjectExperimentsDetailsPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition Project</h2>
+    <h2 className="px-4 font-semibold text-xl">SST2_BERT</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"
