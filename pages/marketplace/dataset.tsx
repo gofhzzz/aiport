@@ -4,12 +4,14 @@ import { useRouter } from 'next/router';
 // components
 import Dashboard from '@components/layout/Dashboard';
 import SearchItem from '@components/marketplace/SearchItem';
+import DatasetDetail from '@components/marketplace/dataset/DatasetDetail';
 
 // labraries
 import getDataset from '@lib/getDataset';
 
 // icons
 import Spinner from '@components/icons/Spinner';
+
 const DatasetDetailPage = () => {
   const router = useRouter();
   const [dataset, setDataset] = React.useState<DatasetInfo | null>(null);
@@ -27,9 +29,9 @@ const DatasetDetailPage = () => {
       </div>
     );
   return (
-    <div>
+    <div className="mt-8">
       <SearchItem initialDropdownItem="dataset" />
-      {JSON.stringify(dataset)}
+      <DatasetDetail dataset={dataset} className="p-8" />
     </div>
   );
 };

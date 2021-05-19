@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connectMongo, withErrorHandler } from '@utils/index';
 import { removeTokenOnCookie, setTokenOnCookie } from '@lib/cookie';
+import signToken from '@utils/token/signToken';
+
+const jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) throw new Error('Missing JWT_SECRET');
 
 const handler: (
   req: NextApiRequest,
@@ -20,7 +24,9 @@ const handler: (
     if (exUser.password !== password)
       return res.status(401).send('Password wrong.');
 
-    setTokenOnCookie(res, '@your_secret_token');
+    const accessToken = signToken(exUser._id, jwtSecret);
+
+    setTokenOnCookie(res, accessToken);
 
     return res.status(204).end();
   }

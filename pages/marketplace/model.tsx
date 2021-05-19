@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 // components
 import Dashboard from '@components/layout/Dashboard';
 import SearchItem from '@components/marketplace/SearchItem';
+import ModelDetail from '@components/marketplace/model/ModelDetail';
 
 // libraries
 import getModel from '@lib/getModel';
@@ -28,9 +29,9 @@ const ModelDetailPage = () => {
       </div>
     );
   return (
-    <div>
+    <div className="mt-8">
       <SearchItem initialDropdownItem="model" />
-      {JSON.stringify(model)}
+      <ModelDetail model={model} className="p-8" />
     </div>
   );
 };

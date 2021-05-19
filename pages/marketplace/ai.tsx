@@ -7,6 +7,7 @@ import getSampleProject from '@lib/getSampleProject';
 // components
 import SearchItem from '@components/marketplace/SearchItem';
 import Dashboard from '@components/layout/Dashboard';
+import ProjectDetail from '@components/marketplace/project/ProjectDetail';
 
 // icons
 import Spinner from '@components/icons/Spinner';
@@ -28,9 +29,9 @@ const ProjectDetailPage = () => {
       </div>
     );
   return (
-    <div>
+    <div className="mt-8">
       <SearchItem initialDropdownItem="ai" />
-      {JSON.stringify(project)}
+      <ProjectDetail project={project} className="p-8" />
     </div>
   );
 };

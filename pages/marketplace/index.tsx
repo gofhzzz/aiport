@@ -61,6 +61,7 @@ const MarketplacePage = () => {
         router.query.category === 'dataset' ||
         router.query.category === 'model')
     ) {
+      setSearchCategory(router.query.category);
       setCategory(router.query.category);
       if (router.query.category === 'ai')
         getSampleProjects().then((sampleProjects) =>
@@ -112,6 +113,7 @@ const MarketplacePage = () => {
                 className="mr-4"
                 checked={category === item.value}
                 onChange={() => {
+                  setSearchCategory(item.value as never);
                   getDataArray(item.value as never);
                   setCategory(item.value as never);
                 }}
