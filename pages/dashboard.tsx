@@ -9,6 +9,33 @@ import Link from '@components/ui/Link';
 
 const sections = [
   {
+    title: 'AI Project',
+    picture: '/icon/project.png',
+    links: [
+      {
+        name: 'Create New',
+        href: '/project/upload',
+        icon: PlusIcon,
+      },
+      {
+        name: 'View All',
+        href: '/project',
+        icon: ViewGridIcon,
+      },
+      {
+        name: 'Marketplace',
+        href: '/marketplace?category=ai',
+        as: '/marketplace',
+        icon: ShoppingCartIcon,
+      },
+      {
+        name: 'Dashboard',
+        href: '#',
+        icon: TemplateIcon,
+      },
+    ],
+  },
+  {
     title: 'Dataset',
     picture: '/icon/dataset.png',
     links: [
@@ -24,7 +51,7 @@ const sections = [
       },
       {
         name: 'Marketplace',
-        href: '/marketplace?sort=dataset',
+        href: '/marketplace?category=dataset',
         as: '/marketplace',
         icon: ShoppingCartIcon,
       },
@@ -46,36 +73,9 @@ const sections = [
       },
       {
         name: 'Marketplace',
-        href: '/marketplace?sort=model',
+        href: '/marketplace?category=model',
         as: '/marketplace',
         icon: ShoppingCartIcon,
-      },
-    ],
-  },
-  {
-    title: 'AI Project',
-    picture: '/icon/project.png',
-    links: [
-      {
-        name: 'Create New',
-        href: '/project/upload',
-        icon: PlusIcon,
-      },
-      {
-        name: 'View All',
-        href: '/project',
-        icon: ViewGridIcon,
-      },
-      {
-        name: 'Marketplace',
-        href: '/marketplace?sort=project',
-        as: '/marketplace',
-        icon: ShoppingCartIcon,
-      },
-      {
-        name: 'Dashboard',
-        href: '#',
-        icon: TemplateIcon,
       },
     ],
   },
