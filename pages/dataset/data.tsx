@@ -29,7 +29,15 @@ interface DataInfoWithChecked extends DataInfo {
 const DatasetDataListPage = () => {
   const [dataList, setDataList] = useState<DataInfoWithChecked[] | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [selected, setSelected] = useState<DataInfoWithChecked | null>(null);
+  const [label, setLabel] = useState<{
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    label: number;
+  }>({ x: 72, y: 32, h: 49, w: 32, label: 2490 });
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
   const totalDataList = useRef<DataInfoWithChecked[]>([]);
@@ -231,6 +239,19 @@ const DatasetDataListPage = () => {
                             <button
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                               onClick={() => {
+                                setIsEdit(true);
+                                setSelected(data);
+                                setShowModal(true);
+                              }}
+                            >
+                              Edit
+                            </button>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              className="text-lightBlue-600 hover:text-lightBlue-900"
+                              onClick={() => {
+                                setIsEdit(false);
                                 setSelected(data);
                                 setShowModal(true);
                               }}
@@ -250,6 +271,9 @@ const DatasetDataListPage = () => {
       </section>
       {/* details modal */}
       <DataDetailsModal
+        isEdit={isEdit}
+        onChangeLabel={(val) => setLabel(val)}
+        label={label}
         show={showModal}
         setShow={setShowModal}
         data={selected}

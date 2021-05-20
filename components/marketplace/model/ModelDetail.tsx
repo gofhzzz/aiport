@@ -33,7 +33,7 @@ const ModelDetail = ({ className, model }: Props) => {
         actionButton: {
           label: 'Go to Model List',
           onClick: () => {
-            router.push('/model');
+            router.push('/model/jupyter');
             closeModal();
           },
         },
@@ -43,7 +43,24 @@ const ModelDetail = ({ className, model }: Props) => {
         },
       });
     } catch (err) {
-      showNoti({ title: 'Error', content: err.message, variant: 'alert' });
+      if (err.code === 101)
+        showModal({
+          variant: 'alert',
+          title: 'Error',
+          content: err.message,
+          actionButton: {
+            label: 'Go to Model detail',
+            onClick: () => {
+              router.push('/model/jupyter');
+              closeModal();
+            },
+          },
+          cancelButton: {
+            label: 'Stay in this page',
+            onClick: () => closeModal(),
+          },
+        });
+      else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
       console.log(err);
     } finally {
       setLoading(false);

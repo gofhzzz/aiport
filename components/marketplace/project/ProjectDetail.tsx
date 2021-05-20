@@ -33,7 +33,7 @@ const ProjectDetail = ({ className, project }: Props) => {
         actionButton: {
           label: 'Go to Ai List',
           onClick: () => {
-            router.push('/project');
+            router.push(`/project/overview?projectId=${project._id}`);
             closeModal();
           },
         },
@@ -43,7 +43,24 @@ const ProjectDetail = ({ className, project }: Props) => {
         },
       });
     } catch (err) {
-      showNoti({ title: 'Error', content: err.message, variant: 'alert' });
+      if (err.code === 101)
+        showModal({
+          variant: 'alert',
+          title: 'Error',
+          content: err.message,
+          actionButton: {
+            label: 'Go to Ai Detail',
+            onClick: () => {
+              router.push(`/project/overview?projectId=${project._id}`);
+              closeModal();
+            },
+          },
+          cancelButton: {
+            label: 'Stay in this page',
+            onClick: () => closeModal(),
+          },
+        });
+      else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
       console.log(err);
     } finally {
       setLoading(false);

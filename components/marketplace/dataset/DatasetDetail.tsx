@@ -33,7 +33,7 @@ const DatasetDetail = ({ className, dataset }: Props) => {
         actionButton: {
           label: 'Go to Dataset List',
           onClick: () => {
-            router.push('/dataset');
+            router.push('/dataset/data');
             closeModal();
           },
         },
@@ -43,7 +43,24 @@ const DatasetDetail = ({ className, dataset }: Props) => {
         },
       });
     } catch (err) {
-      showNoti({ title: 'Error', content: err.message, variant: 'alert' });
+      if (err.code === 101)
+        showModal({
+          variant: 'alert',
+          title: 'Error',
+          content: err.message,
+          actionButton: {
+            label: 'Go to Dataset detail',
+            onClick: () => {
+              router.push('/dataset/data');
+              closeModal();
+            },
+          },
+          cancelButton: {
+            label: 'Stay in this page',
+            onClick: () => closeModal(),
+          },
+        });
+      else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
       console.log(err);
     } finally {
       setLoading(false);
