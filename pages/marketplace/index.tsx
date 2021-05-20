@@ -128,9 +128,8 @@ const MarketplacePage = () => {
         <div className="w-full justify-center flex items-center">
           <Dropdown
             button={
-              <div className="border-2 w-40 justify-between rounded-md mr-2 flex items-center px-4 h-[42px] mt-1">
-                {searchCategory.charAt(0).toUpperCase() +
-                  searchCategory.slice(1)}
+              <div className="capitalize border-2 w-40 justify-between rounded-md mr-2 flex items-center px-4 h-[42px] mt-1">
+                {searchCategory}
                 <ChevronDownIcon className="w-6 h-6" />
               </div>
             }

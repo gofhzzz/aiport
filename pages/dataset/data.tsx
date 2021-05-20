@@ -239,18 +239,6 @@ const DatasetDataListPage = () => {
                             <button
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                               onClick={() => {
-                                setIsEdit(true);
-                                setSelected(data);
-                                setShowModal(true);
-                              }}
-                            >
-                              Edit
-                            </button>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              className="text-lightBlue-600 hover:text-lightBlue-900"
-                              onClick={() => {
                                 setIsEdit(false);
                                 setSelected(data);
                                 setShowModal(true);
@@ -271,7 +259,6 @@ const DatasetDataListPage = () => {
       </section>
       {/* details modal */}
       <DataDetailsModal
-        isEdit={isEdit}
         onChangeLabel={(val) => setLabel(val)}
         label={label}
         show={showModal}

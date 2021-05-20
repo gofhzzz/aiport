@@ -17,7 +17,6 @@ interface Props {
     h: number;
     label: number;
   };
-  isEdit?: boolean;
   onChangeLabel: (label: {
     x: number;
     y: number;
@@ -33,9 +32,8 @@ const DataDetailsModal: React.FC<Props> = ({
   data,
   label,
   onChangeLabel,
-  isEdit = false,
 }) => {
-  const [edit, setEdit] = React.useState<boolean>(isEdit);
+  const [edit, setEdit] = React.useState<boolean>(false);
   const [labelItems, setLabelItems] = React.useState<{
     x: number;
     y: number;
