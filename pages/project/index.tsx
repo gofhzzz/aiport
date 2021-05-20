@@ -8,15 +8,15 @@ import { PlusIcon } from '@heroicons/react/outline';
 import Dashboard from '@components/layout/Dashboard';
 import SectionTitle from '@components/core/SectionTitle';
 import Button from '@components/ui/Button';
+import Link from '@components/ui/Link';
 
 // libraries
-import getProjects from '@lib/getProjects';
-import Link from '@components/ui/Link';
+import getSampleProjects from '@lib/getSampleProjects';
 
 const lastActiveText = ['2 min', '4 days', '10 days'];
 
 const ProjectListPage = () => {
-  const [projects, setProjects] = useState<ProjectInfo[] | null>(null);
+  const [projects, setProjects] = useState<SampleProjectInfo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
 
@@ -32,7 +32,7 @@ const ProjectListPage = () => {
   );
 
   useEffect(() => {
-    getProjects()
+    getSampleProjects()
       .then((projects) => {
         setProjects(
           projects.map((model) => ({
@@ -48,7 +48,7 @@ const ProjectListPage = () => {
 
   return (
     <div className="mx-auto max-w-screen-xl pt-8 md:pt-16 px-4 md:px-6">
-      <SectionTitle picture="/icon/project.png" title="Project" />
+      <SectionTitle picture="/icon/project.png" title="AI" />
 
       {/* search and buttons section */}
       <section className="mt-8 md:mt-12">
@@ -98,7 +98,7 @@ const ProjectListPage = () => {
               <Link
                 key={project._id}
                 className="w-full rounded-md overflow-hidden shadow-md group flex flex-col max-w-md md:max-w-none mx-auto my-8 lg:my-0"
-                href="/project/overview"
+                href={`/project/overview?projectId=${project._id}`}
               >
                 <div className="relative aspect-w-16 aspect-h-9 overflow-hidden">
                   <img
@@ -118,7 +118,7 @@ const ProjectListPage = () => {
                         aria-hidden="true"
                       />
                       <span className="font-medium">
-                        {project.experiments} Experiments
+                        {idx + (3 % 3)} Experiments
                       </span>
                     </li>
                     <li className="flex items-center space-x-3">
@@ -127,7 +127,7 @@ const ProjectListPage = () => {
                         aria-hidden="true"
                       />
                       <span className="font-medium">
-                        {project.deployments} Deployments
+                        {idx + (5 % 3)} Deployments
                       </span>
                     </li>
                     <li className="flex items-center space-x-3">
@@ -136,7 +136,7 @@ const ProjectListPage = () => {
                         aria-hidden="true"
                       />
                       <span className="font-medium">
-                        {project.running} Running
+                        {idx + (4 % 3)} Running
                       </span>
                     </li>
                   </ul>

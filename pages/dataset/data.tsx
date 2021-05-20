@@ -14,10 +14,13 @@ import { useUI } from '@components/ui/context';
 import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
 import Button from '@components/ui/Button';
+import DataDetailsModal from '@components/modals/DataDetailsModal';
 
 // libraries
 import getDatasetDataList from '@lib/getDatasetDataList';
-import DataDetailsModal from '@components/modals/DataDetailsModal';
+
+// icons
+import Spinner from '@components/icons/Spinner';
 
 interface DataInfoWithChecked extends DataInfo {
   checked: boolean;
@@ -125,7 +128,9 @@ const DatasetDataListPage = () => {
       {/* model list section */}
       <section className="mt-8">
         {dataList === null ? (
-          <p className="text-center font-medium mt-12">loading...</p>
+          <div className="h-[404px] flex justify-center items-center">
+            <Spinner className="w-12 h-12 animate-spin" />
+          </div>
         ) : (
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

@@ -12,6 +12,9 @@ import Link from '@components/ui/Link';
 // libraries
 import getSampleProjects from '@lib/getSampleProjects';
 
+// icons
+import Spinner from '@components/icons/Spinner';
+
 const ProjectUploadPage = () => {
   const router = useRouter();
   const [sampleProjects, setSampleProjects] = useState<
@@ -74,7 +77,9 @@ const ProjectUploadPage = () => {
           <h2 className="text-xl font-medium">Clone Project (optional)</h2>
 
           {sampleProjects === null ? (
-            <p className="text-center font-medium mt-12">loading...</p>
+            <div className="h-[404px] flex justify-center items-center">
+              <Spinner className="w-12 h-12 animate-spin" />
+            </div>
           ) : (
             <div className="md:py-6 gap-6 grid-cols-2 md:grid lg:grid-cols-3 lg:gap-10 max-w-screen-xl mx-auto">
               {sampleProjects.map((project, idx) => (

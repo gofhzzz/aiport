@@ -29,6 +29,7 @@ import formatDate from '@utils/formatDate';
 // icons
 import { DatabaseIcon } from '@components/icons';
 import MedalIcon from '@components/icons/MedalIcon';
+import Spinner from '@components/icons/Spinner';
 
 interface DatasetInfoWithChecked extends DatasetInfo {
   checked: boolean;
@@ -151,7 +152,9 @@ const DatasetListPage = () => {
       {/* model list section */}
       <section className="mt-8 md:mt-16">
         {datasets === null ? (
-          <p className="text-center font-medium mt-12">loading...</p>
+          <div className="h-[404px] flex justify-center items-center">
+            <Spinner className="w-12 h-12 animate-spin" />
+          </div>
         ) : (
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

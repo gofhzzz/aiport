@@ -26,6 +26,7 @@ import formatDate from '@utils/formatDate';
 // icons
 import { AIIcon } from '@components/icons';
 import LockIcon from '@components/icons/LockIcon';
+import Spinner from '@components/icons/Spinner';
 
 interface ModelInfoWithChecked extends ModelInfo {
   checked: boolean;
@@ -128,7 +129,9 @@ const ModelListPage = () => {
       {/* model list section */}
       <section className="mt-8 md:mt-16">
         {models === null ? (
-          <p className="text-center font-medium mt-12">loading...</p>
+          <div className="h-[404px] flex justify-center items-center">
+            <Spinner className="w-12 h-12 animate-spin" />
+          </div>
         ) : (
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
