@@ -21,7 +21,7 @@ import getModels from '@lib/getModels';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
 
-const CategoryItems = [
+const categoryItems = [
   {
     name: 'Ai',
     value: 'ai',
@@ -39,12 +39,23 @@ const CategoryItems = [
   },
 ];
 
+const taskItems = [
+  'img classfication',
+  'object detection',
+  'img multi-label claassification',
+  'text pasentiment analysis',
+  'text paraphrase classification',
+  'text question answering',
+];
+
+const proceItems = ['all', 'free', 'Under $25', '$25 to $50', '$50 and Above'];
 const MarketplacePage = () => {
   const router = useRouter();
   const [searchInput, setSearchInput] = React.useState<string>('');
   const [searchCategory, setSearchCategory] = React.useState<
     'ai' | 'dataset' | 'model'
   >('ai');
+
   const [category, setCategory] = React.useState<'ai' | 'dataset' | 'model'>(
     'ai',
   );
@@ -54,7 +65,26 @@ const MarketplacePage = () => {
   const [datasets, setDatasets] = React.useState<DatasetInfo[] | null>(null);
   const [models, setModels] = React.useState<ModelInfo[] | null>(null);
 
+  const totalProjects = React.useRef<SampleProjectInfo[]>([]);
+  const totalDatasets = React.useRef<DatasetInfo[]>([]);
+  const totalModels = React.useRef<ModelInfo[]>([]);
+
+  const [taskFilter, setTaskFilter] = React.useState<string[]>([]);
+  const [priceFilter, setPriceFilter] = React.useState<string>('all');
+
   React.useEffect(() => {
+    if (projects === null)
+      getSampleProjects().then((sampleProjects) => setProjects(sampleProjects));
+    if (datasets === null)
+      getDatasets().then((datasets) => setDatasets(datasets));
+    if (models === null) getModels().then((models) => setModels(models));
+
+    if (projects === null || datasets === null || models === null) return;
+
+    totalProjects.current = projects;
+    totalDatasets.current = datasets;
+    totalModels.current = models;
+
     if (
       router.query.category &&
       (router.query.category === 'ai' ||
@@ -63,17 +93,23 @@ const MarketplacePage = () => {
     ) {
       setSearchCategory(router.query.category);
       setCategory(router.query.category);
-      if (router.query.category === 'ai')
-        getSampleProjects().then((sampleProjects) =>
-          setProjects(sampleProjects),
-        );
-      else if (router.query.category === 'dataset')
-        getDatasets().then((datasets) => setDatasets(datasets));
-      else getModels().then((models) => setModels(models));
-    } else {
-      getSampleProjects().then((sampleProjects) => setProjects(sampleProjects));
     }
-  }, [router]);
+  }, [router, projects, datasets, models]);
+
+  //TODO: 데이터 받으면 필터링 하기
+  const handleFilter = React.useCallback(() => {
+    // setDatasets((prev) => {
+    //   if (!taskFilter) return totalDatasets.current;
+    //   return totalDatasets.current.filter(({ type }) => {
+    //     let flag = false;
+    //     taskFilter.map((val) => {
+    //       if (val === type) flag === true;
+    //     });
+    //     if (flag) return true;
+    //     return false;
+    //   });
+    // });
+  }, [taskFilter]);
 
   const getDataArray = React.useCallback(
     async (variant: 'ai' | 'dataset' | 'model') => {
@@ -98,7 +134,8 @@ const MarketplacePage = () => {
     <div>
       <div className="fixed left-[112px] flex flex-col bg-gray-200 h-full w-72 p-2">
         <div className="py-4">
-          {CategoryItems.map((item, idx) => (
+          <p className="text-lg font-semibold">Category</p>
+          {categoryItems.map((item, idx) => (
             <label
               htmlFor={item.value}
               className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
@@ -119,7 +156,63 @@ const MarketplacePage = () => {
                 }}
               />
               <img src={item.image} width="28" height="28" />
-              <p className="text-xl ml-2 font-medium">{item.name}</p>
+              <p className="text-md ml-2 font-medium">{item.name}</p>
+            </label>
+          ))}
+        </div>
+        <div className="py-4">
+          <p className="text-lg font-semibold">Task</p>
+          {taskItems.map((item, idx) => (
+            <label
+              htmlFor={item}
+              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
+                'bg-gray-300 rounded-md': category === item,
+                'hover:opacity-80 cursor-pointer': category !== item,
+              })}
+              key={`${item}-${idx}`}
+            >
+              <input
+                type="checkBox"
+                id={item}
+                className="mr-2"
+                checked={taskFilter.includes(item)}
+                onChange={() => {
+                  setTaskFilter((prev) =>
+                    taskFilter.includes(item)
+                      ? prev.filter((val) => val !== item)
+                      : [...prev, item],
+                  );
+                  getDataArray(item as never);
+                  handleFilter();
+                }}
+              />
+              <p className="text-md ml-2 font-medium capitalize">{item}</p>
+            </label>
+          ))}
+        </div>
+        <div className="py-4">
+          <p className="text-lg font-semibold">Price</p>
+          {proceItems.map((item, idx) => (
+            <label
+              htmlFor={item}
+              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
+                'bg-gray-300 rounded-md': category === item,
+                'hover:opacity-80 cursor-pointer': category !== item,
+              })}
+              key={`${item}-${idx}`}
+            >
+              <input
+                type="radio"
+                id={item}
+                className="mr-2"
+                checked={priceFilter === item}
+                onChange={() => {
+                  setPriceFilter(item);
+                  // getDataArray(item as never);
+                  handleFilter();
+                }}
+              />
+              <p className="text-md ml-2 font-medium capitalize">{item}</p>
             </label>
           ))}
         </div>
@@ -128,7 +221,7 @@ const MarketplacePage = () => {
         <div className="w-full justify-center flex items-center">
           <Dropdown
             button={
-              <div className="capitalize border-2 w-40 justify-between rounded-md mr-2 flex items-center px-4 h-[42px] mt-1">
+              <div className="capitalize bg-white border-2 w-40 justify-between rounded-md mr-2 flex items-center px-4 h-[42px] mt-1">
                 {searchCategory}
                 <ChevronDownIcon className="w-6 h-6" />
               </div>

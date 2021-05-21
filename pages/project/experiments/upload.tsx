@@ -6,7 +6,7 @@ import Dashboard from '@components/layout/Dashboard';
 import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
 import Select from '@components/ui/Select';
-import AiSidebar from '@components/sidebar/AiSidebar';
+import Link from '@components/ui/Link';
 
 const selectItems = {
   dataset: [
@@ -547,316 +547,327 @@ const ProjectExperimentUploadPage = () => {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-    setTimeout(() => router.push('/project/experiments/details/empty'), 500);
+    setTimeout(() => router.push('/project/experiments/details'), 500);
   }, [router]);
 
   return (
-    <div className="flex w-full">
-      <AiSidebar
-        projectId="6083a1ecd7f0a9318ae5bc81"
-        projectName="Text Sentiment Analysis"
-      />
-      <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-32">
-        <h1 className="text-3xl font-medium">New Experiments</h1>
+    <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-32">
+      <h1 className="text-3xl font-medium">New Experiments</h1>
 
-        {/* General section */}
-        <div className="mt-6 space-y-6">
-          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  General
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  General experiment settings.
-                </p>
-              </div>
-              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-                <div className="grid grid-cols-3 gap-6">
-                  <div className="col-span-3 sm:col-span-2">
-                    <Input
-                      label="Experiment Name"
-                      placeholder="Please enter an experiment name"
-                    />
-                  </div>
-                </div>
-
-                <div>
+      {/* General section */}
+      <div className="mt-6 space-y-6">
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                General
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                General experiment settings.
+              </p>
+            </div>
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              <div className="grid grid-cols-3 gap-6">
+                <div className="col-span-3 sm:col-span-2">
                   <Input
-                    label="Description (Optional)"
-                    placeholder="Describe your experiment here..."
+                    label="Experiment Name"
+                    placeholder="Please enter an experiment name"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Input
+                  label="Description (Optional)"
+                  placeholder="Describe your experiment here..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Dataset Section */}
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Dataset
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Choose dataset you want to use for this experiment.
+              </p>
+            </div>
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              <Select
+                label="Dataset"
+                items={[
+                  { key: '-', label: 'Select', value: '' },
+                  ...selectItems.dataset.map((dataset) => ({
+                    key: dataset.id,
+                    label: dataset.name,
+                    value: dataset.name,
+                  })),
+                ]}
+                selectedValue={selectedDataset}
+                onSelect={(item) => setSelectedDataset(item.value as string)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* AI Model Section */}
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                AI Model
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Choose a model you want to use for this experiment.
+              </p>
+            </div>
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              <Select
+                label="Model"
+                items={[
+                  { key: '-', label: 'Select', value: '' },
+                  ...selectItems.model.map((model) => ({
+                    key: model.id,
+                    label: model.name,
+                    value: model.name,
+                  })),
+                ]}
+                selectedValue={selectedModel}
+                onSelect={(item) => setSelectedModel(item.value as string)}
+              />
+              <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
+                <div>
+                  <Select
+                    label="File"
+                    items={[
+                      { key: '-', label: 'Select', value: '' },
+                      ...(selectItems.model
+                        .find((model) => selectedModel === model.name)
+                        ?.files.map((file) => ({
+                          key: file,
+                          label: file,
+                          value: file,
+                        })) ?? []),
+                    ]}
+                    selectedValue={selectedFile}
+                    onSelect={(item) => setSelectedFile(item.value as string)}
+                  />
+                </div>
+                <div>
+                  <Select
+                    label="Model Class/Function"
+                    items={[
+                      { key: '-', label: 'Select', value: '' },
+                      ...(selectItems.model
+                        .find((model) => selectedModel === model.name)
+                        ?.class_function.map((functionName) => ({
+                          key: functionName,
+                          label: functionName,
+                          value: functionName,
+                        })) ?? []),
+                    ]}
+                    selectedValue={selectedFunction}
+                    onSelect={(item) =>
+                      setSelectedFunction(item.value as string)
+                    }
                   />
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Dataset Section */}
-          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Dataset
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Choose dataset you want to use for this experiment.
-                </p>
-              </div>
-              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-                <Select
-                  label="Dataset"
-                  items={[
-                    { key: '-', label: 'Select', value: '' },
-                    ...selectItems.dataset.map((dataset) => ({
-                      key: dataset.id,
-                      label: dataset.name,
-                      value: dataset.name,
-                    })),
-                  ]}
-                  selectedValue={selectedDataset}
-                  onSelect={(item) => setSelectedDataset(item.value as string)}
-                />
-              </div>
+        {/* Trainer Section */}
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Trainer
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Trainer configurations like loss and optimizer functions.
+              </p>
             </div>
-          </div>
-
-          {/* AI Model Section */}
-          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  AI Model
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Choose a model you want to use for this experiment.
-                </p>
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
+                <div>
+                  <Select
+                    label="Loss"
+                    items={[
+                      { key: '-', label: 'Select', value: '' },
+                      ...selectItems.trainer.loss.map((model) => ({
+                        key: model.name,
+                        label: model.name,
+                        value: model.name,
+                      })),
+                    ]}
+                    selectedValue={selectedLoss}
+                    onSelect={(item) => setSelectedLoss(item.value as string)}
+                  />
+                </div>
+                <div>
+                  <Select
+                    label="Optimizer"
+                    items={[
+                      { key: '-', label: 'Select', value: '' },
+                      ...selectItems.trainer.optimizer.map((model) => ({
+                        key: model.name,
+                        label: model.name,
+                        value: model.name,
+                      })),
+                    ]}
+                    selectedValue={selectedOptimizer}
+                    onSelect={(item) =>
+                      setSelectedOptimizer(item.value as string)
+                    }
+                  />
+                </div>
               </div>
-              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-                <Select
-                  label="Model"
-                  items={[
-                    { key: '-', label: 'Select', value: '' },
-                    ...selectItems.model.map((model) => ({
-                      key: model.id,
-                      label: model.name,
-                      value: model.name,
-                    })),
-                  ]}
-                  selectedValue={selectedModel}
-                  onSelect={(item) => setSelectedModel(item.value as string)}
-                />
-                <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
-                  <div>
-                    <Select
-                      label="File"
-                      items={[
-                        { key: '-', label: 'Select', value: '' },
-                        ...(selectItems.model
-                          .find((model) => selectedModel === model.name)
-                          ?.files.map((file) => ({
-                            key: file,
-                            label: file,
-                            value: file,
-                          })) ?? []),
-                      ]}
-                      selectedValue={selectedFile}
-                      onSelect={(item) => setSelectedFile(item.value as string)}
-                    />
-                  </div>
-                  <div>
-                    <Select
-                      label="Model Class/Function"
-                      items={[
-                        { key: '-', label: 'Select', value: '' },
-                        ...(selectItems.model
-                          .find((model) => selectedModel === model.name)
-                          ?.class_function.map((functionName) => ({
-                            key: functionName,
-                            label: functionName,
-                            value: functionName,
-                          })) ?? []),
-                      ]}
-                      selectedValue={selectedFunction}
-                      onSelect={(item) =>
-                        setSelectedFunction(item.value as string)
-                      }
-                    />
-                  </div>
+              <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
+                <div>
+                  <Input label="Batch Size" placeholder="32" />
+                </div>
+                <div>
+                  <Input label="Epoch" placeholder="50" />
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Trainer Section */}
-          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Trainer
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Trainer configurations like loss and optimizer functions.
-                </p>
-              </div>
-              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-                <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
-                  <div>
-                    <Select
-                      label="Loss"
-                      items={[
-                        { key: '-', label: 'Select', value: '' },
-                        ...selectItems.trainer.loss.map((model) => ({
-                          key: model.name,
-                          label: model.name,
-                          value: model.name,
-                        })),
-                      ]}
-                      selectedValue={selectedLoss}
-                      onSelect={(item) => setSelectedLoss(item.value as string)}
-                    />
-                  </div>
-                  <div>
-                    <Select
-                      label="Optimizer"
-                      items={[
-                        { key: '-', label: 'Select', value: '' },
-                        ...selectItems.trainer.optimizer.map((model) => ({
-                          key: model.name,
-                          label: model.name,
-                          value: model.name,
-                        })),
-                      ]}
-                      selectedValue={selectedOptimizer}
-                      onSelect={(item) =>
-                        setSelectedOptimizer(item.value as string)
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
-                  <div>
-                    <Input label="Batch Size" placeholder="32" />
-                  </div>
-                  <div>
-                    <Input label="Epoch" placeholder="50" />
-                  </div>
-                </div>
-              </div>
+        {/* Parameter Section */}
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Parameter
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                You can override all kinds of training parameters in this
+                section
+              </p>
             </div>
-          </div>
-
-          {/* Parameter Section */}
-          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Parameter
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  You can override all kinds of training parameters in this
-                  section
-                </p>
-              </div>
-              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-                {Array.from({ length: parameterLength }, (_, idx) => (
-                  <div
-                    key={`parameter-${idx}`}
-                    className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
-                  >
-                    <div>
-                      <Input label="Key" placeholder="Enter a variable name" />
-                    </div>
-                    <div>
-                      <Input label="Value" placeholder="Enter a value" />
-                    </div>
-                  </div>
-                ))}
-                <Button
-                  size="sm"
-                  color="white"
-                  full
-                  onClick={() => setParameterLength((prev) => prev + 1)}
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              {Array.from({ length: parameterLength }, (_, idx) => (
+                <div
+                  key={`parameter-${idx}`}
+                  className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
                 >
-                  Add Parameter
-                </Button>
-              </div>
+                  <div>
+                    <Input label="Key" placeholder="Enter a variable name" />
+                  </div>
+                  <div>
+                    <Input label="Value" placeholder="Enter a value" />
+                  </div>
+                </div>
+              ))}
+              <Button
+                size="sm"
+                color="white"
+                full
+                onClick={() => setParameterLength((prev) => prev + 1)}
+              >
+                Add Parameter
+              </Button>
             </div>
           </div>
+        </div>
 
-          {/* Environment Section */}
-          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Environment
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  You can choose the environment in which your experiment will
-                  be run.
-                </p>
-              </div>
-              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-                <Select
-                  label="Processors (CPU/GPU)"
-                  items={[
-                    { key: '-', label: 'Select', value: '' },
-                    ...selectItems.environment.node.map((node) => ({
-                      key: node,
-                      label: node,
-                      value: node,
-                    })),
-                  ]}
-                  selectedValue={selectedProccessor}
-                  onSelect={(item) =>
-                    setSelectedProccessor(item.value as string)
-                  }
-                />
-                <Select
-                  label="Framework"
-                  items={[
-                    { key: '-', label: 'Select', value: '' },
-                    ...selectItems.environment.framework.map((framework) => ({
-                      key: framework,
-                      label: framework,
-                      value: framework,
-                    })),
-                  ]}
-                  selectedValue={selectedFramework}
-                  onSelect={(item) =>
-                    setSelectedFramework(item.value as string)
-                  }
-                />
-              </div>
+        {/* Environment Section */}
+        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+          <div className="md:grid md:grid-cols-3 md:gap-6">
+            <div className="md:col-span-1">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Environment
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                You can choose the environment in which your experiment will be
+                run.
+              </p>
+            </div>
+            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              <Select
+                label="Processors (CPU/GPU)"
+                items={[
+                  { key: '-', label: 'Select', value: '' },
+                  ...selectItems.environment.node.map((node) => ({
+                    key: node,
+                    label: node,
+                    value: node,
+                  })),
+                ]}
+                selectedValue={selectedProccessor}
+                onSelect={(item) => setSelectedProccessor(item.value as string)}
+              />
+              <Select
+                label="Framework"
+                items={[
+                  { key: '-', label: 'Select', value: '' },
+                  ...selectItems.environment.framework.map((framework) => ({
+                    key: framework,
+                    label: framework,
+                    value: framework,
+                  })),
+                ]}
+                selectedValue={selectedFramework}
+                onSelect={(item) => setSelectedFramework(item.value as string)}
+              />
             </div>
           </div>
+        </div>
 
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-              disabled={
-                loading ||
-                !selectedDataset ||
-                !selectedFile ||
-                !selectedFramework ||
-                !selectedFunction ||
-                !selectedLoss ||
-                !selectedModel ||
-                !selectedOptimizer ||
-                !selectedProccessor
-              }
-            >
-              Create
-            </Button>
-          </div>
+        <div className="flex justify-end">
+          <Button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            disabled={
+              loading ||
+              !selectedDataset ||
+              !selectedFile ||
+              !selectedFramework ||
+              !selectedFunction ||
+              !selectedLoss ||
+              !selectedModel ||
+              !selectedOptimizer ||
+              !selectedProccessor
+            }
+          >
+            Create
+          </Button>
         </div>
       </div>
     </div>
   );
 };
 
+const Sidebar = (
+  <div className="py-4 flex flex-col">
+    <h2 className="px-4 font-semibold text-xl">Text Sentiment Analysis</h2>
+    <div className="mt-16 space-y-1">
+      <Link
+        className="flex px-4 py-2 hover:bg-gray-50"
+        href="/project/overview"
+      >
+        <span>Overview</span>
+      </Link>
+      <Link className="flex px-4 py-2 bg-gray-200" href="/project/experiments">
+        <span>Experiments</span>
+      </Link>
+      <Link className="flex px-4 py-2 " href="#">
+        <span>Settings</span>
+      </Link>
+    </div>
+  </div>
+);
+
 ProjectExperimentUploadPage.Layout = Dashboard;
+ProjectExperimentUploadPage.Sidebar = Sidebar;
 export default ProjectExperimentUploadPage;

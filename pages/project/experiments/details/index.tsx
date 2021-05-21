@@ -4,8 +4,8 @@ import cn from 'classnames';
 // components
 import Dashboard from '@components/layout/Dashboard';
 import Button from '@components/ui/Button';
+import Link from '@components/ui/Link';
 import ExperimentDownloadModal from '@components/modals/ExperimentDownloadModal';
-import AiSidebar from '@components/sidebar/AiSidebar';
 
 // lib
 import getSingleExperiment from '@lib/getSingleExperiment';
@@ -27,7 +27,6 @@ const ProjectExperimentsDetailsPage = () => {
   const router = useRouter();
   const [projectInfo, setProjectInfo] = React.useState<{
     id: string;
-    name: string;
   } | null>(null);
   const [experiment, setExperiment] = useState<ExperimentInfo | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -43,17 +42,10 @@ const ProjectExperimentsDetailsPage = () => {
   } | null>(null);
 
   useEffect(() => {
-    if (
-      router.query.projectId &&
-      typeof router.query.projectId === 'string' &&
-      router.query.projectName &&
-      typeof router.query.projectName === 'string'
-    ) {
-      setProjectInfo({
-        id: router.query.projectId,
-        name: router.query.projectName,
-      });
-    }
+    setProjectInfo({
+      id: '6083a1ecd7f0a9318ae5bc81',
+    });
+
     getSingleExperiment()
       .then((exp) => setExperiment(exp))
       .catch((err) => setError(err.message));
@@ -88,11 +80,10 @@ const ProjectExperimentsDetailsPage = () => {
     );
 
   return (
-    <div className="flex w-full">
-      <AiSidebar projectId={projectInfo.id} projectName={projectInfo.name} />
-      <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16 w-full">
+    <>
+      <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
         <div className="md:flex items-center justify-between">
-          <h1 className="text-3xl font-medium">{experiment.name}</h1>
+          <h1 className="text-3xl font-medium">{`< ${experiment.name} < Deploy`}</h1>
           <div className="mt-4 md:mt-0 flex items-center space-x-4">
             <Button color="white" onClick={() => setShow(true)}>
               Download
@@ -311,9 +302,30 @@ const ProjectExperimentsDetailsPage = () => {
             handleImage(e.target.files[0]);
         }}
       />
-    </div>
+    </>
   );
 };
 
+const Sidebar = (
+  <div className="py-4 flex flex-col">
+    <h2 className="px-4 font-semibold text-xl">Text Sentiment Analysis</h2>
+    <div className="mt-16 space-y-1">
+      <Link
+        className="flex px-4 py-2 hover:bg-gray-50"
+        href="/project/overview"
+      >
+        <span>Overview</span>
+      </Link>
+      <Link className="flex px-4 py-2 bg-gray-200" href="/project/experiments">
+        <span>Experiments</span>
+      </Link>
+      <Link className="flex px-4 py-2 " href="#">
+        <span>Settings</span>
+      </Link>
+    </div>
+  </div>
+);
+
 ProjectExperimentsDetailsPage.Layout = Dashboard;
+ProjectExperimentsDetailsPage.Sidebar = Sidebar;
 export default ProjectExperimentsDetailsPage;
