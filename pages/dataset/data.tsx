@@ -29,7 +29,6 @@ interface DataInfoWithChecked extends DataInfo {
 const DatasetDataListPage = () => {
   const [dataList, setDataList] = useState<DataInfoWithChecked[] | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [selected, setSelected] = useState<DataInfoWithChecked | null>(null);
   const [label, setLabel] = useState<{
     x: number;
@@ -81,6 +80,18 @@ const DatasetDataListPage = () => {
 
       {/* search and buttons section */}
       <section className="mt-8">
+        <div className="py-4 mt-10 max-w-7xl mx-auto shadow-lg rounded-md mb-8">
+          <div className="justify-around flex text-md font-semibold">
+            <div className="text-left pl-4 flex-grow">
+              <p className="pb-4">Data type: Image</p>
+              <p>Task: Bounding Box</p>
+            </div>
+            <div className="border-r border-gray-300" />
+            <div className="flex-grow pl-4">
+              <p className="pb-4">Created Time: 2021-04-20 12:31 PM</p>
+            </div>
+          </div>
+        </div>
         <div className="space-y-4 flex flex-col items-end md:flex-row md:space-y-0 md:space-x-4 md:justify-between">
           {/* search input */}
           <div className="self-stretch flex-grow md:max-w-lg">
@@ -239,7 +250,6 @@ const DatasetDataListPage = () => {
                             <button
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                               onClick={() => {
-                                setIsEdit(false);
                                 setSelected(data);
                                 setShowModal(true);
                               }}

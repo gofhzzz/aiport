@@ -253,7 +253,7 @@ const ModelListPage = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
-                              href="/model/jupyter"
+                              href={`/model/jupyter?modelId=${model._id}`}
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
                               Edit

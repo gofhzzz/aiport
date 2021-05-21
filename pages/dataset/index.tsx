@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import NextLink from 'next/link';
+import NextLink from 'next/link';
 import { useDebounce } from 'react-use';
 import { SearchIcon } from '@heroicons/react/solid';
 import {
@@ -134,17 +134,12 @@ const DatasetListPage = () => {
               <DocumentDuplicateIcon className="w-5 h-5 mr-2" />
               <span>Duplicate</span>
             </Button>
-            {/* <NextLink href="/dataset/upload"> */}
-            <Button
-              size="sm"
-              onClick={() => {
-                showNoti({ variant: 'alert', title: '준비중인 기능입니다.' });
-              }}
-            >
-              <PlusIcon className="w-5 h-5 mr-2" />
-              <span>New Dataset</span>
-            </Button>
-            {/* </NextLink> */}
+            <NextLink href="/dataset/upload">
+              <Button size="sm">
+                <PlusIcon className="w-5 h-5 mr-2" />
+                <span>New Dataset</span>
+              </Button>
+            </NextLink>
           </div>
         </div>
       </section>

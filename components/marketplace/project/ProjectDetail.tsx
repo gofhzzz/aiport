@@ -31,7 +31,7 @@ const ProjectDetail = ({ className, project }: Props) => {
         title: 'Success',
         content: 'It has been added to your Ai',
         actionButton: {
-          label: 'Go to Ai List',
+          label: 'Go to Ai',
           onClick: () => {
             router.push(`/project/overview?projectId=${project._id}`);
             closeModal();
@@ -49,7 +49,7 @@ const ProjectDetail = ({ className, project }: Props) => {
           title: 'Error',
           content: err.message,
           actionButton: {
-            label: 'Go to Ai Detail',
+            label: 'Go to Ai',
             onClick: () => {
               router.push(`/project/overview?projectId=${project._id}`);
               closeModal();

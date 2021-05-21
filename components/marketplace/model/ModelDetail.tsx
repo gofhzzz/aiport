@@ -31,9 +31,9 @@ const ModelDetail = ({ className, model }: Props) => {
         title: 'Success',
         content: 'It has been added to your Model',
         actionButton: {
-          label: 'Go to Model List',
+          label: 'Go to Model',
           onClick: () => {
-            router.push('/model/jupyter');
+            router.push(`/model/jupyter?modelId=${model._id}`);
             closeModal();
           },
         },
@@ -49,9 +49,9 @@ const ModelDetail = ({ className, model }: Props) => {
           title: 'Error',
           content: err.message,
           actionButton: {
-            label: 'Go to Model detail',
+            label: 'Go to Model',
             onClick: () => {
-              router.push('/model/jupyter');
+              router.push(`/model/jupyter?modelId=${model._id}`);
               closeModal();
             },
           },

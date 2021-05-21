@@ -31,7 +31,7 @@ const DatasetDetail = ({ className, dataset }: Props) => {
         title: 'Success',
         content: 'It has been added to your Dataset',
         actionButton: {
-          label: 'Go to Dataset List',
+          label: 'Go to Dataset',
           onClick: () => {
             router.push('/dataset/data');
             closeModal();
@@ -49,7 +49,7 @@ const DatasetDetail = ({ className, dataset }: Props) => {
           title: 'Error',
           content: err.message,
           actionButton: {
-            label: 'Go to Dataset detail',
+            label: 'Go to Dataset',
             onClick: () => {
               router.push('/dataset/data');
               closeModal();
