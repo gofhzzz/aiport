@@ -73,6 +73,16 @@ const MarketplacePage = () => {
   const [priceFilter, setPriceFilter] = React.useState<string>('all');
 
   React.useEffect(() => {
+    if (
+      projects === null &&
+      router.query.category &&
+      (router.query.category === 'ai' ||
+        router.query.category === 'dataset' ||
+        router.query.category === 'model')
+    ) {
+      setSearchCategory(router.query.category);
+      setCategory(router.query.category);
+    }
     if (projects === null)
       getSampleProjects().then((sampleProjects) => setProjects(sampleProjects));
     if (datasets === null)
@@ -84,17 +94,7 @@ const MarketplacePage = () => {
     totalProjects.current = projects;
     totalDatasets.current = datasets;
     totalModels.current = models;
-
-    if (
-      router.query.category &&
-      (router.query.category === 'ai' ||
-        router.query.category === 'dataset' ||
-        router.query.category === 'model')
-    ) {
-      setSearchCategory(router.query.category);
-      setCategory(router.query.category);
-    }
-  }, [router, projects, datasets, models]);
+  }, [router, projects, datasets, models, category]);
 
   //TODO: 데이터 받으면 필터링 하기
   const handleFilter = React.useCallback(() => {
@@ -245,7 +245,7 @@ const MarketplacePage = () => {
                 ? '/icon/dataset.png'
                 : '/icon/model.png'
             }
-            title={category.toUpperCase()}
+            title={category ? category.toUpperCase() : ''}
             className="mb-8"
           />
           {category === 'ai' &&

@@ -177,7 +177,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
             </Button>
           </div>
         </div>
-        <div className="py-4">
+        <div className="py-4 overflow-x-scroll">
           <p className="mt-2 text-lg font-semibold">People also viewed</p>
           <div className="flex gap-16 pt-2">
             {otherProject.map((project, idx) => (
