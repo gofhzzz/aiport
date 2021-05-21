@@ -9,7 +9,6 @@ import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
 import EditModelModal from '@components/modals/EditModelModal';
 import Button from '@components/ui/Button';
-import { useUI } from '@components/ui/context';
 
 // libs
 import getModel from '@lib/getModel';
@@ -21,7 +20,6 @@ import formatDate from '@utils/formatDate';
 import Spinner from '@components/icons/Spinner';
 import { SearchIcon } from '@heroicons/react/solid';
 import { PlusIcon } from '@heroicons/react/outline';
-import { AIIcon } from '@components/icons';
 
 const initialCodeItems = [
   { name: '__init__.py', model: [], checked: false },
@@ -47,19 +45,21 @@ const ModelJupyterPage = () => {
     { name: string; model: string[]; checked: boolean }[]
   >([]);
 
-  const { showNoti } = useUI();
-
   useEffect(() => {
     if (router.query.modelId && typeof router.query.modelId === 'string')
       getModel(router.query.modelId)
         .then((model) => setModel(model))
         .catch((err) => console.log(err));
-
+    else {
+      getModel('6085be4d9902ff375e4bc0ef')
+        .then((model) => setModel(model))
+        .catch((err) => console.log(err));
+    }
     totalCodes.current = codeItems.map((codeItem) => ({
       ...codeItem,
       checked: false,
     }));
-  }, [router]);
+  }, [router, codeItems]);
 
   useDebounce(
     () => {
@@ -80,21 +80,23 @@ const ModelJupyterPage = () => {
     );
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-7xl mx-auto ">
       <h1 className="text-3xl font-semibold">{model.name}</h1>
-      <div className="py-10 mt-10 max-w-7xl mx-auto shadow-lg rounded-md">
+
+      <div className="py-4 mt-10 shadow-lg rounded-md mb-8">
         <div className="justify-around flex text-md font-semibold">
-          <div>
+          <div className="text-left pl-4 flex-grow">
             <p className="pb-4">Framework: {model.framework}</p>
             <p>Task: Bounding Box</p>
           </div>
           <div className="border-r border-gray-300" />
-          <div>
+          <div className="flex-grow pl-4">
             <p className="pb-4">Created Time: {formatDate(model.created)}</p>
             <p>Pre-traned models: 1</p>
           </div>
         </div>
       </div>
+
       <section className="mt-8 md:mt-12">
         <div className="space-y-4 flex flex-col items-end md:flex-row md:space-y-0 md:space-x-4 md:justify-between">
           {/* search input */}
@@ -198,8 +200,7 @@ const ModelJupyterPage = () => {
                           }}
                         />
                       </td>
-                      <td className="px-6 py-4 h-full whitespace-nowrap text-sm text-gray-500 flex justify-center items-center space-x-4">
-                        <AIIcon className="w-6 h-6" />
+                      <td className="px-6 py-4  whitespace-nowrap text-center font-medium text-gray-500 space-x-4">
                         <span>{code.name}</span>
                       </td>
 

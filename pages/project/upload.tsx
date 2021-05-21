@@ -14,13 +14,17 @@ import getSampleProjects from '@lib/getSampleProjects';
 
 // icons
 import Spinner from '@components/icons/Spinner';
+import TextArea from '@components/ui/TextArea';
 
 const ProjectUploadPage = () => {
   const router = useRouter();
   const [sampleProjects, setSampleProjects] = useState<
     SampleProjectInfo[] | null
   >(null);
-  const [projectInput, setProjectInput] = useState<ProjectInput>({ name: '' });
+  const [projectInput, setProjectInput] = useState<ProjectInput>({
+    name: '',
+    description: '',
+  });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -32,7 +36,7 @@ const ProjectUploadPage = () => {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-    setTimeout(() => router.push('/project/overview/empty'), 500);
+    setTimeout(() => router.push('/project/overview'), 500);
   }, [router]);
 
   if (error !== null) return <div>{error}</div>;
@@ -46,9 +50,8 @@ const ProjectUploadPage = () => {
         <div className="rounded-md shadow-md bg-white p-4 sm:p-6 md:flex md:space-x-6 justify-between items-end max-w-lg mx-auto md:max-w-none">
           <div className="flex-1">
             <h2 className="text-xl font-medium">Create Empty Project</h2>
-
             <Input
-              containerClassName="mt-4"
+              containerClassName="my-4"
               label="Project Name"
               placeholder="My first project"
               value={projectInput.name}
@@ -58,6 +61,17 @@ const ProjectUploadPage = () => {
                   name: e.target.value,
                 }));
               }}
+            />
+            <TextArea
+              value={projectInput.description}
+              onChange={(e) => {
+                setProjectInput((prev) => ({
+                  ...prev,
+                  description: e.target.value,
+                }));
+              }}
+              label="Description (Optional)"
+              placeholder="lease enter a short description of this application ..."
             />
           </div>
           <div className="mt-4 flex items-center justify-end">

@@ -160,7 +160,7 @@ const DatasetUploadPage = () => {
                     router.push('/dataset/data');
                   }, 2000);
                 }}
-                disabled={!datasetName || !fileInfo || loading}
+                // disabled={!datasetName || !fileInfo || loading}
               >
                 Upload
               </Button>
@@ -178,7 +178,9 @@ const DatasetUploadPage = () => {
             ))}
           </div>
           <button
-            onClick={() => showNoti({ title: '준비중인 기능입니다' })}
+            onClick={() =>
+              showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+            }
             className="mt-2 w-full flex items-center justify-end text-lightBlue-500 hover:opacity-80"
           >
             <p className="text-xl">Browse All Datasets</p>

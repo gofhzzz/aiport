@@ -27,4 +27,5 @@ interface SampleProjectInfo {
 
 interface ProjectInput {
   name: string;
+  description: string;
 }

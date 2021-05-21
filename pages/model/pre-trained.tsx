@@ -97,7 +97,9 @@ const ModelJupyterPage = () => {
           {/* button groups */}
           <div className="flex items-center flex-shrink-0 space-x-4">
             <Button
-              onClick={() => showNoti({ title: '준비중인 기능입니다.' })}
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
               size="sm"
               color="red"
             >
@@ -106,13 +108,17 @@ const ModelJupyterPage = () => {
             <Button
               color="white"
               size="sm"
-              onClick={() => showNoti({ title: '준비중인 기능입니다.' })}
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
             >
               <span>Download</span>
             </Button>
             <Button
               size="sm"
-              onClick={() => showNoti({ title: '준비중인 기능입니다.' })}
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
             >
               <PlusIcon className="w-5 h-5 mr-2" />
               <span>Upload File</span>
@@ -241,16 +247,13 @@ const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">Faster R-CNN</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2 bg-gray-200" href="/model/jupyter">
+      <Link className="flex px-4 py-2  hover:bg-gray-50" href="/model/jupyter">
         <span>Overview</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
         <span>Jupyter lab</span>
       </Link>
-      <Link
-        className="flex px-4 py-2 hover:bg-gray-50"
-        href="/model/pre-trained"
-      >
+      <Link className="flex px-4 py-2 bg-gray-200" href="/model/pre-trained">
         <span>Pre-trained</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
