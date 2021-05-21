@@ -14,36 +14,40 @@ import getDatasets from '@lib/getDatasets';
 // icons
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
+import Select from '@components/ui/Select';
+
+const selectTypes = [
+  { label: 'image', value: 'image' },
+  { label: 'image2', value: 'image2' },
+  { label: 'image3', value: 'image3' },
+];
+
+const selectTasks = [
+  {
+    label: 'classification',
+    value: 'classification',
+  },
+  {
+    label: 'classification2',
+    value: 'classification2',
+  },
+  {
+    label: 'classification3',
+    value: 'classification3',
+  },
+];
 
 const DatasetUploadPage = () => {
   const router = useRouter();
   const DropdownItem = [
     { label: 'local', value: 'local', onClick: () => setVariant('local') },
   ];
-  const DropdownType = [
-    { label: 'image', value: 'image', onClick: () => setType('image') },
-    { label: 'image2', value: 'image2', onClick: () => setType('image2') },
-    { label: 'image3', value: 'image3', onClick: () => setType('image3') },
-  ];
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  const DropdownTask = [
-    {
-      label: 'classification',
-      value: 'classification',
-      onClick: () => setType('classification'),
-    },
-    {
-      label: 'classification2',
-      value: 'classification2',
-      onClick: () => setType('classification2'),
-    },
-    {
-      label: 'classification3',
-      value: 'classification3',
-      onClick: () => setType('classification3'),
-    },
-  ];
-
+  const [fileInfo, setFileInfo] = React.useState<{
+    filename: string;
+    size: number;
+  } | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [datasets, setDatasets] = React.useState<DatasetInfo[] | null>(null);
   const [variant, setVariant] = React.useState<string>('local');
@@ -73,10 +77,12 @@ const DatasetUploadPage = () => {
     );
 
   return (
-    <div className="px-4 mt-8 mx-auto max-w-screen-xl">
-      <h1 className="text-3xl font-medium">Upload Dataset</h1>
-      <div className="mt-8 md:grid grid-cols-2 gap-8 space-y-6 md:space-y-0 max-w-md md:max-w-none mx-auto">
-        <section className="min-h-[600px] p-4 bg-white rounded-lg shadow-md">
+    <div className="pb-32 lg:py-12 min-h-full flex flex-col justify-center items-stretch">
+      <h1 className="max-w-2xl min-w-[1024px] mx-auto text-left text-3xl font-medium">
+        Upload Dataset
+      </h1>
+      <div className="w-full lg:grid gap-8 grid-cols-2 max-w-5xl mx-auto lg:px-16">
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-medium capitalize">New Dataset</h1>
             <Dropdown
@@ -95,48 +101,56 @@ const DatasetUploadPage = () => {
               <div className="mt-8">
                 <p className="my-2">Dataset Name</p>
                 <Input
-                  className="w-96"
                   type="text"
                   placeholder="Input Template Name"
                   value={datasetName}
                   onChange={(e) => setDatasetName(e.target.value)}
                 />
               </div>
-              <div className="flex gap-4">
-                <div>
-                  <p className="mt-4 mb-2">Data Type</p>
-                  <Dropdown
-                    dropdownItems={DropdownType}
-                    button={
-                      <div className="capitalize flex text-lg items-center w-[200px] justify-between p-2 rounded-md border-gray-300 border">
-                        <p className="text-sm">{type}</p>
-                        <ChevronDownIcon className="w-6 h-6" />
-                      </div>
-                    }
-                  />
-                </div>
 
-                <div>
-                  <p className="mt-4 mb-2">Task</p>
-                  <Dropdown
-                    dropdownItems={DropdownTask}
-                    button={
-                      <div className="capitalize flex text-lg items-center w-[200px] justify-between p-2 rounded-md border-gray-300 border">
-                        <p className="text-sm">{task}</p>
-                        <ChevronDownIcon className="w-6 h-6" />
-                      </div>
-                    }
-                  />
-                </div>
+              <Select
+                className="mt-6"
+                label="Data Type"
+                items={selectTypes.map((type) => ({
+                  ...type,
+                  key: type.label,
+                }))}
+                selectedValue={type}
+                onSelect={(item) => setType(item.value as string)}
+              />
+
+              <Select
+                className="mt-6"
+                label="Task"
+                items={selectTasks.map((task) => ({
+                  ...task,
+                  key: task.label,
+                }))}
+                selectedValue={task}
+                onSelect={(item) => setTask(item.value as string)}
+              />
+
+              <div className="mt-6">
+                <Button
+                  size="sm"
+                  color="white"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  Choose Folder (zip)
+                </Button>
               </div>
-              <div className="space-y-8 mt-4">
-                <Button>Choose Folder (zip)</Button>
-
-                <p className="text-lg text-gray-600">Selected:</p>
-                <p className="text-lg text-gray-600">Size: </p>
+              <div className="mt-6 space-y-2">
+                <p>Selected: {fileInfo?.filename}</p>
+                <p>
+                  Size:{' '}
+                  {fileInfo ? `${fileInfo?.size.toLocaleString()} Bytes` : ''}
+                </p>
               </div>
             </div>
-            <div className="flex justify-end">
+            <div className="mt-6 flex justify-end space-x-4">
+              <Button color="white" onClick={() => router.back()}>
+                Back
+              </Button>
               <Button
                 onClick={() => {
                   setLoading(true);
@@ -144,23 +158,19 @@ const DatasetUploadPage = () => {
                     router.push('/dataset/data');
                   }, 2000);
                 }}
-                className="w-28 mr-4"
+                disabled={!datasetName || !fileInfo || loading}
               >
                 Upload
-              </Button>
-
-              <Button onClick={() => router.back()} className="w-28">
-                Back
               </Button>
             </div>
           </div>
         </section>
-        <section className="p-4 bg-white rounded-lg shadow-md">
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
           <h1 className="text-xl font-medium">Browse Dataset</h1>
           <p className="text-sm mt-2 text-gray-500">
             Choose public/private dataset
           </p>
-          <div className="grid grid-cols-2">
+          <div className="flex-grow py-6 grid grid-cols-2 gap-4">
             {datasets.slice(0, 4).map((dataset, idx) => (
               <DatasetCard key={dataset._id} dataset={dataset} idx={idx} />
             ))}
@@ -171,6 +181,22 @@ const DatasetUploadPage = () => {
           </button>
         </section>
       </div>
+      <input
+        ref={fileInputRef}
+        className="hidden"
+        type="file"
+        accept=".zip,.rar,.7zip"
+        onChange={(e) => {
+          if (e.target.files) {
+            const file = e.target.files[0];
+
+            if (e.target.files[0]) {
+              setFileInfo({ filename: file.name, size: file.size });
+              e.currentTarget.value = '';
+            }
+          }
+        }}
+      />
     </div>
   );
 };
