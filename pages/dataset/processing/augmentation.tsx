@@ -37,7 +37,7 @@ const DatasetProcessingPage = () => {
     [],
   ]);
 
-  const { showNoti } = useUI();
+  const { showNoti, showModal, closeModal } = useUI();
 
   React.useEffect(() => {
     if (
@@ -66,11 +66,33 @@ const DatasetProcessingPage = () => {
       if (!template) throw new Error('No Template Info');
 
       uploadProcessing(augmentations, preprocessing, template);
-      showNoti({ title: 'Success' });
+      showModal({
+        title: 'Save succeed',
+        content: 'It has been added to your Processing Page',
+        actionButton: {
+          label: 'Go to my processing',
+          onClick: () => {
+            router.push('/dataset/processing');
+            closeModal();
+          },
+        },
+        cancelButton: {
+          label: 'Stay in this page',
+          onClick: () => closeModal(),
+        },
+      });
     } catch (err) {
       showNoti({ variant: 'alert', title: err.message });
     }
-  }, [showNoti, preprocessing, augmentations, template]);
+  }, [
+    showNoti,
+    showModal,
+    closeModal,
+    router,
+    preprocessing,
+    augmentations,
+    template,
+  ]);
 
   if (template === null)
     return (
@@ -283,6 +305,13 @@ const DatasetProcessingPage = () => {
           </section>
           <div className="pt-4 text-right">
             <Button onClick={() => handleSave()}>Save</Button>
+            <Button
+              className="ml-4"
+              onClick={() => showNoti({ title: '준비중이 기능입니다.' })}
+            >
+              Save As
+            </Button>
+
             <Link href="/dataset/processing">
               <Button className="ml-4">New</Button>
             </Link>

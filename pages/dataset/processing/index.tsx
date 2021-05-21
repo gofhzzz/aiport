@@ -8,6 +8,8 @@ import Dropdown from '@components/ui/Dropdown';
 import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
 import DatasetCard from '@components/dataset/DatasetCard';
+import Select from '@components/ui/Select';
+import { useUI } from '@components/ui/context';
 
 // libs
 import getDatasets from '@lib/getDatasets';
@@ -17,17 +19,18 @@ import getProcessings from '@lib/getProcessings';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
 
+const selectTypes = [
+  { label: 'image1', value: 'image1' },
+  { label: 'image2', value: 'image2' },
+  { label: 'image3', value: 'image3' },
+];
+
 const ProcessingPage = () => {
   const DropdownItem = [
     { label: 'new', value: 'new', onClick: () => setVariant('new') },
     { label: 'load', value: 'load', onClick: () => setVariant('load') },
   ];
-  const DropdownType = [
-    { label: 'image1', value: 'image1', onClick: () => setType('image1') },
-    { label: 'image2', value: 'image2', onClick: () => setType('image2') },
-    { label: 'image3', value: 'image3', onClick: () => setType('image3') },
-  ];
-
+  const { showNoti } = useUI();
   const [datasets, setDatasets] = React.useState<DatasetInfo[] | null>(null);
   const [variant, setVariant] = React.useState<'new' | 'load'>('new');
   const [templateName, setTemplateName] = React.useState<string>('');
@@ -58,8 +61,10 @@ const ProcessingPage = () => {
     );
 
   return (
-    <div className="px-4 mt-8 mx-auto max-w-screen-xl">
-      <h1 className="text-3xl font-medium">Processing</h1>
+    <div className="pb-32 lg:py-12 min-h-full flex flex-col justify-center items-stretch">
+      <h1 className="max-w-2xl min-w-[1024px] mx-auto text-left text-3xl font-medium">
+        Processing
+      </h1>
       <div className="mt-8 md:grid grid-cols-2 gap-8 space-y-6 md:space-y-0 max-w-md md:max-w-none mx-auto">
         <section className="min-h-[600px] p-4 bg-white rounded-lg shadow-md">
           <div className="flex justify-between items-center">
@@ -123,15 +128,15 @@ const ProcessingPage = () => {
                     onChange={(e) => setTemplateName(e.target.value)}
                   />
                 </div>
-                <p className="mt-4 mb-2">Data Type</p>
-                <Dropdown
-                  dropdownItems={DropdownType}
-                  button={
-                    <div className="flex text-lg items-center w-[200px] justify-between p-2 rounded-md border-gray-300 border">
-                      <p className="text-sm">{type}</p>
-                      <ChevronDownIcon className="w-6 h-6" />
-                    </div>
-                  }
+                <Select
+                  className="mt-6"
+                  label="Data Type"
+                  items={selectTypes.map((type) => ({
+                    ...type,
+                    key: type.label,
+                  }))}
+                  selectedValue={type}
+                  onSelect={(item) => setType(item.value as string)}
                 />
               </div>
               <Link
@@ -147,12 +152,15 @@ const ProcessingPage = () => {
           <p className="text-sm mt-2 text-gray-500">
             Choose processing templates
           </p>
-          <div className="grid grid-cols-2">
+          <div className="flex-grow py-6 grid grid-cols-2 gap-4">
             {datasets.slice(0, 4).map((dataset, idx) => (
               <DatasetCard key={dataset._id} dataset={dataset} idx={idx} />
             ))}
           </div>
-          <button className="mt-2 w-full flex items-center justify-end text-lightBlue-500 hover:opacity-80">
+          <button
+            onClick={() => showNoti({ title: '준비중인 기능입니다' })}
+            className="mt-2 w-full flex items-center justify-end text-lightBlue-500 hover:opacity-80"
+          >
             <p className="text-xl">Browse All Template</p>
             <ChevronRightIcon className="w-8 h-8" />
           </button>
@@ -164,7 +172,7 @@ const ProcessingPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">CIFAR10</h2>
+    <h2 className="px-4 font-semibold text-xl">CelebA</h2>
     <div className="mt-16 space-y-1">
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="/dataset/data">
         <span>Data</span>

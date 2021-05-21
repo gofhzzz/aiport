@@ -1,7 +1,11 @@
 import React, { Dispatch, Fragment, SetStateAction } from 'react';
 import NextImage from 'next/image';
 import { Dialog, Transition } from '@headlessui/react';
-import { XIcon } from '@heroicons/react/outline';
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  XIcon,
+} from '@heroicons/react/outline';
 
 // components
 import Button from '@components/ui/Button';
@@ -34,6 +38,7 @@ const DataDetailsModal: React.FC<Props> = ({
   onChangeLabel,
 }) => {
   const [edit, setEdit] = React.useState<boolean>(false);
+  const [imageIndex, setImageIndex] = React.useState<number>(0);
   const [labelItems, setLabelItems] = React.useState<{
     x: number;
     y: number;
@@ -88,31 +93,43 @@ const DataDetailsModal: React.FC<Props> = ({
               >
                 <XIcon className="w-6 h-6 group-hover:opacity-70" />
               </button>
-              <h5 className="text-lg font-medium">
-                {data?.name ?? 'loading...'}
-              </h5>
+              <h5 className="text-lg font-medium">{`0000${
+                imageIndex + 1
+              }.jpg`}</h5>
 
-              <div className="mt-4 sm:flex">
+              <div className="mt-4 sm:flex items-center">
+                <button
+                  onClick={() => setImageIndex((prev) => prev - 1)}
+                  disabled={imageIndex === 0}
+                >
+                  <ChevronLeftIcon className="w-6 h-6" />
+                </button>
                 <NextImage
                   className="shadow rounded-md"
-                  src={data?.imageUrl ?? ''}
-                  width={500}
-                  height={500}
+                  src={`/images/dataset/data/${imageIndex + 4}.jpg`}
+                  width={400}
+                  height={400}
                   objectFit="cover"
                 />
+                <button
+                  onClick={() => setImageIndex((prev) => prev + 1)}
+                  disabled={imageIndex === 5}
+                >
+                  <ChevronRightIcon className="w-6 h-6" />
+                </button>
                 <div className="flex flex-col justify-between">
                   <div className="sm:ml-6 min-w-[200px] text-left space-y-5">
                     <div>
                       <h6 className="text-sm text-gray-500">
                         Data Key (Name):
                       </h6>
-                      <p>{data?.name}</p>
+                      <p>{`0000${imageIndex + 1}.jpg`}</p>
                     </div>
                     <div>
                       <h6 className="text-sm text-gray-500">
                         Assigned Project:
                       </h6>
-                      <p>{data?.name}</p>
+                      <p>{`0000${imageIndex + 1}.jpg`}</p>
                     </div>
                     <div>
                       <h6 className="text-sm text-gray-500">Uploaded by:</h6>
@@ -221,7 +238,7 @@ const DataDetailsModal: React.FC<Props> = ({
                     </div>
                   </div>
                   <Button
-                    className="ml-4"
+                    className="ml-4 mt-4"
                     onClick={() => {
                       onChangeLabel(labelItems);
                       setEdit((prev) => !prev);

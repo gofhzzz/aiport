@@ -7,6 +7,7 @@ import Dropdown from '@components/ui/Dropdown';
 import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
 import DatasetCard from '@components/dataset/DatasetCard';
+import { useUI } from '@components/ui/context';
 
 // libs
 import getDatasets from '@lib/getDatasets';
@@ -54,6 +55,7 @@ const DatasetUploadPage = () => {
   const [type, setType] = React.useState<string>('image1');
   const [datasetName, setDatasetName] = React.useState<string>('');
   const [task, setTask] = React.useState<string>('classification');
+  const { showNoti } = useUI();
 
   React.useEffect(() => {
     getDatasets()
@@ -175,7 +177,10 @@ const DatasetUploadPage = () => {
               <DatasetCard key={dataset._id} dataset={dataset} idx={idx} />
             ))}
           </div>
-          <button className="mt-2 w-full flex items-center justify-end text-lightBlue-500 hover:opacity-80">
+          <button
+            onClick={() => showNoti({ title: '준비중인 기능입니다' })}
+            className="mt-2 w-full flex items-center justify-end text-lightBlue-500 hover:opacity-80"
+          >
             <p className="text-xl">Browse All Datasets</p>
             <ChevronRightIcon className="w-8 h-8" />
           </button>

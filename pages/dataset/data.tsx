@@ -76,7 +76,7 @@ const DatasetDataListPage = () => {
 
   return (
     <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
-      <h1 className="text-3xl font-medium">CIFAR10</h1>
+      <h1 className="text-3xl font-medium">CelebA</h1>
 
       {/* search and buttons section */}
       <section className="mt-8">
@@ -281,7 +281,7 @@ const DatasetDataListPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">CIFAR10</h2>
+    <h2 className="px-4 font-semibold text-xl">CelebA</h2>
     <div className="mt-16 space-y-1">
       <Link className="flex px-4 py-2 bg-gray-200" href="/dataset/data">
         <span>Data</span>
