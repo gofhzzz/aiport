@@ -8,64 +8,72 @@ import SectionTitle from '@components/core/SectionTitle';
 import { useUI } from '@components/ui/context';
 
 // labraries
-import addToMyAiById from '@lib/addToMyAiById';
+// import addToMyAiById from '@lib/addToMyAiById';
 
 // icons
-import { ChevronDownIcon, EyeIcon, StarIcon } from '@heroicons/react/solid';
+import {
+  ChevronDownIcon,
+  EyeIcon,
+  HeartIcon as FillHeartIcon,
+  StarIcon,
+} from '@heroicons/react/solid';
+import { HeartIcon } from '@heroicons/react/outline';
 
 interface Props {
   className?: string;
   project: SampleProjectInfo;
+  otherProject: SampleProjectInfo[];
 }
 
-const ProjectDetail = ({ className, project }: Props) => {
+const ProjectDetail = ({ className, project, otherProject }: Props) => {
   const router = useRouter();
   const { showNoti, showModal, closeModal } = useUI();
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [heartFlag, setHeartFalg] = React.useState<boolean>(false);
 
-  const handleAddToMyAi = React.useCallback(async () => {
-    setLoading(true);
-    try {
-      await addToMyAiById(project._id);
-      showModal({
-        title: 'Success',
-        content: 'It has been added to your Ai',
-        actionButton: {
-          label: 'Go to Ai List',
-          onClick: () => {
-            router.push(`/project/overview?projectId=${project._id}`);
-            closeModal();
-          },
-        },
-        cancelButton: {
-          label: 'Stay in this page',
-          onClick: () => closeModal(),
-        },
-      });
-    } catch (err) {
-      if (err.code === 101)
-        showModal({
-          variant: 'alert',
-          title: 'Error',
-          content: err.message,
-          actionButton: {
-            label: 'Go to Ai Detail',
-            onClick: () => {
-              router.push(`/project/overview?projectId=${project._id}`);
-              closeModal();
-            },
-          },
-          cancelButton: {
-            label: 'Stay in this page',
-            onClick: () => closeModal(),
-          },
-        });
-      else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [showNoti, project, showModal, closeModal, router]);
+  // const handleAddToMyAi = React.useCallback(async () => {
+  //   setLoading(true);
+  //   try {
+  //     await addToMyAiById(project._id);
+  // showModal({
+  //   title: 'Success',
+  //   content: 'It has been added to your Ai',
+  //   actionButton: {
+  //     label: 'Go to Ai',
+  //     onClick: () => {
+  //       router.push(`/project/overview?projectId=${project._id}`);
+  //       closeModal();
+  //     },
+  //   },
+  //   cancelButton: {
+  //     label: 'Stay in this page',
+  //     onClick: () => closeModal(),
+  //   },
+  // });
+  //   } catch (err) {
+  //     if (err.code === 101)
+  //       showModal({
+  //         variant: 'alert',
+  //         title: 'Error',
+  //         content: err.message,
+  //         actionButton: {
+  //           label: 'Go to Ai',
+  //           onClick: () => {
+  //             router.push(`/project/overview?projectId=${project._id}`);
+  //             closeModal();
+  //           },
+  //         },
+  //         cancelButton: {
+  //           label: 'Stay in this page',
+  //           onClick: () => closeModal(),
+  //         },
+  //       });
+  //     else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
+  //     console.log(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [showNoti, project, showModal, closeModal, router]);
+
   return (
     <>
       <SectionTitle className="px-8" picture="/icon/project.png" title="AI" />
@@ -91,6 +99,16 @@ const ProjectDetail = ({ className, project }: Props) => {
                     {project.star.toLocaleString()}
                   </p>
                 </div>
+                <button
+                  className="flex items-center ml-2 text-red-600"
+                  onClick={() => setHeartFalg((prev) => !prev)}
+                >
+                  {heartFlag ? (
+                    <FillHeartIcon color="red" className="w-6 h-6" />
+                  ) : (
+                    <HeartIcon className="w-6 h-6" />
+                  )}
+                </button>
               </div>
             </div>
             <div className="flex gap-4 py-4">
@@ -98,6 +116,10 @@ const ProjectDetail = ({ className, project }: Props) => {
                 <p className="text-red-500">Price</p>
                 <p>Owner</p>
                 <p>Task</p>
+                <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
+                  <p>See More</p>
+                  <ChevronDownIcon className="w-6 h-6" />
+                </button>
               </div>
               <div className="space-y-2 text-md font-medium">
                 <p className="text-red-500">
@@ -108,44 +130,83 @@ const ProjectDetail = ({ className, project }: Props) => {
               </div>
             </div>
             <div>
-              <div className="pt-4 line-clamp-4">
-                대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충
-                긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명 대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명 대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명 대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명 대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명
+              <p className="mt-2 text-lg font-semibold">About</p>
+              <div className=" line-clamp-4">
+                This application will find celebrity that look like you!
               </div>
-              <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
-                <p>See More</p>
-                <ChevronDownIcon className="w-6 h-6" />
-              </button>
             </div>
           </div>
           <div className="w-96 ml-8 space-y-2">
             <Button
-              disabled={loading}
-              onClick={() => handleAddToMyAi()}
+              onClick={() => {
+                showModal({
+                  title: 'Success',
+                  content: 'It has been added to your Ai',
+                  actionButton: {
+                    label: 'Go to Ai',
+                    onClick: () => {
+                      router.push(`/project/overview?projectId=${project._id}`);
+                      closeModal();
+                    },
+                  },
+                  cancelButton: {
+                    label: 'Stay in this page',
+                    onClick: () => closeModal(),
+                  },
+                });
+              }}
               className="w-full"
             >
               Add to my AI
             </Button>
-            <Button disabled={loading} className="w-full">
+            <Button
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+              }
+              className="w-full"
+            >
               Download Source Code
             </Button>
-            <Button disabled={loading} className="w-full">
+            <Button
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+              }
+              className="w-full"
+            >
               Buy License
             </Button>
           </div>
         </div>
-        <div className="py-4">여기에 다른 부스 보기 자리</div>
+        <div className="py-4 overflow-x-scroll">
+          <p className="mt-2 text-lg font-semibold">People also viewed</p>
+          <div className="flex gap-16 pt-2">
+            {otherProject.map((project, idx) => (
+              <button key={`otherProject-${project._id}-${idx}`}>
+                <div className="relative w-48 h-48 overflow-hidden rounded-md">
+                  <img
+                    src={`/images/dataset/data/${idx + 1}.jpg`}
+                    className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"
+                  />
+                </div>
+                <p className="text-left">{project.name}</p>
+                <div className="flex">
+                  <div className="flex items-center">
+                    <StarIcon color="orange" className="w-6 h-6" />
+                    <p className="text-gray-600 pl-1">
+                      {project.star.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex items-center ml-4">
+                    <EyeIcon className="w-6 h-6" color="gray" />
+                    <p className="text-gray-600 pl-1">
+                      {project.star.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

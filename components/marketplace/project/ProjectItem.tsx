@@ -3,6 +3,7 @@ import { EyeIcon, MenuIcon, StarIcon } from '@heroicons/react/solid';
 import {
   ChartSquareBarIcon,
   CurrencyDollarIcon,
+  HeartIcon,
   UserCircleIcon,
 } from '@heroicons/react/outline';
 
@@ -43,6 +44,7 @@ const ProjectItem = ({ project, className, src }: Props) => {
                   {project.isPublic ? 'free' : project.price.toLocaleString()}
                 </p>
               </div>
+              <HeartIcon className="w-6 h-6 ml-2 text-red-500" />
             </div>
           </div>
           <div className="mt-1">

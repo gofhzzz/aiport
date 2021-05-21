@@ -1,65 +1,58 @@
 import React, { useRef } from 'react';
 import { useEffect, useState } from 'react';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useDebounce } from 'react-use';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
 import Link from '@components/ui/Link';
-import EditModelModal from '@components/modals/EditModelModal';
 import Button from '@components/ui/Button';
-
-// libs
-import getModel from '@lib/getModel';
-
-// utils
-import formatDate from '@utils/formatDate';
+import { useUI } from '@components/ui/context';
 
 // icons
-import Spinner from '@components/icons/Spinner';
 import { SearchIcon } from '@heroicons/react/solid';
 import { PlusIcon } from '@heroicons/react/outline';
 
 const initialCodeItems = [
-  { name: '__init__.py', model: [], checked: false },
   {
-    name: 'fasterrcnn.py',
+    name: 'epoch30_val91.pt',
     model: ['fasterrcnn_mobilenet_v3_large_fpn'],
+    storage: '0.9GB',
+    created: '2021-04-28',
     checked: false,
   },
-  { name: 'mlphead.ph', model: [], checked: false },
-  { name: 'predictor.py', model: [], checked: false },
 ];
 
 const ModelJupyterPage = () => {
   const router = useRouter();
-  const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [codeItems, setCodeItems] = React.useState<
-    { name: string; model: string[]; checked: boolean }[]
+    {
+      name: string;
+      model: string[];
+      storage: string;
+      created: string;
+      checked: boolean;
+    }[]
   >(initialCodeItems);
-  const [editIndex, setEditIndex] = React.useState<number>(0);
   const [searchKey, setSearchKey] = useState<string>('');
-  const [model, setModel] = useState<ModelInfo | null>(null);
   const totalCodes = useRef<
-    { name: string; model: string[]; checked: boolean }[]
+    {
+      name: string;
+      model: string[];
+      storage: string;
+      created: string;
+      checked: boolean;
+    }[]
   >([]);
 
+  const { showNoti } = useUI();
+
   useEffect(() => {
-    if (router.query.modelId && typeof router.query.modelId === 'string')
-      getModel(router.query.modelId)
-        .then((model) => setModel(model))
-        .catch((err) => console.log(err));
-    else {
-      getModel('6085be4d9902ff375e4bc0ef')
-        .then((model) => setModel(model))
-        .catch((err) => console.log(err));
-    }
     totalCodes.current = codeItems.map((codeItem) => ({
       ...codeItem,
       checked: false,
     }));
-  }, [router, codeItems]);
+  }, [router]);
 
   useDebounce(
     () => {
@@ -72,30 +65,9 @@ const ModelJupyterPage = () => {
     [searchKey],
   );
 
-  if (model === null)
-    return (
-      <div className="h-[404px] flex justify-center items-center">
-        <Spinner className="w-12 h-12 animate-spin" />
-      </div>
-    );
-
   return (
-    <div className="p-6 max-w-7xl mx-auto ">
-      <h1 className="text-3xl font-semibold">{model.name}</h1>
-
-      <div className="py-4 mt-10 shadow-lg rounded-md mb-8">
-        <div className="justify-around flex text-md font-semibold">
-          <div className="text-left pl-4 flex-grow">
-            <p className="pb-4">Framework: {model.framework}</p>
-            <p>Task: Bounding Box</p>
-          </div>
-          <div className="border-r border-gray-300" />
-          <div className="flex-grow pl-4">
-            <p className="pb-4">Created Time: {formatDate(model.created)}</p>
-            <p>Pre-traned models: 1</p>
-          </div>
-        </div>
-      </div>
+    <div className="p-6">
+      <h1 className="text-3xl font-semibold">Pre-Trained</h1>
 
       <section className="mt-8 md:mt-12">
         <div className="space-y-4 flex flex-col items-end md:flex-row md:space-y-0 md:space-x-4 md:justify-between">
@@ -115,7 +87,7 @@ const ModelJupyterPage = () => {
                 id="search"
                 name="search"
                 className="block w-full bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Search models..."
+                placeholder="Search Pre-trained model..."
                 type="search"
                 value={searchKey}
                 onChange={(e) => setSearchKey(e.target.value)}
@@ -124,12 +96,33 @@ const ModelJupyterPage = () => {
           </div>
           {/* button groups */}
           <div className="flex items-center flex-shrink-0 space-x-4">
-            <NextLink href="/model/upload">
-              <Button size="sm">
-                <PlusIcon className="w-5 h-5 mr-2" />
-                <span>Upload Module</span>
-              </Button>
-            </NextLink>
+            <Button
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
+              size="sm"
+              color="red"
+            >
+              <span>Delete</span>
+            </Button>
+            <Button
+              color="white"
+              size="sm"
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
+            >
+              <span>Download</span>
+            </Button>
+            <Button
+              size="sm"
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
+            >
+              <PlusIcon className="w-5 h-5 mr-2" />
+              <span>Upload File</span>
+            </Button>
           </div>
         </div>
       </section>
@@ -170,6 +163,18 @@ const ModelJupyterPage = () => {
                     >
                       Model
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Storage
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Upload Date
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -200,7 +205,7 @@ const ModelJupyterPage = () => {
                           }}
                         />
                       </td>
-                      <td className="px-6 py-4  whitespace-nowrap text-center font-medium text-gray-500 space-x-4">
+                      <td className="px-6 py-4 h-full whitespace-nowrap text-sm text-gray-500 text-center">
                         <span>{code.name}</span>
                       </td>
 
@@ -219,16 +224,12 @@ const ModelJupyterPage = () => {
                         )}
                       </td>
 
-                      <td>
-                        <button
-                          className="text-lightBlue-400 hover:opacity-80 hover:underline"
-                          onClick={() => {
-                            setEditIndex(idx);
-                            setOpenModal(true);
-                          }}
-                        >
-                          <p>Edit</p>
-                        </button>
+                      <td className="px-6 py-4 h-full whitespace-nowrap text-sm text-gray-500 text-center">
+                        <span>{code.storage}</span>
+                      </td>
+
+                      <td className="px-6 py-4 h-full whitespace-nowrap text-sm text-gray-500 text-center">
+                        <span>{code.created}</span>
                       </td>
                     </tr>
                   ))}
@@ -238,12 +239,6 @@ const ModelJupyterPage = () => {
           </div>
         </div>
       </section>
-      <EditModelModal
-        show={openModal}
-        setShow={setOpenModal}
-        data={codeItems[editIndex]}
-        setChange={setCodeItems}
-      />
     </div>
   );
 };
@@ -252,16 +247,13 @@ const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">Faster R-CNN</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2 bg-gray-200" href="/model/jupyter">
+      <Link className="flex px-4 py-2  hover:bg-gray-50" href="/model/jupyter">
         <span>Overview</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
         <span>Jupyter lab</span>
       </Link>
-      <Link
-        className="flex px-4 py-2 hover:bg-gray-50"
-        href="/model/pre-trained"
-      >
+      <Link className="flex px-4 py-2 bg-gray-200" href="/model/pre-trained">
         <span>Pre-trained</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">

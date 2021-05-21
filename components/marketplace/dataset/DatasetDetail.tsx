@@ -8,64 +8,72 @@ import SectionTitle from '@components/core/SectionTitle';
 import { useUI } from '@components/ui/context';
 
 // libraries
-import addToMyDatasetById from '@lib/addToMyDatasetById';
+// import addToMyDatasetById from '@lib/addToMyDatasetById';
 
 // icons
-import { ChevronDownIcon, EyeIcon, StarIcon } from '@heroicons/react/solid';
+import {
+  ChevronDownIcon,
+  EyeIcon,
+  HeartIcon as FillHeartIcon,
+  StarIcon,
+} from '@heroicons/react/solid';
+import { HeartIcon } from '@heroicons/react/outline';
 
 interface Props {
   className?: string;
   dataset: DatasetInfo;
+  otherDataset: DatasetInfo[];
 }
 
-const DatasetDetail = ({ className, dataset }: Props) => {
+const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
   const router = useRouter();
   const { showNoti, showModal, closeModal } = useUI();
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [heartFlag, setHeartFalg] = React.useState<boolean>(false);
 
-  const handleAddToMyDataset = React.useCallback(async () => {
-    setLoading(true);
-    try {
-      await addToMyDatasetById(dataset._id);
-      showModal({
-        title: 'Success',
-        content: 'It has been added to your Dataset',
-        actionButton: {
-          label: 'Go to Dataset List',
-          onClick: () => {
-            router.push('/dataset/data');
-            closeModal();
-          },
-        },
-        cancelButton: {
-          label: 'Stay in this page',
-          onClick: () => closeModal(),
-        },
-      });
-    } catch (err) {
-      if (err.code === 101)
-        showModal({
-          variant: 'alert',
-          title: 'Error',
-          content: err.message,
-          actionButton: {
-            label: 'Go to Dataset detail',
-            onClick: () => {
-              router.push('/dataset/data');
-              closeModal();
-            },
-          },
-          cancelButton: {
-            label: 'Stay in this page',
-            onClick: () => closeModal(),
-          },
-        });
-      else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [showNoti, dataset, router, closeModal, showModal]);
+  // const handleAddToMyDataset = React.useCallback(async () => {
+  //   setLoading(true);
+  //   try {
+  //     await addToMyDatasetById(dataset._id);
+  //     showModal({
+  //       title: 'Success',
+  //       content: 'It has been added to your Dataset',
+  //       actionButton: {
+  //         label: 'Go to Dataset',
+  //         onClick: () => {
+  //           router.push('/dataset/data');
+  //           closeModal();
+  //         },
+  //       },
+  //       cancelButton: {
+  //         label: 'Stay in this page',
+  //         onClick: () => closeModal(),
+  //       },
+  //     });
+  //   } catch (err) {
+  //     if (err.code === 101)
+  //       showModal({
+  //         variant: 'alert',
+  //         title: 'Error',
+  //         content: err.message,
+  //         actionButton: {
+  //           label: 'Go to Dataset',
+  //           onClick: () => {
+  //             router.push('/dataset/data');
+  //             closeModal();
+  //           },
+  //         },
+  //         cancelButton: {
+  //           label: 'Stay in this page',
+  //           onClick: () => closeModal(),
+  //         },
+  //       });
+  //     else showNoti({ title: 'Error', content: err.message, variant: 'alert' });
+  //     console.log(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [showNoti, dataset, router, closeModal, showModal]);
+
   return (
     <>
       <SectionTitle
@@ -95,6 +103,16 @@ const DatasetDetail = ({ className, dataset }: Props) => {
                     {dataset.star.toLocaleString()}
                   </p>
                 </div>
+                <button
+                  className="flex items-center ml-2 text-red-600"
+                  onClick={() => setHeartFalg((prev) => !prev)}
+                >
+                  {heartFlag ? (
+                    <FillHeartIcon color="red" className="w-6 h-6" />
+                  ) : (
+                    <HeartIcon className="w-6 h-6" />
+                  )}
+                </button>
               </div>
             </div>
             <div className="flex gap-4 py-4">
@@ -104,6 +122,10 @@ const DatasetDetail = ({ className, dataset }: Props) => {
                 <p>Type</p>
                 <p>Size</p>
                 <p>isOriginal</p>
+                <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
+                  <p>See More</p>
+                  <ChevronDownIcon className="w-6 h-6" />
+                </button>
               </div>
               <div className="space-y-2 text-md font-medium">
                 <p className="text-red-500">
@@ -116,44 +138,84 @@ const DatasetDetail = ({ className, dataset }: Props) => {
               </div>
             </div>
             <div>
-              <div className="pt-4 line-clamp-4">
-                대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충
-                긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명 대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명 대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명 대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명 대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴 설명대충 긴
-                설명대충 긴 설명대충 긴 설명
+              <p className="mt-2 text-lg font-semibold">About</p>
+              <div className=" line-clamp-4">
+                Over 200k images of celebrities with 40 binary attribute
+                annotations
               </div>
-              <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
-                <p>See More</p>
-                <ChevronDownIcon className="w-6 h-6" />
-              </button>
             </div>
           </div>
           <div className="w-96 ml-8 space-y-2">
             <Button
-              disabled={loading}
-              onClick={() => handleAddToMyDataset()}
+              onClick={() =>
+                showModal({
+                  title: 'Success',
+                  content: 'It has been added to your Dataset',
+                  actionButton: {
+                    label: 'Go to Dataset',
+                    onClick: () => {
+                      router.push('/dataset/data');
+                      closeModal();
+                    },
+                  },
+                  cancelButton: {
+                    label: 'Stay in this page',
+                    onClick: () => closeModal(),
+                  },
+                })
+              }
               className="w-full"
             >
               Add to my dataset
             </Button>
-            <Button disabled={loading} className="w-full">
+            <Button
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+              }
+              className="w-full"
+            >
               Download Source Code
             </Button>
-            <Button disabled={loading} className="w-full">
+            <Button
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+              }
+              className="w-full"
+            >
               Buy License
             </Button>
           </div>
         </div>
-        <div className="py-4">여기에 다른 부스 보기 자리</div>
+        <div className="py-4 overflow-x-scroll">
+          <p className="mt-2 text-lg font-semibold">People also viewed</p>
+          <div className="flex gap-16 pt-2">
+            {otherDataset.map((dataset, idx) => (
+              <button key={`otherDataset-${dataset._id}-${idx}`}>
+                <div className="relative w-48 h-48 overflow-hidden rounded-md">
+                  <img
+                    src={`/images/dataset/data/${idx + 1}.jpg`}
+                    className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"
+                  />
+                </div>
+                <p className="text-left">{dataset.name}</p>
+                <div className="flex">
+                  <div className="flex items-center">
+                    <StarIcon color="orange" className="w-6 h-6" />
+                    <p className="text-gray-600 pl-1">
+                      {dataset.star.toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex items-center ml-4">
+                    <EyeIcon className="w-6 h-6" color="gray" />
+                    <p className="text-gray-600 pl-1">
+                      {dataset.star.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
-import Link from '@components/ui/Link';
 import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
 import Select from '@components/ui/Select';
+import Link from '@components/ui/Link';
 
 const selectItems = {
   dataset: [
@@ -237,10 +237,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'resnet.py'
-      ],
+      files: ['__init__.py', 'resnet.py'],
       class_function: [
         'BasicBlock',
         'Bottleneck',
@@ -264,10 +261,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'efficientnet.py'
-      ],
+      files: ['__init__.py', 'efficientnet.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -304,9 +298,7 @@ const selectItems = {
         'layer_norm.py',
         'sublayer.py',
       ],
-      class_function: [
-        'BERT',
-      ],
+      class_function: ['BERT'],
     },
     {
       name: 'T-ResNet',
@@ -319,10 +311,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'tresnet.py'
-      ],
+      files: ['__init__.py', 'tresnet.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -344,10 +333,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'robert.py'
-      ],
+      files: ['__init__.py', 'robert.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -369,10 +355,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'kobert.py'
-      ],
+      files: ['__init__.py', 'kobert.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -394,10 +377,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'xlnet.py'
-      ],
+      files: ['__init__.py', 'xlnet.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -419,10 +399,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'alexnet.py'
-      ],
+      files: ['__init__.py', 'alexnet.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -444,10 +421,7 @@ const selectItems = {
       star: 33,
       category: 'Image/BBox',
       created_at: '2021-04-13',
-      files: [
-        '__init__.py',
-        'albert.py'
-      ],
+      files: ['__init__.py', 'albert.py'],
       class_function: [
         'swish',
         'drop_connect',
@@ -756,10 +730,10 @@ const ProjectExperimentUploadPage = () => {
               </div>
               <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
                 <div>
-                  <Input label="Batch Size" placeholder="32"/>
+                  <Input label="Batch Size" placeholder="32" />
                 </div>
                 <div>
-                  <Input label="Epoch" placeholder="50"/>
+                  <Input label="Epoch" placeholder="50" />
                 </div>
               </div>
             </div>
@@ -785,10 +759,10 @@ const ProjectExperimentUploadPage = () => {
                   className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
                 >
                   <div>
-                    <Input label="Key" placeholder="Enter a variable name"/>
+                    <Input label="Key" placeholder="Enter a variable name" />
                   </div>
                   <div>
-                    <Input label="Value" placeholder="Enter a value"/>
+                    <Input label="Value" placeholder="Enter a value" />
                   </div>
                 </div>
               ))}
@@ -876,7 +850,7 @@ const ProjectExperimentUploadPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">img_clf</h2>
+    <h2 className="px-4 font-semibold text-xl">Text Sentiment Analysis</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"
@@ -887,7 +861,7 @@ const Sidebar = (
       <Link className="flex px-4 py-2 bg-gray-200" href="/project/experiments">
         <span>Experiments</span>
       </Link>
-      <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
+      <Link className="flex px-4 py-2 " href="#">
         <span>Settings</span>
       </Link>
     </div>

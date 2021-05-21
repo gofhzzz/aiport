@@ -56,7 +56,7 @@ const IndexPage = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <div className="space-y-6">
+          <form className="space-y-6">
             <div>
               <Input
                 type="text"
@@ -99,6 +99,7 @@ const IndexPage = () => {
 
               <div className="text-sm">
                 <button
+                  type="button"
                   className="font-medium text-lightBlue-600 hover:text-lightBlue-500"
                   onClick={() => {
                     showNoti({
@@ -117,14 +118,15 @@ const IndexPage = () => {
                 full
                 type="submit"
                 disabled={!username || !password}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   handleSignin(username, password);
                 }}
               >
                 Sign in
               </Button>
             </div>
-          </div>
+          </form>
 
           <div className="mt-6">
             <div className="relative">
