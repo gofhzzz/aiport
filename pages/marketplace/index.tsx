@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
+import { useDebounce } from 'react-use';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
@@ -9,8 +10,6 @@ import DatasetList from '@components/marketplace/dataset/DatasetList';
 import ModelList from '@components/marketplace/model/ModelList';
 import SectionTitle from '@components/core/SectionTitle';
 import Input from '@components/ui/Input';
-import Button from '@components/ui/Button';
-import Dropdown from '@components/ui/Dropdown';
 
 // libraries
 import getSampleProjects from '@lib/getSampleProjects';
@@ -18,8 +17,8 @@ import getDatasets from '@lib/getDatasets';
 import getModels from '@lib/getModels';
 
 // icons
-import { ChevronDownIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
+import { XIcon } from '@heroicons/react/outline';
 
 const categoryItems = [
   {
@@ -44,7 +43,7 @@ const taskItems = [
   'object detection',
   'img multi-label claassification',
   'text pasentiment analysis',
-  'text paraphrase classification',
+  'Text Classification',
   'text question answering',
 ];
 
@@ -52,10 +51,6 @@ const proceItems = ['all', 'free', 'Under $25', '$25 to $50', '$50 and Above'];
 const MarketplacePage = () => {
   const router = useRouter();
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [searchCategory, setSearchCategory] = React.useState<
-    'ai' | 'dataset' | 'model'
-  >('ai');
-
   const [category, setCategory] = React.useState<'ai' | 'dataset' | 'model'>(
     'ai',
   );
@@ -80,36 +75,42 @@ const MarketplacePage = () => {
         router.query.category === 'dataset' ||
         router.query.category === 'model')
     ) {
-      setSearchCategory(router.query.category);
+      if (
+        router.query.searchInput &&
+        typeof router.query.searchInput === 'string'
+      )
+        setSearchInput(router.query.searchInput);
       setCategory(router.query.category);
     }
+
     if (projects === null)
-      getSampleProjects().then((sampleProjects) => setProjects(sampleProjects));
+      getSampleProjects().then((sampleProjects) => {
+        totalProjects.current = sampleProjects;
+        setProjects(sampleProjects);
+      });
     if (datasets === null)
-      getDatasets().then((datasets) => setDatasets(datasets));
-    if (models === null) getModels().then((models) => setModels(models));
+      getDatasets().then((datasets) => {
+        totalDatasets.current = datasets;
+        setDatasets(datasets);
+      });
+    if (models === null)
+      getModels().then((models) => {
+        totalModels.current = models;
+        setModels(models);
+      });
 
     if (projects === null || datasets === null || models === null) return;
 
-    totalProjects.current = projects;
-    totalDatasets.current = datasets;
-    totalModels.current = models;
-  }, [router, projects, datasets, models, category]);
+    //TODO: 데이터 받으면 필터링
 
-  //TODO: 데이터 받으면 필터링 하기
-  const handleFilter = React.useCallback(() => {
-    // setDatasets((prev) => {
-    //   if (!taskFilter) return totalDatasets.current;
-    //   return totalDatasets.current.filter(({ type }) => {
-    //     let flag = false;
-    //     taskFilter.map((val) => {
-    //       if (val === type) flag === true;
-    //     });
-    //     if (flag) return true;
-    //     return false;
-    //   });
-    // });
-  }, [taskFilter]);
+    setProjects((prev) => {
+      if (prev === null) return null;
+      if (taskFilter.length === 0) return totalProjects.current;
+      return prev.filter((project) => {
+        return taskFilter.includes(project.task);
+      });
+    });
+  }, [taskFilter, router]);
 
   const getDataArray = React.useCallback(
     async (variant: 'ai' | 'dataset' | 'model') => {
@@ -124,15 +125,35 @@ const MarketplacePage = () => {
     [],
   );
 
-  const DropdownItems = [
-    { label: 'Ai', onClick: () => setSearchCategory('ai') },
-    { label: 'Dataset', onClick: () => setSearchCategory('dataset') },
-    { label: 'Model', onClick: () => setSearchCategory('model') },
-  ];
+  useDebounce(
+    () => {
+      setProjects(() => totalProjects.current);
+      setDatasets(() => totalDatasets.current);
+      setModels(() => totalModels.current);
+
+      setProjects((prev) => {
+        if (prev === null) return null;
+        if (!searchInput) return totalProjects.current;
+        return prev.filter(({ name }) => name.includes(searchInput));
+      });
+      setDatasets((prev) => {
+        if (prev === null) return null;
+        if (!searchInput) return totalDatasets.current;
+        return prev.filter(({ name }) => name.includes(searchInput));
+      });
+      setModels((prev) => {
+        if (prev === null) return null;
+        if (!searchInput) return totalModels.current;
+        return prev.filter(({ name }) => name.includes(searchInput));
+      });
+    },
+    1000,
+    [searchInput, category],
+  );
 
   return (
     <div>
-      <div className="fixed left-[112px] flex flex-col bg-gray-200 h-full w-72 p-2">
+      <div className="fixed overflow-y-auto left-[112px] flex flex-col bg-gray-200 h-full w-72 p-2">
         <div className="py-4">
           <p className="text-lg font-semibold">Category</p>
           {categoryItems.map((item, idx) => (
@@ -150,7 +171,6 @@ const MarketplacePage = () => {
                 className="mr-4"
                 checked={category === item.value}
                 onChange={() => {
-                  setSearchCategory(item.value as never);
                   getDataArray(item.value as never);
                   setCategory(item.value as never);
                 }}
@@ -182,8 +202,6 @@ const MarketplacePage = () => {
                       ? prev.filter((val) => val !== item)
                       : [...prev, item],
                   );
-                  getDataArray(item as never);
-                  handleFilter();
                 }}
               />
               <p className="text-md ml-2 font-medium capitalize">{item}</p>
@@ -208,8 +226,6 @@ const MarketplacePage = () => {
                 checked={priceFilter === item}
                 onChange={() => {
                   setPriceFilter(item);
-                  // getDataArray(item as never);
-                  handleFilter();
                 }}
               />
               <p className="text-md ml-2 font-medium capitalize">{item}</p>
@@ -218,24 +234,6 @@ const MarketplacePage = () => {
         </div>
       </div>
       <div className="w-full p-8 pl-80">
-        <div className="w-full justify-center flex items-center">
-          <Dropdown
-            button={
-              <div className="capitalize bg-white border-2 w-40 justify-between rounded-md mr-2 flex items-center px-4 h-[42px] mt-1">
-                {searchCategory}
-                <ChevronDownIcon className="w-6 h-6" />
-              </div>
-            }
-            dropdownItems={DropdownItems}
-          />
-          <Input
-            className="w-[600px]"
-            placeholder="Search Items"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-          <Button className="mt-1 ml-2">Search</Button>
-        </div>
         <div className="mt-8">
           <SectionTitle
             picture={
@@ -248,6 +246,24 @@ const MarketplacePage = () => {
             title={category ? category.toUpperCase() : ''}
             className="mb-8"
           />
+          <div className="flex ml-6 relative items-center">
+            <Input
+              className="w-[600px]"
+              placeholder="Search Items"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            {searchInput && (
+              <button
+                className="absolute left-[570px] "
+                onClick={() => {
+                  setSearchInput('');
+                }}
+              >
+                <XIcon className="w-5 h-5 text-gray-700" />
+              </button>
+            )}
+          </div>
           {category === 'ai' &&
             (projects ? (
               <ProjectList projects={projects} />

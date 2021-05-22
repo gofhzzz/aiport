@@ -78,6 +78,7 @@ const IndexPage = () => {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                clear={() => setPassword('')}
               />
             </div>
 

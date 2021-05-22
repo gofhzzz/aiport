@@ -210,7 +210,7 @@ const ModalUploadPage = () => {
             />
             <Select
               className="mt-6"
-              label="Type"
+              label="Task"
               items={[
                 { key: 'public', label: 'Public', value: true },
                 { key: 'private', label: 'Private', value: false },

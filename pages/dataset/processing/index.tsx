@@ -92,8 +92,7 @@ const ProcessingPage = () => {
                       }}
                       className={cn('flex', {
                         'text-lightBlue-400':
-                          selectedTemplate?.templateName ===
-                          processing.templateName,
+                          selectedTemplate?._id === processing._id,
                       })}
                     >
                       <ChevronRightIcon className="w-6 h-6" />

@@ -86,7 +86,7 @@ const DataDetailsModal: React.FC<Props> = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block align-bottom bg-white rounded px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full sm:p-6">
+            <div className="relative inline-block align-bottom bg-white rounded p-8 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl">
               <button
                 className="absolute top-3 right-3 rounded-full group"
                 onClick={() => setShow(false)}
@@ -143,7 +143,7 @@ const DataDetailsModal: React.FC<Props> = ({
                           : ''}
                       </p>
                     </div>
-                    <div>
+                    <div className="h-[150px]">
                       <h6 className="text-sm text-gray-500">Label</h6>
                       {edit ? (
                         <>

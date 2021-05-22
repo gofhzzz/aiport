@@ -6,6 +6,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import Button from '@components/ui/Button';
 import Dropdown from '@components/ui/Dropdown';
 import Input from '@components/ui/Input';
+import Link from '@components/ui/Link';
 
 interface Props {
   className?: string;
@@ -40,7 +41,11 @@ const SearchItem = ({ className, initialDropdownItem = 'ai' }: Props) => {
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
       />
-      <Button className="mt-1 ml-2">Search</Button>
+      <Link
+        href={`/marketplace?category=${searchCategory}&searchInput=${searchInput}`}
+      >
+        <Button className="mt-1 ml-2">Search</Button>
+      </Link>
     </div>
   );
 };
