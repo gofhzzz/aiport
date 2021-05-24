@@ -17,17 +17,20 @@ import Spinner from '@components/icons/Spinner';
 import TextArea from '@components/ui/TextArea';
 
 // types
-import { ProjectInput, SampleProjectInfo } from 'types/project';
+import {
+  initialProjectInput,
+  ProjectInput,
+  SampleProjectInfo,
+} from 'types/project';
 
 const ProjectUploadPage = () => {
   const router = useRouter();
   const [sampleProjects, setSampleProjects] = useState<
     SampleProjectInfo[] | null
   >(null);
-  const [projectInput, setProjectInput] = useState<ProjectInput>({
-    name: '',
-    description: '',
-  });
+  const [projectInput, setProjectInput] = useState<ProjectInput>(
+    initialProjectInput,
+  );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
