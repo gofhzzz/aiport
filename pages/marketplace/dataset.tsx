@@ -7,11 +7,11 @@ import SearchItem from '@components/marketplace/SearchItem';
 import DatasetDetail from '@components/marketplace/dataset/DatasetDetail';
 
 // labraries
-import getDataset from '@lib/getDataset';
+import getDataset from '@lib/dataset/getDataset';
 
 // icons
 import Spinner from '@components/icons/Spinner';
-import getDatasets from '@lib/getDatasets';
+import getDatasets from '@lib/dataset/getDatasets';
 
 // types
 import { DatasetInfo } from 'types/dataset';

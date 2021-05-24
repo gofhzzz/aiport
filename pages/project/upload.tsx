@@ -10,7 +10,7 @@ import Input from '@components/ui/Input';
 import Link from '@components/ui/Link';
 
 // libraries
-import getSampleProjects from '@lib/getSampleProjects';
+import getSampleProjects from '@lib/ai/getSampleProjects';
 
 // icons
 import Spinner from '@components/icons/Spinner';

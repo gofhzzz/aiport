@@ -21,7 +21,7 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 
 // libraries
-import getDatasets from '@lib/getDatasets';
+import getDatasets from '@lib/dataset/getDatasets';
 
 // utilities
 import formatDate from '@utils/formatDate';

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connectMongo, withErrorHandler } from '@utils/index';
-import { removeTokenOnCookie, setTokenOnCookie } from '@lib/cookie';
+import { removeTokenOnCookie, setTokenOnCookie } from '@lib/auth/cookie';
 import signToken from '@utils/token/signToken';
 
 const jwtSecret = process.env.JWT_SECRET;

@@ -11,7 +11,7 @@ import EditModelModal from '@components/modals/EditModelModal';
 import Button from '@components/ui/Button';
 
 // libs
-import getModel from '@lib/getModel';
+import getModel from '@lib/model/getModel';
 
 // utils
 import formatDate from '@utils/formatDate';

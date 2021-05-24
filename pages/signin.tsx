@@ -11,7 +11,7 @@ import Input from '@components/ui/Input';
 
 // libraries
 import useUser from '@lib/useUser';
-import signin from '@lib/signin';
+import signin from '@lib/auth/signin';
 
 const IndexPage = () => {
   // const router = useRouter();

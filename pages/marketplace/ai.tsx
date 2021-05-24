@@ -2,8 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 // libraries
-import getSampleProject from '@lib/getSampleProject';
-import getSampleProjects from '@lib/getSampleProjects';
+import getSampleProject from '@lib/ai/getSampleProject';
+import getSampleProjects from '@lib/ai/getSampleProjects';
 
 // components
 import SearchItem from '@components/marketplace/SearchItem';

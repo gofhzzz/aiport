@@ -11,8 +11,8 @@ import Button from '@components/ui/Button';
 import AddProcessingModal from '@components/modals/AddProcessingModal';
 
 // libs
-import getProcessing from '@lib/getProcessing';
-import uploadProcessing from '@lib/uploadProcessing';
+import getProcessing from '@lib/processing/getProcessing';
+import uploadProcessing from '@lib/processing/uploadProcessing';
 
 // icons
 import { PlusIcon } from '@heroicons/react/outline';

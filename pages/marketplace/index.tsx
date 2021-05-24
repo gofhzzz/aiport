@@ -12,9 +12,9 @@ import SectionTitle from '@components/core/SectionTitle';
 import Input from '@components/ui/Input';
 
 // libraries
-import getSampleProjects from '@lib/getSampleProjects';
-import getDatasets from '@lib/getDatasets';
-import getModels from '@lib/getModels';
+import getSampleProjects from '@lib/ai/getSampleProjects';
+import getDatasets from '@lib/dataset/getDatasets';
+import getModels from '@lib/model/getModels';
 
 // icons
 import Spinner from '@components/icons/Spinner';
@@ -43,7 +43,7 @@ const categoryItems = [
   },
 ];
 
-const taskItems = [
+const TASK_ITEMS = [
   'img classfication',
   'object detection',
   'img multi-label claassification',
@@ -52,12 +52,32 @@ const taskItems = [
   'text question answering',
 ];
 
-const proceItems = ['all', 'free', 'Under $25', '$25 to $50', '$50 and Above'];
+const PRICE_ITEMS = [
+  'all',
+  'free',
+  'Under $25',
+  '$25 to $50',
+  '$50 and Above',
+] as const;
+
+const CATEGORY = ['ai', 'dataset', 'model'] as const;
+
 const MarketplacePage = () => {
   const router = useRouter();
+
+  const categoryItem = React.useMemo(() => {
+    if (
+      router.query.category === 'ai' ||
+      router.query.category === 'dataset' ||
+      router.query.category === 'model'
+    )
+      return router.query.category;
+    return 'ai';
+  }, [router]);
+
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [category, setCategory] = React.useState<'ai' | 'dataset' | 'model'>(
-    'ai',
+  const [category, setCategory] = React.useState<typeof CATEGORY[number]>(
+    CATEGORY[0],
   );
   const [projects, setProjects] = React.useState<SampleProjectInfo[] | null>(
     null,
@@ -69,8 +89,11 @@ const MarketplacePage = () => {
   const totalDatasets = React.useRef<DatasetInfo[]>([]);
   const totalModels = React.useRef<ModelInfo[]>([]);
 
-  const [taskFilter, setTaskFilter] = React.useState<string[]>([]);
-  const [priceFilter, setPriceFilter] = React.useState<string>('all');
+  const [taskFilter, setTaskFilter] = React.useState<typeof TASK_ITEMS>([]);
+
+  const [priceFilter, setPriceFilter] = React.useState<
+    typeof PRICE_ITEMS[number]
+  >(PRICE_ITEMS[0]);
 
   React.useEffect(() => {
     if (
@@ -86,7 +109,6 @@ const MarketplacePage = () => {
         setSearchInput(router.query.searchInput);
       setCategory(router.query.category);
     }
-
     getSampleProjects().then((sampleProjects) => {
       totalProjects.current = sampleProjects;
       setProjects(sampleProjects);
@@ -114,19 +136,6 @@ const MarketplacePage = () => {
   React.useEffect(() => {
     changeTaskFilter(taskFilter);
   }, [taskFilter, changeTaskFilter]);
-
-  const getDataArray = React.useCallback(
-    async (variant: 'ai' | 'dataset' | 'model') => {
-      try {
-        if (variant === 'ai') setProjects(await getSampleProjects());
-        else if (variant === 'dataset') setDatasets(await getDatasets());
-        else setModels(await getModels());
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [],
-  );
 
   useDebounce(
     () => {
@@ -174,7 +183,6 @@ const MarketplacePage = () => {
                 className="mr-4"
                 checked={category === item.value}
                 onChange={() => {
-                  getDataArray(item.value as never);
                   setCategory(item.value as never);
                 }}
               />
@@ -185,13 +193,10 @@ const MarketplacePage = () => {
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Task</p>
-          {taskItems.map((item, idx) => (
+          {TASK_ITEMS.map((item, idx) => (
             <label
               htmlFor={item}
-              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
-                'bg-gray-300 rounded-md': category === item,
-                'hover:opacity-80 cursor-pointer': category !== item,
-              })}
+              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5')}
               key={`${item}-${idx}`}
             >
               <input
@@ -213,13 +218,10 @@ const MarketplacePage = () => {
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Price</p>
-          {proceItems.map((item, idx) => (
+          {PRICE_ITEMS.map((item, idx) => (
             <label
               htmlFor={item}
-              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
-                'bg-gray-300 rounded-md': category === item,
-                'hover:opacity-80 cursor-pointer': category !== item,
-              })}
+              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5')}
               key={`${item}-${idx}`}
             >
               <input

@@ -8,9 +8,9 @@ import Link from '@components/ui/Link';
 import Button from '@components/ui/Button';
 
 // libs
-import getRunningExperiments from '@lib/getRunningExperiments';
+import getRunningExperiments from '@lib/experiment/getRunningExperiments';
 import getFeeds from '@lib/getFeeds';
-import getSampleProject from '@lib/getSampleProject';
+import getSampleProject from '@lib/ai/getSampleProject';
 
 // icons
 import { PlusIcon } from '@heroicons/react/outline';

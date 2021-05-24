@@ -19,7 +19,7 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 
 // libraries
-import getExperiments from '@lib/getExperiments';
+import getExperiments from '@lib/experiment/getExperiments';
 
 // icons
 import { AIIcon } from '@components/icons';

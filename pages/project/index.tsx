@@ -11,7 +11,7 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 
 // libraries
-import getSampleProjects from '@lib/getSampleProjects';
+import getSampleProjects from '@lib/ai/getSampleProjects';
 
 // types
 import { SampleProjectInfo } from 'types/project';

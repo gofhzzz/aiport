@@ -7,11 +7,11 @@ import SearchItem from '@components/marketplace/SearchItem';
 import ModelDetail from '@components/marketplace/model/ModelDetail';
 
 // libraries
-import getModel from '@lib/getModel';
+import getModel from '@lib/model/getModel';
 
 // icons
 import Spinner from '@components/icons/Spinner';
-import getModels from '@lib/getModels';
+import getModels from '@lib/model/getModels';
 
 // types
 import { ModelInfo } from 'types/model';

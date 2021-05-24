@@ -8,7 +8,7 @@ import Link from '@components/ui/Link';
 import ExperimentDownloadModal from '@components/modals/ExperimentDownloadModal';
 
 // lib
-import getSingleExperiment from '@lib/getSingleExperiment';
+import getSingleExperiment from '@lib/experiment/getSingleExperiment';
 
 // icons
 import Spinner from '@components/icons/Spinner';

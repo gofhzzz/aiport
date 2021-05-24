@@ -12,8 +12,8 @@ import Select from '@components/ui/Select';
 import { useUI } from '@components/ui/context';
 
 // libs
-import getDatasets from '@lib/getDatasets';
-import getProcessings from '@lib/getProcessings';
+import getDatasets from '@lib/dataset/getDatasets';
+import getProcessings from '@lib/processing/getProcessings';
 
 // icons
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';

@@ -17,7 +17,7 @@ import Button from '@components/ui/Button';
 import DataDetailsModal from '@components/modals/DataDetailsModal';
 
 // libraries
-import getDatasetDataList from '@lib/getDatasetDataList';
+import getDatasetDataList from '@lib/dataset/getDatasetDataList';
 
 // icons
 import Spinner from '@components/icons/Spinner';

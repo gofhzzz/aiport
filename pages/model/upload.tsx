@@ -14,7 +14,7 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 
 // libraries
-import getModels from '@lib/getModels';
+import getModels from '@lib/model/getModels';
 // import uploadModel from '@lib/uploadModel';
 
 // types

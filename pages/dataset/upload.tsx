@@ -10,7 +10,7 @@ import DatasetCard from '@components/dataset/DatasetCard';
 import { useUI } from '@components/ui/context';
 
 // libs
-import getDatasets from '@lib/getDatasets';
+import getDatasets from '@lib/dataset/getDatasets';
 
 // icons
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
