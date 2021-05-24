@@ -25,11 +25,13 @@ const ProjectItem = ({ project, className }: Props) => {
         className="flex hover:bg-gray-200 rounded-md p-2 cursor-pointer"
         href={`/marketplace/ai?id=${project._id}`}
       >
-        <div className="flex justify-center relative w-40 h-40">
-          <img
-            src={project.src}
-            className="absolute inset-0 w-full h-full object-contain"
-          />
+        <div>
+          <div className="relative w-40 pt-[100%]">
+            <img
+              src={project.src}
+              className="absolute w-full h-full inset-0 object-contain"
+            />
+          </div>
         </div>
         <div className="ml-4">
           <p className="text-xl font-semibold">{project.name}</p>

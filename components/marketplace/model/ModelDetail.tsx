@@ -83,10 +83,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
       <SectionTitle className="px-8" picture="/icon/model.png" title="Model" />
       <div className={cn(className, 'divide-y-2')}>
         <div className="flex py-4">
-          <img
-            src="/images/project/cover1.jpg"
-            className="object-cover w-80 h-80 rounded-md"
-          />
+          <img src={model.src} className="object-cover w-80 h-80 rounded-md" />
           <div className="divide-y-2 px-4 w-full">
             <div className="flex justify-between pb-2 w-full">
               <p className="text-2xl font-semibold">{model.name}</p>
@@ -194,7 +191,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
               <button className="w-36" key={`othermodel-${model._id}-${idx}`}>
                 <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
-                    src={`/images/dataset/data/${idx + 1}.jpg`}
+                    src={model.src}
                     className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"
                   />
                 </div>

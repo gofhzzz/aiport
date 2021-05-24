@@ -25,11 +25,13 @@ const ModelItem = ({ model, className }: Props) => {
         href={`/marketplace/model?id=${model._id}`}
         className="flex hover:bg-gray-200 rounded-md p-2 cursor-pointer"
       >
-        <div className="flex justify-center relative w-40 h-40">
-          <img
-            src={model.src}
-            className="absolute inset-0 w-full h-full object-contain"
-          />
+        <div>
+          <div className="relative w-40 pt-[100%]">
+            <img
+              src={model.src}
+              className="absolute w-full h-full inset-0 object-contain"
+            />
+          </div>
         </div>
         <div className="ml-4">
           <p className="text-xl font-semibold">{model.name}</p>

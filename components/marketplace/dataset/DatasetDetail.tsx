@@ -87,7 +87,7 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
       <div className={cn(className, 'divide-y-2')}>
         <div className="flex py-4">
           <img
-            src="/images/project/cover1.jpg"
+            src={dataset.src}
             className="object-cover w-80 h-80 rounded-md"
           />
           <div className="divide-y-2 px-4 w-full">
@@ -199,7 +199,7 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
               >
                 <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
-                    src={`/images/dataset/data/${idx + 1}.jpg`}
+                    src={dataset.src}
                     className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"
                   />
                 </div>
