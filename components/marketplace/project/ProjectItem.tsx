@@ -16,17 +16,21 @@ import { SampleProjectInfo } from 'types/project';
 interface Props {
   className?: string;
   project: SampleProjectInfo;
-  src: string;
 }
 
-const ProjectItem = ({ project, className, src }: Props) => {
+const ProjectItem = ({ project, className }: Props) => {
   return (
     <div className={className}>
       <Link
         className="flex hover:bg-gray-200 rounded-md p-2 cursor-pointer"
         href={`/marketplace/ai?id=${project._id}`}
       >
-        <img src={src} className="rounded-md object-cove w-40 h-40" />
+        <div className="flex justify-center relative w-40 h-40">
+          <img
+            src={project.src}
+            className="absolute inset-0 w-full h-full object-contain"
+          />
+        </div>
         <div className="ml-4">
           <p className="text-xl font-semibold">{project.name}</p>
           <div className="mt-2">
@@ -53,7 +57,9 @@ const ProjectItem = ({ project, className, src }: Props) => {
           <div className="mt-1">
             <div className="flex items-center">
               <ChartSquareBarIcon color="orange" className="w-6 h-6" />
-              <p className="text-gray-600 pl-1">{project.task}</p>
+              <p className="text-gray-600 pl-1 capitalize">
+                {project.dataType}/{project.task}
+              </p>
               <div className="flex items-center ml-4">
                 <UserCircleIcon className="w-6 h-6" color="gray" />
                 <p className="text-gray-600 pl-1">{project.owner}</p>
@@ -61,10 +67,7 @@ const ProjectItem = ({ project, className, src }: Props) => {
             </div>
           </div>
           <div className="mt-4 text-gray-700 line-clamp-2">
-            대충 설명 넣기대충 설명 넣기대충 설명 넣기대충 설명 넣기대충 설명
-            넣기대충 설명 넣기대충 설명 넣기대충 설명 넣기대충 설명 넣기대충
-            설명 넣기대충 설명 넣기대충 설명 넣기대충 설명 넣기대충 설명
-            넣기대충 설명 넣기
+            {project.description}
           </div>
         </div>
       </Link>

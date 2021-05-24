@@ -1,14 +1,19 @@
 export interface ModelInfo {
   _id: string;
   name: string;
-  framework: string;
   isPublic: boolean;
-  task: string;
   owner: string;
-  collaborators: string[];
   watch: number;
   star: number;
+  price: number;
+  dataType: string;
+  task: string;
+  description: string;
+  src: string;
+  framework: string;
   created: string;
+  lastUpdated: string;
+  pretrained: number;
 }
 
 export interface ModelInput {

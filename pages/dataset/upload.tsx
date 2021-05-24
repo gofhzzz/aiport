@@ -22,8 +22,7 @@ import { DatasetInfo } from 'types/dataset';
 
 const selectTypes = [
   { label: 'image', value: 'image' },
-  { label: 'image2', value: 'image2' },
-  { label: 'image3', value: 'image3' },
+  { label: 'text', value: 'text' },
 ];
 
 const selectTasks = [
@@ -32,12 +31,33 @@ const selectTasks = [
     value: 'classification',
   },
   {
-    label: 'classification2',
-    value: 'classification2',
+    label: 'multi-label classification',
+
+    value: 'multi-label classification',
   },
   {
-    label: 'classification3',
-    value: 'classification3',
+    label: 'object detection',
+    value: 'object detection',
+  },
+  {
+    label: 'sentiment classification',
+    value: 'sentiment classification',
+  },
+  {
+    label: 'Translation',
+    value: 'Translation',
+  },
+  {
+    label: 'paraphrase classification',
+    value: 'paraphrase classification',
+  },
+  {
+    label: 'question answering',
+    value: 'question answering',
+  },
+  {
+    label: 'language modeling',
+    value: 'language modeling',
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 // components
@@ -7,16 +7,10 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 import ExperimentDownloadModal from '@components/modals/ExperimentDownloadModal';
 
-// lib
-import getSingleExperiment from '@lib/experiment/getSingleExperiment';
-
 // icons
 import Spinner from '@components/icons/Spinner';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-
-// types
-import { ExperimentInfo } from 'types/experiment';
 
 const outputItems: { name: string; idx: number; per: number }[] = [
   { name: 'Lee Jun Ho', idx: 1, per: 94.4 },
@@ -28,11 +22,6 @@ const ProjectExperimentsDetailsPage = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [dragOverFlag, setDragOverFlag] = React.useState<boolean>(false);
   const router = useRouter();
-  const [projectInfo, setProjectInfo] = React.useState<{
-    id: string;
-  } | null>(null);
-  const [experiment, setExperiment] = useState<ExperimentInfo | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [show, setShow] = useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = React.useState<string>('');
   const [previewName, setPreviewName] = React.useState<string>('');
@@ -43,16 +32,6 @@ const ProjectExperimentsDetailsPage = () => {
     idx: number;
     per: number;
   } | null>(null);
-
-  useEffect(() => {
-    setProjectInfo({
-      id: '6083a1ecd7f0a9318ae5bc81',
-    });
-
-    getSingleExperiment()
-      .then((exp) => setExperiment(exp))
-      .catch((err) => setError(err.message));
-  }, [router]);
 
   const handleImage = React.useCallback(async (file: File) => {
     setPreviewName(file.name);
@@ -73,15 +52,6 @@ const ProjectExperimentsDetailsPage = () => {
     }, 3000);
   }, []);
 
-  if (error !== null) return <div>{error}</div>;
-
-  if (experiment === null || !projectInfo)
-    return (
-      <div className="h-[404px] flex justify-center items-center">
-        <Spinner className="w-12 h-12 animate-spin" />
-      </div>
-    );
-
   return (
     <>
       <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
@@ -91,7 +61,7 @@ const ProjectExperimentsDetailsPage = () => {
               <ChevronLeftIcon className="w-6 h-6" />
             </button>{' '}
             <a className="hover:opacity-80 flex" href="/project/experiments">
-              {`${experiment.name}`}
+              Exp_1
             </a>
             <ChevronLeftIcon className="w-6 h-6" />
             Deploy
@@ -150,9 +120,7 @@ const ProjectExperimentsDetailsPage = () => {
                 >
                   <p className="text-lg">
                     {previewUrl ? (
-                      <div className="relative w-full h-full inset-0 object-cover">
-                        <img src={previewUrl} />
-                      </div>
+                      <img src={previewUrl} className="w-72 h-72" />
                     ) : (
                       'Drag&Drop Image Here'
                     )}
@@ -194,7 +162,9 @@ const ProjectExperimentsDetailsPage = () => {
                           }
                         >
                           <ChevronLeftIcon
-                            className={cn('w-12 h-12 absolute left-0 top-36')}
+                            className={cn(
+                              'w-12 h-12 absolute left-0 top-36 z-10',
+                            )}
                           />
                         </button>
                         <button
@@ -207,14 +177,16 @@ const ProjectExperimentsDetailsPage = () => {
                           }
                         >
                           <ChevronRightIcon
-                            className={cn('w-12 h-12 absolute right-0 top-36')}
+                            className={cn(
+                              'w-12 h-12 absolute right-0 top-36 z-10',
+                            )}
                           />
                         </button>
                         <p className="text-lg -mt-4 font-semibold">{`${outputInfo.idx}.${outputInfo.name}`}</p>
-                        <div className="w-72 flex items-center justify-center mx-auto h-72 relative">
+                        <div className="flex items-center justify-center relative">
                           <img
-                            src={`/images/dataset/data/${outputInfo.idx}.jpg`}
-                            className="object-cover inset-0 absoulte"
+                            src={`/images/deploy/${outputInfo.idx}.png`}
+                            className="object-cover w-72 h-72"
                           />
                         </div>
                         <p className="text-lg text-center font-semibold">
@@ -253,10 +225,11 @@ const ProjectExperimentsDetailsPage = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <th className="pt-4">
-                      <div className="w-20 h-20 mx-auto">
-                        <img src={previewUrl} className="object-cover" />
-                      </div>
+                    <th className="pt-4 flex justify-center items-center">
+                      <img
+                        src={previewUrl}
+                        className="object-cover w-20 h-20"
+                      />
                     </th>
                     <th>
                       <p>{previewName}</p>

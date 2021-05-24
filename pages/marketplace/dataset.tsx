@@ -24,7 +24,11 @@ const DatasetDetailPage = () => {
   );
 
   React.useEffect(() => {
-    if (router.query.id && typeof router.query.id === 'string') {
+    if (
+      dataset === null &&
+      router.query.id &&
+      typeof router.query.id === 'string'
+    ) {
       getDataset(router.query.id).then((dataset) => setDataset(dataset));
     }
     if (dataset !== null)

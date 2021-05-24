@@ -35,7 +35,7 @@ const initialCodeItems = [
   { name: 'predictor.py', model: [], checked: false },
 ];
 
-const ModelJupyterPage = () => {
+const ModelOverviewPage = () => {
   const router = useRouter();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [codeItems, setCodeItems] = React.useState<
@@ -54,7 +54,7 @@ const ModelJupyterPage = () => {
         .then((model) => setModel(model))
         .catch((err) => console.log(err));
     else {
-      getModel('6085be4d9902ff375e4bc0ef')
+      getModel('60ab6feb0fb5890a912f41f6')
         .then((model) => setModel(model))
         .catch((err) => console.log(err));
     }
@@ -90,12 +90,12 @@ const ModelJupyterPage = () => {
         <div className="justify-around flex text-md font-semibold">
           <div className="text-left pl-4 flex-grow">
             <p className="pb-4">Framework: {model.framework}</p>
-            <p>Task: Bounding Box</p>
+            <p>Task: {model.task}</p>
           </div>
           <div className="border-r border-gray-300" />
           <div className="flex-grow pl-4">
             <p className="pb-4">Created Time: {formatDate(model.created)}</p>
-            <p>Pre-trained Models: 1</p>
+            <p>Pre-trained Models: {model.pretrained}</p>
           </div>
         </div>
       </div>
@@ -255,7 +255,7 @@ const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">Faster R-CNN</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2 bg-gray-200" href="/model/jupyter">
+      <Link className="flex px-4 py-2 bg-gray-200" href="/model/overview">
         <span>Overview</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
@@ -280,6 +280,6 @@ const Sidebar = (
   </div>
 );
 
-ModelJupyterPage.Layout = Dashboard;
-ModelJupyterPage.Sidebar = Sidebar;
-export default ModelJupyterPage;
+ModelOverviewPage.Layout = Dashboard;
+ModelOverviewPage.Sidebar = Sidebar;
+export default ModelOverviewPage;

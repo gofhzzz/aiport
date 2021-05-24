@@ -10,20 +10,20 @@ import Button from '@components/ui/Button';
 // libs
 import getRunningExperiments from '@lib/experiment/getRunningExperiments';
 import getFeeds from '@lib/getFeeds';
-import getSampleProject from '@lib/ai/getSampleProject';
 
 // icons
 import { PlusIcon } from '@heroicons/react/outline';
 import Spinner from '@components/icons/Spinner';
 
 // types
-import { SampleProjectInfo } from 'types/project';
+import { MySampleProjectInfo } from 'types/project';
 import { FeedInfo } from 'types/feed';
 import { ExperimentInfo } from 'types/experiment';
+import getMySampleProject from '@lib/ai/getMySampleProject';
 
 const ProjectOverviewPage = () => {
   const router = useRouter();
-  const [project, setProject] = useState<SampleProjectInfo | null>(null);
+  const [project, setProject] = useState<MySampleProjectInfo | null>(null);
   const [feeds, setFeeds] = useState<FeedInfo[] | null>(null);
   const [runningExperiments, setRunningExperiments] = useState<
     ExperimentInfo[] | null
@@ -31,7 +31,7 @@ const ProjectOverviewPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getSampleProject('6083a1ecd7f0a9318ae5bc81')
+    getMySampleProject('60ab72950fb5890a912f41fa')
       .then((project) => setProject(project))
       .catch((err) => setError(err.message));
     getFeeds()
@@ -54,7 +54,7 @@ const ProjectOverviewPage = () => {
   return (
     <div className="pb-32">
       <div className="aspect-h-6 md:aspect-h-3 aspect-w-16">
-        <img className="object-cover" src="/images/project/cover1.jpg" />
+        <img className="object-cover" src={project.src} />
       </div>
       <div className="max-w-screen-xl mx-auto pt-8 px-4 md:px-6">
         {/* title section */}
@@ -77,13 +77,17 @@ const ProjectOverviewPage = () => {
               <dt className="text-sm font-medium text-gray-500 truncate">
                 Total Experiments
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">2</dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">
+                {project.totalExperiments}
+              </dd>
             </div>
             <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">
                 Deploy
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">4</dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">
+                {project.deploy}
+              </dd>
             </div>
           </dl>
         </section>
@@ -192,8 +196,7 @@ const ProjectOverviewPage = () => {
                                 </a>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {experiment.epoch.current} /{' '}
-                                {experiment.epoch.total}
+                                {experiment.epoch}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell xl:hidden 2xl:table-cell">
                                 {experiment.trainLoss}

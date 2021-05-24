@@ -24,7 +24,11 @@ const ProjectDetailPage = () => {
   >(null);
 
   React.useEffect(() => {
-    if (router.query.id && typeof router.query.id === 'string') {
+    if (
+      router.query.id &&
+      typeof router.query.id === 'string' &&
+      project === null
+    ) {
       getSampleProject(router.query.id).then((sample) => setProject(sample));
     }
     if (project !== null)

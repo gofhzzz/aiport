@@ -45,17 +45,17 @@ const categoryItems = [
 ];
 
 const IMAGE_TASK = [
-  'Classification',
-  'Multi-label Classification',
-  'Object Detection',
+  'classification',
+  'multi-label classification',
+  'object detection',
 ];
 
 const TEXT_TASK = [
-  'Sentiment Classification',
+  'sentiment classification',
   'Translation',
-  'Paraphrase Classification',
-  'Question Answering',
-  'Language Modeling',
+  'paraphrase classification',
+  'question answering',
+  'language modeling',
 ];
 
 const PRICE_ITEMS = [
@@ -132,24 +132,81 @@ const MarketplacePage = () => {
   }, [router]);
 
   const changeTaskFilter = useCallback((tasks: string[]) => {
-    if (tasks.length === 0) return setProjects(totalProjects.current);
+    if (tasks.length === 0) {
+      setProjects(totalProjects.current);
+      setDatasets(totalDatasets.current);
+      setModels(totalModels.current);
+      return;
+    }
 
-    setProjects((prev) =>
-      prev === null
-        ? totalProjects.current
-        : prev.filter((project) => tasks.includes(project.task)),
+    setProjects(
+      totalProjects.current.filter((project) => tasks.includes(project.task)),
     );
-    setDatasets((prev) =>
-      prev === null
-        ? totalDatasets.current
-        : prev.filter((dataset) => tasks.includes(dataset.task)),
+    setDatasets(
+      totalDatasets.current.filter((dataset) => tasks.includes(dataset.task)),
     );
-    setModels((prev) =>
-      prev === null
-        ? totalModels.current
-        : prev.filter((model) => tasks.includes(model.task)),
+    setModels(
+      totalModels.current.filter((model) => tasks.includes(model.task)),
     );
   }, []);
+
+  const changePriceFilter = useCallback((price: string) => {
+    if (price === 'all') {
+      setProjects(totalProjects.current);
+      setDatasets(totalDatasets.current);
+      setModels(totalModels.current);
+      return;
+    }
+
+    setProjects(
+      totalProjects.current.filter((project) => {
+        switch (price) {
+          case 'free':
+            return project.price === 0;
+          case 'Under $25':
+            return project.price < 25;
+          case '$25 to $50':
+            return 25 <= project.price && project.price <= 50;
+          default:
+            return project.price;
+        }
+      }),
+    );
+
+    setDatasets(
+      totalDatasets.current.filter((dataset) => {
+        switch (price) {
+          case 'free':
+            return dataset.price === 0;
+          case 'Under $25':
+            return dataset.price < 25;
+          case '$25 to $50':
+            return 25 <= dataset.price && dataset.price <= 50;
+          default:
+            return dataset.price;
+        }
+      }),
+    );
+
+    setModels(
+      totalModels.current.filter((model) => {
+        switch (price) {
+          case 'free':
+            return model.price === 0;
+          case 'Under $25':
+            return model.price < 25;
+          case '$25 to $50':
+            return 25 <= model.price && model.price <= 50;
+          default:
+            return model.price;
+        }
+      }),
+    );
+  }, []);
+
+  React.useEffect(() => {
+    changePriceFilter(priceFilter);
+  }, [priceFilter, changePriceFilter]);
 
   React.useEffect(() => {
     changeTaskFilter(taskFilter);
@@ -227,7 +284,7 @@ const MarketplacePage = () => {
                     <label
                       htmlFor={item}
                       className={cn(
-                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer',
+                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer capitalize',
                       )}
                       key={`${item}-${idx}`}
                     >
@@ -267,7 +324,7 @@ const MarketplacePage = () => {
                     <label
                       htmlFor={item}
                       className={cn(
-                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer',
+                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer capitalize',
                       )}
                       key={`${item}-${idx}`}
                     >

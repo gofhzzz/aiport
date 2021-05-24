@@ -1,16 +1,18 @@
 export interface DatasetInfo {
   _id: string;
   name: string;
-  task: string;
-  type: string;
-  size: number;
-  isOriginal: boolean;
   isPublic: boolean;
   owner: string;
-  collaborators: string[];
   watch: number;
+  size: number;
   star: number;
+  price: number;
+  dataType: string;
+  task: string;
+  description: string;
+  src: string;
   created: string;
+  lastUpdated: string;
 }
 
 export interface DatasetInput {

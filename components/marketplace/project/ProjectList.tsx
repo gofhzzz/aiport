@@ -13,13 +13,8 @@ interface Props {
 const ProjectList = ({ className, projects }: Props) => {
   return (
     <div className={cn(className, 'divide-y-2')}>
-      {projects.map((project, idx) => (
-        <ProjectItem
-          className="p-4"
-          project={project}
-          key={project._id}
-          src={`/images/project/sample/clone_cover_${idx + 1}.jpg`}
-        />
+      {projects.map((project) => (
+        <ProjectItem className="p-4" project={project} key={project._id} />
       ))}
     </div>
   );

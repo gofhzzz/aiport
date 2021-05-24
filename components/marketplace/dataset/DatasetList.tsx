@@ -13,13 +13,8 @@ interface Props {
 const DatasetList = ({ datasets, className }: Props) => {
   return (
     <div className={cn(className, 'divide-y-2')}>
-      {datasets.map((dataset, idx) => (
-        <DatasetItem
-          className="p-4"
-          dataset={dataset}
-          key={dataset._id}
-          src={`/images/dataset/data/${idx + 1}.jpg`}
-        />
+      {datasets.map((dataset) => (
+        <DatasetItem className="p-4" dataset={dataset} key={dataset._id} />
       ))}
     </div>
   );

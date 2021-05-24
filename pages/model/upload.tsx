@@ -112,7 +112,7 @@ const ModalUploadPage = () => {
   //         actionButton: {
   //           label: 'Detils',
   //           onClick: () => {
-  //             router.push('/model/jupyter');
+  //             router.push('/model/overview');
   //             closeModal();
   //           },
   //         },
@@ -141,7 +141,7 @@ const ModalUploadPage = () => {
         actionButton: {
           label: 'Details',
           onClick: () => {
-            router.push('/model/jupyter');
+            router.push('/model/overview/empty');
             closeModal();
           },
         },
@@ -272,16 +272,16 @@ const ModalUploadPage = () => {
               <div className="flex-grow text-center">{error}</div>
             ) : (
               <div className="flex-grow py-6 grid grid-cols-2 gap-4">
-                {models.map((model, idx) => (
+                {models.map((model) => (
                   <Link
                     key={model._id}
                     className="rounded-md overflow-hidden shadow-md group flex flex-col"
-                    href="/model/jupyter"
+                    href="/model/overview"
                   >
                     <div className="relative aspect-w-16 aspect-h-7 overflow-hidden">
                       <img
                         className="object-cover transform duration-300 transition-transform group-hover:scale-110"
-                        src={`/images/model/img${idx + 1}.jpg`}
+                        src={model.src}
                         loading="lazy"
                       />
                     </div>

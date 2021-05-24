@@ -10,8 +10,8 @@ export interface Processing {
   templateType: string;
   augmentations: ProcessingStep[][];
   preprocessing: ProcessingStep[];
-  created: Date;
-  lastUpdated: Date;
+  created: string;
+  lastUpdated: string;
 }
 
 export {};

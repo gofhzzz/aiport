@@ -42,8 +42,12 @@ const ProjectUploadPage = () => {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-    setTimeout(() => router.push('/project/overview'), 500);
-  }, [router]);
+    setTimeout(
+      () =>
+        router.push(`/project/overview/empty?projectName=${projectInput.name}`),
+      500,
+    );
+  }, [router, projectInput]);
 
   if (error !== null) return <div>{error}</div>;
 

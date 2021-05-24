@@ -122,7 +122,8 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
               <div className="w-[100px] space-y-2 text-md font-semibold">
                 <p className="text-red-500">Price</p>
                 <p>Owner</p>
-                <p>Type</p>
+                <p>Task</p>
+                <p>Data Type</p>
                 <p>Size</p>
                 <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
                   <p>See More</p>
@@ -134,8 +135,9 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
                   {dataset.isPublic ? 'FREE' : '120.65'}
                 </p>
                 <p>{dataset.owner}</p>
-                <p>{dataset.type}</p>
-                <p>{dataset.size}</p>
+                <p>{dataset.task}</p>
+                <p>{dataset.dataType}</p>
+                <p>{(dataset.size / 1024 / 1024).toFixed(2)}GB</p>
               </div>
             </div>
             <div>
@@ -191,8 +193,11 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
           <p className="mt-2 text-lg font-semibold">People also viewed</p>
           <div className="flex gap-16 pt-2">
             {otherDataset.map((dataset, idx) => (
-              <button key={`otherDataset-${dataset._id}-${idx}`}>
-                <div className="relative w-48 h-48 overflow-hidden rounded-md">
+              <button
+                className="w-36"
+                key={`otherDataset-${dataset._id}-${idx}`}
+              >
+                <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
                     src={`/images/dataset/data/${idx + 1}.jpg`}
                     className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"

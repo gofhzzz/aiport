@@ -44,7 +44,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
   //       actionButton: {
   //         label: 'Go to Model',
   //         onClick: () => {
-  //           router.push(`/model/jupyter?modelId=${model._id}`);
+  //           router.push(`/model/overview?modelId=${model._id}`);
   //           closeModal();
   //         },
   //       },
@@ -62,7 +62,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
   //         actionButton: {
   //           label: 'Go to Model',
   //           onClick: () => {
-  //             router.push(`/model/jupyter?modelId=${model._id}`);
+  //             router.push(`/model/overview?modelId=${model._id}`);
   //             closeModal();
   //           },
   //         },
@@ -119,6 +119,8 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
               <div className="w-[100px] space-y-2 text-md font-semibold">
                 <p className="text-red-500">Price</p>
                 <p>Owner</p>
+                <p>Task</p>
+                <p>Data Type</p>
                 <p>Framework</p>
                 <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
                   <p>See More</p>
@@ -130,6 +132,8 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
                   {model.isPublic ? 'FREE' : '120.65'}
                 </p>
                 <p>{model.owner}</p>
+                <p>{model.task}</p>
+                <p>{model.dataType}</p>
                 <p>{model.framework}</p>
               </div>
             </div>
@@ -151,7 +155,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
                   actionButton: {
                     label: 'Go to Model',
                     onClick: () => {
-                      router.push(`/model/jupyter?modelId=${model._id}`);
+                      router.push(`/model/overview?modelId=${model._id}`);
                       closeModal();
                     },
                   },
@@ -187,8 +191,8 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
           <p className="mt-2 text-lg font-semibold">People also viewed</p>
           <div className="flex gap-16 pt-2">
             {otherModel.map((model, idx) => (
-              <button key={`othermodel-${model._id}-${idx}`}>
-                <div className="relative w-48 h-48 overflow-hidden rounded-md">
+              <button className="w-36" key={`othermodel-${model._id}-${idx}`}>
+                <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
                     src={`/images/dataset/data/${idx + 1}.jpg`}
                     className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"

@@ -195,12 +195,6 @@ const DatasetListPage = () => {
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Original
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
                           Size
                         </th>
                         <th
@@ -247,7 +241,7 @@ const DatasetListPage = () => {
                             <span>{dataset.name}</span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {dataset.type.split('/')[0] === 'Image' ? (
+                            {dataset.dataType.split('/')[0] === 'image' ? (
                               <div className="flex justify-center items-center space-x-2 transform -translate-x-4">
                                 <PhotographIcon className="w-6 h-6" />
                                 <span>Image</span>
@@ -259,21 +253,12 @@ const DatasetListPage = () => {
                               </div>
                             )}
                           </td>
+
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {dataset.isOriginal ? (
-                              <div className="flex justify-center items-center space-x-2 transform -translate-x-6">
-                                <MedalIcon className="w-6 h-6" />
-                                <span>Original</span>
-                              </div>
-                            ) : (
-                              'Duplicated'
-                            )}
+                            1.3GB items
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {dataset.size.toLocaleString()} items
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {formatDate(dataset.created)}
+                            {formatDate(String(dataset.created))}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link

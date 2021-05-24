@@ -1,5 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
@@ -13,18 +14,7 @@ import { FeedInfo } from 'types/feed';
 import { ExperimentInfo } from 'types/experiment';
 
 const ProjectOverviewPage = () => {
-  const project: ProjectInfo = {
-    _id: '-',
-    name: 'img_clf',
-    isPublic: true,
-    owner: 'Admin',
-    collaborators: [],
-    experiments: 0,
-    deployments: 0,
-    running: 0,
-    created: '',
-    lastUpdated: '',
-  };
+  const router = useRouter();
 
   const feeds: FeedInfo[] = [];
   const runningExperiments: ExperimentInfo[] = [];
@@ -37,7 +27,9 @@ const ProjectOverviewPage = () => {
       <div className="max-w-screen-xl mx-auto pt-8 px-4 md:px-6">
         {/* title section */}
         <section className="md:flex justify-between md:space-x-4">
-          <h1 className="text-3xl font-medium">{project.name}</h1>
+          <h1 className="text-3xl font-medium">
+            {router.query.projectName ?? 'Image Recognition AI'}
+          </h1>
           <div className="my-3 md:my-0">
             <NextLink href="/project/experiments/upload">
               <Button size="sm">
@@ -55,25 +47,13 @@ const ProjectOverviewPage = () => {
               <dt className="text-sm font-medium text-gray-500 truncate">
                 Experiments
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {project.experiments.toLocaleString()}
-              </dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">0</dd>
             </div>
             <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">
                 Deployments
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {project.deployments.toLocaleString()}
-              </dd>
-            </div>
-            <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-              <dt className="text-sm font-medium text-gray-500 truncate">
-                Running
-              </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">
-                {project.running.toLocaleString()}
-              </dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">0</dd>
             </div>
           </dl>
         </section>
@@ -173,8 +153,7 @@ const ProjectOverviewPage = () => {
                                 {experiment.name}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {experiment.epoch.current} /{' '}
-                                {experiment.epoch.total}
+                                {experiment.epoch}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell xl:hidden 2xl:table-cell">
                                 {experiment.trainLoss}
@@ -211,7 +190,7 @@ const ProjectOverviewPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">img_clf</h2>
+    <h2 className="px-4 font-semibold text-xl">Image Recognition AI</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 bg-gray-200"

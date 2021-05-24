@@ -22,7 +22,11 @@ const ModelDetailPage = () => {
   const [otherModel, setOtherModel] = React.useState<ModelInfo[] | null>(null);
 
   React.useEffect(() => {
-    if (router.query.id && typeof router.query.id === 'string') {
+    if (
+      model === null &&
+      router.query.id &&
+      typeof router.query.id === 'string'
+    ) {
       getModel(router.query.id).then((model) => setModel(model));
     }
 

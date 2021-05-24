@@ -27,6 +27,7 @@ import Spinner from '@components/icons/Spinner';
 
 // types
 import { ExperimentInfo } from 'types/experiment';
+import formatDate from '@utils/formatDate';
 
 interface ExperimentInfoWithChecked extends ExperimentInfo {
   checked: boolean;
@@ -40,10 +41,6 @@ const ProjectExperimentsPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
   const totalExperiments = useRef<ExperimentInfoWithChecked[]>([]);
-
-  const [projectInfo, setProjectInfo] = React.useState<{
-    id: string;
-  } | null>(null);
 
   const { showNoti } = useUI();
 
@@ -60,10 +57,6 @@ const ProjectExperimentsPage = () => {
   );
 
   useEffect(() => {
-    setProjectInfo({
-      id: '6083a1ecd7f0a9318ae5bc81',
-    });
-
     getExperiments()
       .then((experiments) => {
         totalExperiments.current = experiments.map((experiment) => ({
@@ -81,13 +74,6 @@ const ProjectExperimentsPage = () => {
   }, [router]);
 
   if (error !== null) return <div>{error}</div>;
-
-  if (!projectInfo)
-    return (
-      <div className="h-[404px] flex justify-center items-center">
-        <Spinner className="w-12 h-12 animate-spin" />
-      </div>
-    );
 
   return (
     <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
@@ -192,7 +178,7 @@ const ProjectExperimentsPage = () => {
         ) : (
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 overflow-x-scroll">
                 <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -261,7 +247,78 @@ const ProjectExperimentsPage = () => {
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          <span className="sr-only">View</span>
+                          Dataset
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Model
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Loss
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Optimizer
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Batch-Size
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Parameter
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Initialization
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Framework
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Created-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Start-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          LastRun-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Running-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
                           Deploy
                         </th>
                       </tr>
@@ -319,8 +376,7 @@ const ProjectExperimentsPage = () => {
                             {experiment.user}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {experiment.epoch.current} /{' '}
-                            {experiment.epoch.total}
+                            {experiment.epoch}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {experiment.trainLoss}
@@ -332,6 +388,45 @@ const ProjectExperimentsPage = () => {
                             {experiment.score}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.dataset}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.model}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.loss}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.optimizer}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.batchSize}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.parameter}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.initialization}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.framework}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {formatDate(experiment.createdTime)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {formatDate(experiment.startTime)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {formatDate(experiment.lastRunTime)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {formatDate(experiment.runningTime)}
+                          </td>
+                          <td className="capitalize px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {String(experiment.deploy)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
                               href="/project/experiments/deploy"
                               className="text-lightBlue-600 hover:text-lightBlue-900"

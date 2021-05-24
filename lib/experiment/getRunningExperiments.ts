@@ -8,7 +8,7 @@ const getRunningExperiments: () => Promise<ExperimentInfo[]> = async () => {
     '/api/experiment',
   );
 
-  return experiments.filter((experiment) => experiment.status === 'Running');
+  return experiments;
 };
 
 export default getRunningExperiments;
