@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import { useDebounce } from 'react-use';
@@ -74,7 +74,6 @@ const MarketplacePage = () => {
 
   React.useEffect(() => {
     if (
-      projects === null &&
       router.query.category &&
       (router.query.category === 'ai' ||
         router.query.category === 'dataset' ||
@@ -88,34 +87,33 @@ const MarketplacePage = () => {
       setCategory(router.query.category);
     }
 
-    if (projects === null)
-      getSampleProjects().then((sampleProjects) => {
-        totalProjects.current = sampleProjects;
-        setProjects(sampleProjects);
-      });
-    if (datasets === null)
-      getDatasets().then((datasets) => {
-        totalDatasets.current = datasets;
-        setDatasets(datasets);
-      });
-    if (models === null)
-      getModels().then((models) => {
-        totalModels.current = models;
-        setModels(models);
-      });
-
-    if (projects === null || datasets === null || models === null) return;
-
-    //TODO: 데이터 받으면 필터링
-
-    setProjects((prev) => {
-      if (prev === null) return null;
-      if (taskFilter.length === 0) return totalProjects.current;
-      return prev.filter((project) => {
-        return taskFilter.includes(project.task);
-      });
+    getSampleProjects().then((sampleProjects) => {
+      totalProjects.current = sampleProjects;
+      setProjects(sampleProjects);
     });
-  }, [taskFilter, router]);
+    getDatasets().then((datasets) => {
+      totalDatasets.current = datasets;
+      setDatasets(datasets);
+    });
+    getModels().then((models) => {
+      totalModels.current = models;
+      setModels(models);
+    });
+  }, [router]);
+
+  const changeTaskFilter = useCallback((tasks: string[]) => {
+    if (tasks.length === 0) return setProjects(totalProjects.current);
+
+    setProjects((prev) =>
+      prev === null
+        ? totalProjects.current
+        : prev.filter((project) => tasks.includes(project.task)),
+    );
+  }, []);
+
+  React.useEffect(() => {
+    changeTaskFilter(taskFilter);
+  }, [taskFilter, changeTaskFilter]);
 
   const getDataArray = React.useCallback(
     async (variant: 'ai' | 'dataset' | 'model') => {
