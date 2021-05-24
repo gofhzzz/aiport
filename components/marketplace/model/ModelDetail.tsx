@@ -83,7 +83,10 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
       <SectionTitle className="px-8" picture="/icon/model.png" title="Model" />
       <div className={cn(className, 'divide-y-2')}>
         <div className="flex py-4">
-          <img src={model.src} className="object-cover w-80 h-80 rounded-md" />
+          <img
+            src={model.src}
+            className="object-contain w-80 h-80 rounded-md"
+          />
           <div className="divide-y-2 px-4 w-full">
             <div className="flex justify-between pb-2 w-full">
               <p className="text-2xl font-semibold">{model.name}</p>

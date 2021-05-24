@@ -88,7 +88,7 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
         <div className="flex py-4">
           <img
             src={dataset.src}
-            className="object-cover w-80 h-80 rounded-md"
+            className="object-contain w-80 h-80 rounded-md"
           />
           <div className="divide-y-2 px-4 w-full">
             <div className="flex justify-between pb-2 w-full">
