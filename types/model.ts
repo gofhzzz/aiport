@@ -16,4 +16,10 @@ export interface ModelInput {
   isPublic: boolean;
 }
 
+export const initialModelInput: ModelInput = {
+  name: '',
+  framework: '',
+  isPublic: true,
+};
+
 export {};

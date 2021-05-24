@@ -18,7 +18,7 @@ import getModels from '@lib/getModels';
 // import uploadModel from '@lib/uploadModel';
 
 // types
-import { ModelInfo, ModelInput } from 'types/model';
+import { initialModelInput, ModelInfo, ModelInput } from 'types/model';
 
 const frameworkList = [
   {
@@ -81,11 +81,7 @@ const frameworkList = [
 
 const ModalUploadPage = () => {
   const router = useRouter();
-  const [modelInput, setModelInput] = useState<ModelInput>({
-    name: '',
-    framework: '',
-    isPublic: true,
-  });
+  const [modelInput, setModelInput] = useState<ModelInput>(initialModelInput);
   const [fileInfo, setFileInfo] = useState<{
     filename: string;
     size: number;
