@@ -8,7 +8,7 @@ import SectionTitle from '@components/core/SectionTitle';
 import { useUI } from '@components/ui/context';
 
 // labraries
-// import addToMyModelById from '@lib/addToMyModelById';
+// import addToMyModelById from '@lib/Model/addToMyModelById';
 
 // icons
 import {

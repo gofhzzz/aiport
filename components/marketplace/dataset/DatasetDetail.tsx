@@ -8,7 +8,7 @@ import SectionTitle from '@components/core/SectionTitle';
 import { useUI } from '@components/ui/context';
 
 // libraries
-// import addToMyDatasetById from '@lib/addToMyDatasetById';
+// import addToMyDatasetById from '@lib/dataset/addToMyDatasetById';
 
 // icons
 import {

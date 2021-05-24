@@ -1,4 +1,4 @@
-import fetcher from './fetcher';
+import fetcher from '@lib/fetcher';
 
 const addToMyModelById: (modelId: string) => Promise<void> = async (
   modelId,

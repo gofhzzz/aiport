@@ -1,15 +1,15 @@
-import fetcher from './fetcher';
+import fetcher from '@lib/fetcher';
 
-const addToMyAiById: (projectId: string) => Promise<void> = async (
-  projectId,
+const addToMyDatasetById: (datasetId: string) => Promise<void> = async (
+  datasetId,
 ) => {
   try {
-    await fetcher(`/api/user/project/${projectId}`, {
+    await fetcher(`/api/user/dataset/${datasetId}`, {
       method: 'POST',
     });
   } catch (err) {
     if (process.env.NODE_ENV === 'development') {
-      console.log('[addToMyAiById] error', err);
+      console.log('[addToMyDatasetById] error', err);
     }
 
     const { code, additionalInfo } = err;
@@ -31,4 +31,4 @@ const addToMyAiById: (projectId: string) => Promise<void> = async (
   }
 };
 
-export default addToMyAiById;
+export default addToMyDatasetById;

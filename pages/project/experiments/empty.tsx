@@ -278,7 +278,7 @@ const ProjectExperimentsPage = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
-                              href="/project/experiments/details"
+                              href="/project/experiments/deploy"
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
                               View
