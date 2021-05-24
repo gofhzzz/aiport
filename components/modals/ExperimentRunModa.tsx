@@ -1,10 +1,10 @@
 import React, { Dispatch, Fragment, SetStateAction, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { Slider } from '@material-ui/core';
 
 // components
 import Select from '@components/ui/Select';
 import Button from '@components/ui/Button';
-import Input from '@components/ui/Input';
 
 // icons
 import { XIcon } from '@heroicons/react/outline';
@@ -32,6 +32,14 @@ const selectItems = [
 const ExperimentRunModal: React.FC<Props> = ({ show, setShow }) => {
   const [selectedNode, setSelectedNode] = useState<string>(selectItems[0]);
   const [gpuNum, setGpuNum] = useState<number>(1);
+
+  const getValueText: (gpuNum: number) => string = React.useCallback(
+    (gpuNum) => {
+      setGpuNum(gpuNum);
+      return String(gpuNum);
+    },
+    [],
+  );
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -94,16 +102,17 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow }) => {
                     onSelect={(item) => setSelectedNode(item.value as string)}
                   />
 
-                  {/*TODO: Fix range bar */}
                   <div className="mt-8">
-                    <Input
-                      className=""
-                      label="Number of GPUs"
-                      type="range"
-                      min="1"
-                      max="10"
-                      value={gpuNum}
-                      onChange={(e) => setGpuNum(Number(e.target.value))}
+                    <p>Number of GPUs</p>
+                    <Slider
+                      defaultValue={3}
+                      getAriaValueText={getValueText}
+                      aria-labelledby="discrete-slider"
+                      valueLabelDisplay="auto"
+                      step={1}
+                      marks
+                      min={1}
+                      max={10}
                     />
 
                     <p className="text-right">{gpuNum} / 10</p>
