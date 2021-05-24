@@ -257,8 +257,12 @@ const ProjectExperimentsPage = () => {
                         >
                           Score
                         </th>
-                        <th scope="col" className="relative px-6 py-3">
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
                           <span className="sr-only">View</span>
+                          Deploy
                         </th>
                       </tr>
                     </thead>
@@ -293,7 +297,7 @@ const ProjectExperimentsPage = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <a
                               className="flex items-center space-x-4 hover:opacity-80 hover:underline"
-                              href="/project/experiments/deploy"
+                              href="/project/experiments/details"
                             >
                               <AIIcon className="w-6 h-6" />
                               <span>{experiment.name}</span>
@@ -327,12 +331,12 @@ const ProjectExperimentsPage = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {experiment.score}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             <Link
-                              href="/project/experiments/details"
+                              href="/project/experiments/deploy"
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
-                              Detail
+                              View
                             </Link>
                           </td>
                         </tr>
@@ -351,7 +355,9 @@ const ProjectExperimentsPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Text Sentiment Analysis</h2>
+    <h2 className="px-4 font-semibold text-xl">
+      Celebrity Look-alike Recommender
+    </h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"

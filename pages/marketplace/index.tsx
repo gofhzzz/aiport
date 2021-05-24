@@ -44,17 +44,18 @@ const categoryItems = [
   },
 ];
 
+const IMAGE_TASK = [
+  'Classification',
+  'Multi-label Classification',
+  'Object Detection',
+];
+
 const TEXT_TASK = [
   'Sentiment Classification',
   'Translation',
   'Paraphrase Classification',
   'Question Answering',
-];
-
-const IMAGE_TASK = [
-  'Classification',
-  'Multi-label Classification',
-  'Object Detection',
+  'Language Modeling',
 ];
 
 const PRICE_ITEMS = [
@@ -70,15 +71,15 @@ const CATEGORY = ['ai', 'dataset', 'model'] as const;
 const MarketplacePage = () => {
   const router = useRouter();
 
-  const categoryItem = React.useMemo(() => {
-    if (
-      router.query.category === 'ai' ||
-      router.query.category === 'dataset' ||
-      router.query.category === 'model'
-    )
-      return router.query.category;
-    return 'ai';
-  }, [router]);
+  // const categoryItem = React.useMemo(() => {
+  //   if (
+  //     router.query.category === 'ai' ||
+  //     router.query.category === 'dataset' ||
+  //     router.query.category === 'model'
+  //   )
+  //     return router.query.category;
+  //   return 'ai';
+  // }, [router]);
 
   const [searchInput, setSearchInput] = React.useState<string>('');
   const [category, setCategory] = React.useState<typeof CATEGORY[number]>(
@@ -137,6 +138,16 @@ const MarketplacePage = () => {
       prev === null
         ? totalProjects.current
         : prev.filter((project) => tasks.includes(project.task)),
+    );
+    setDatasets((prev) =>
+      prev === null
+        ? totalDatasets.current
+        : prev.filter((dataset) => tasks.includes(dataset.task)),
+    );
+    setModels((prev) =>
+      prev === null
+        ? totalModels.current
+        : prev.filter((model) => tasks.includes(model.task)),
     );
   }, []);
 
@@ -200,10 +211,10 @@ const MarketplacePage = () => {
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Task</p>
-          <Disclosure>
+          <Disclosure defaultOpen={true}>
             {({ open }) => (
               <>
-                <Disclosure.Button className="py-2 flex items-center">
+                <Disclosure.Button className="flex items-center">
                   <ChevronRightIcon
                     className={cn('w-4 h-4 mr-2', {
                       'transform rotate-90': open,
@@ -240,7 +251,7 @@ const MarketplacePage = () => {
               </>
             )}
           </Disclosure>
-          <Disclosure>
+          <Disclosure defaultOpen={true}>
             {({ open }) => (
               <>
                 <Disclosure.Button className="py-2 flex items-center">

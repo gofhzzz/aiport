@@ -3,6 +3,7 @@ export interface ModelInfo {
   name: string;
   framework: string;
   isPublic: boolean;
+  task: string;
   owner: string;
   collaborators: string[];
   watch: number;

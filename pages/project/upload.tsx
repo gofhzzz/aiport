@@ -1,13 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { EyeIcon, HeartIcon } from '@heroicons/react/outline';
-import { StarIcon } from '@heroicons/react/solid';
-
 // components
 import Dashboard from '@components/layout/Dashboard';
 import Button from '@components/ui/Button';
 import Input from '@components/ui/Input';
-import Link from '@components/ui/Link';
 
 // libraries
 import getSampleProjects from '@lib/ai/getSampleProjects';
@@ -15,6 +11,7 @@ import getSampleProjects from '@lib/ai/getSampleProjects';
 // icons
 import Spinner from '@components/icons/Spinner';
 import TextArea from '@components/ui/TextArea';
+import { ChevronRightIcon } from '@heroicons/react/outline';
 
 // types
 import {
@@ -22,6 +19,8 @@ import {
   ProjectInput,
   SampleProjectInfo,
 } from 'types/project';
+import { useUI } from '@components/ui/context';
+import ProjectCard from '@components/project/ProjectCard';
 
 const ProjectUploadPage = () => {
   const router = useRouter();
@@ -33,6 +32,7 @@ const ProjectUploadPage = () => {
   );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { showNoti } = useUI();
 
   useEffect(() => {
     getSampleProjects()
@@ -49,109 +49,81 @@ const ProjectUploadPage = () => {
 
   return (
     <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
-      <h1 className="text-3xl font-medium">New Project</h1>
+      <div className="w-full lg:grid gap-8 grid-cols-2 max-w-5xl mx-auto lg:px-16">
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-medium capitalize">New Project</h1>
+          </div>
 
+          <div className="flex flex-col justify-between h-full pb-8">
+            <div>
+              <div className="mt-8">
+                <Input
+                  containerClassName="my-4"
+                  label="Project Name"
+                  placeholder="My first project"
+                  value={projectInput.name}
+                  onChange={(e) => {
+                    setProjectInput((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }));
+                  }}
+                />
+              </div>
+
+              <TextArea
+                value={projectInput.description}
+                onChange={(e) => {
+                  setProjectInput((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }));
+                }}
+                label="Description (Optional)"
+                placeholder="lease enter a short description of this application ..."
+              />
+            </div>
+            <div className="mt-6 flex justify-end space-x-4">
+              <Button color="white" onClick={() => router.back()}>
+                Back
+              </Button>
+              <Button
+                disabled={!projectInput.name || loading}
+                onClick={() => handleSubmit()}
+              >
+                Create
+              </Button>
+            </div>
+          </div>
+        </section>
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
+          <h1 className="text-xl font-medium">Clone Project (optional)</h1>
+          <div className="flex-grow py-6 grid grid-cols-2 gap-4">
+            {sampleProjects === null ? (
+              <div className="h-[404px] flex justify-center items-center">
+                <Spinner className="w-12 h-12 animate-spin" />
+              </div>
+            ) : (
+              sampleProjects
+                .slice(0, 4)
+                .map((project, idx) => (
+                  <ProjectCard key={project._id} project={project} idx={idx} />
+                ))
+            )}
+          </div>
+          <button
+            onClick={() =>
+              showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+            }
+            className="mt-2 w-full flex items-center justify-end text-lightBlue-500 hover:opacity-80"
+          >
+            <p className="text-xl">Browse All AI projects</p>
+            <ChevronRightIcon className="w-8 h-8" />
+          </button>
+        </section>
+      </div>
       {/* new project form */}
-      <section className="mt-8">
-        <div className="rounded-md shadow-md bg-white p-4 sm:p-6 md:flex md:space-x-6 justify-between items-end max-w-lg mx-auto md:max-w-none">
-          <div className="flex-1">
-            <h2 className="text-xl font-medium">Create Empty Project</h2>
-            <Input
-              containerClassName="my-4"
-              label="Project Name"
-              placeholder="My first project"
-              value={projectInput.name}
-              onChange={(e) => {
-                setProjectInput((prev) => ({
-                  ...prev,
-                  name: e.target.value,
-                }));
-              }}
-            />
-            <TextArea
-              value={projectInput.description}
-              onChange={(e) => {
-                setProjectInput((prev) => ({
-                  ...prev,
-                  description: e.target.value,
-                }));
-              }}
-              label="Description (Optional)"
-              placeholder="lease enter a short description of this application ..."
-            />
-          </div>
-          <div className="mt-4 flex items-center justify-end">
-            <Button
-              disabled={!projectInput.name || loading}
-              onClick={() => handleSubmit()}
-            >
-              Create
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* clone project section */}
-      <section className="mt-8">
-        <div className="rounded-md shadow-md bg-white p-4 sm:p-6 max-w-lg mx-auto md:max-w-none">
-          <h2 className="text-xl font-medium">Clone Project (optional)</h2>
-
-          {sampleProjects === null ? (
-            <div className="h-[404px] flex justify-center items-center">
-              <Spinner className="w-12 h-12 animate-spin" />
-            </div>
-          ) : (
-            <div className="md:py-6 gap-6 grid-cols-2 md:grid lg:grid-cols-3 lg:gap-10 max-w-screen-xl mx-auto">
-              {sampleProjects.map((project, idx) => (
-                <Link
-                  key={project._id}
-                  className="rounded-md overflow-hidden shadow-md group flex flex-col my-6 md:my-0"
-                  href="/project/overview"
-                >
-                  <div className="relative aspect-w-16 aspect-h-7 overflow-hidden">
-                    <img
-                      className="object-cover transform duration-300 transition-transform group-hover:scale-110"
-                      src={`/images/project/sample/clone_cover_${idx + 1}.jpg`}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="px-4 flex-grow flex flex-col justify-center min-h-[128px]">
-                    <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
-                      {project.name}
-                    </h5>
-                    <p className="mt-2 text-sm truncate">
-                      Task: {project.task}
-                    </p>
-                    <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm">
-                      <div className="flex items-center space-x-1">
-                        <EyeIcon className="w-5 h-5" />
-                        <span>{project.watch.toLocaleString()}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <StarIcon className="w-5 h-5" />
-                        <span>{project.star.toLocaleString()}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="border-t border-gray-300 py-1.5 flex justify-between items-center px-4">
-                    <HeartIcon className="w-5 h-5 text-red-400" />
-                    <span className="text-sm">Free</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-          <div className="pb-8 md:pb-4">
-            <Link
-              className="float-right text-lightBlue-400 hover:underline hover:opacity-70"
-              href="/marketplace?sort=project"
-              as="/marketplace"
-            >
-              Browse all AI projects &gt;
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

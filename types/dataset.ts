@@ -1,6 +1,7 @@
 export interface DatasetInfo {
   _id: string;
   name: string;
+  task: string;
   type: string;
   size: number;
   isOriginal: boolean;

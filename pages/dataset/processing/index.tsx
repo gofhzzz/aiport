@@ -105,9 +105,7 @@ const ProcessingPage = () => {
                               'transform rotate-90': open,
                             })}
                           />
-                          <p className="text-xl font-semibold capitalize">
-                            {processing}
-                          </p>
+                          <p className="text-lg">{processing}</p>
                         </Disclosure.Button>
                         <Disclosure.Panel>
                           {open &&

@@ -9,18 +9,18 @@ import { EyeIcon, StarIcon } from '@heroicons/react/solid';
 import { HeartIcon } from '@heroicons/react/outline';
 
 // types
-import { DatasetInfo } from 'types/dataset';
+import { SampleProjectInfo } from 'types/project';
 
 interface Props {
   className?: string;
-  dataset: DatasetInfo;
+  project: SampleProjectInfo;
   idx: number;
 }
 
-const DatasetCard = ({ className, dataset, idx }: Props) => {
+const ProjectCard = ({ className, project, idx }: Props) => {
   return (
     <Link
-      href="/dataset/data"
+      href="/project/overview"
       className={cn(
         className,
         'rounded-md overflow-hidden shadow-md group flex flex-col',
@@ -35,17 +35,17 @@ const DatasetCard = ({ className, dataset, idx }: Props) => {
       </div>
       <div className="px-4 flex-grow">
         <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
-          {dataset.name}
+          {project.name}
         </h5>
-        <p className="mt-2 text-sm truncate">{dataset.type}</p>
+        <p className="mt-2 text-sm truncate">{project.task}</p>
         <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm mb-2">
           <div className="flex items-center space-x-1">
             <EyeIcon className="w-5 h-5" />
-            <span>{dataset.watch.toLocaleString()}</span>
+            <span>{project.watch.toLocaleString()}</span>
           </div>
           <div className="flex items-center space-x-1">
             <StarIcon className="w-5 h-5" color="orange" />
-            <span>{dataset.star.toLocaleString()}</span>
+            <span>{project.star.toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -57,4 +57,4 @@ const DatasetCard = ({ className, dataset, idx }: Props) => {
   );
 };
 
-export default DatasetCard;
+export default ProjectCard;
