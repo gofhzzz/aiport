@@ -146,7 +146,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
                   title: 'Success',
                   content: 'It has been added to your Ai',
                   actionButton: {
-                    label: 'Go to Ai',
+                    label: 'Go to AI',
                     onClick: () => {
                       router.push(`/project/overview?projectId=${project._id}`);
                       closeModal();

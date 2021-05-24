@@ -9,7 +9,7 @@ import Link from '@components/ui/Link';
 
 const sections = [
   {
-    title: 'AI Project',
+    title: 'AI',
     picture: '/icon/project.png',
     links: [
       {

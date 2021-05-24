@@ -95,7 +95,7 @@ const ModelJupyterPage = () => {
           <div className="border-r border-gray-300" />
           <div className="flex-grow pl-4">
             <p className="pb-4">Created Time: {formatDate(model.created)}</p>
-            <p>Pre-traned models: 1</p>
+            <p>Pre-trained Models: 1</p>
           </div>
         </div>
       </div>

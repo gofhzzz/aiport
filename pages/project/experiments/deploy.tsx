@@ -86,18 +86,16 @@ const ProjectExperimentsDetailsPage = () => {
     <>
       <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
         <div className="md:flex items-center justify-between">
-          <h1 className="text-3xl font-medium">{`< ${experiment.name} < Deploy`}</h1>
-          <div className="mt-4 md:mt-0 flex items-center space-x-4">
-            <Button color="white" onClick={() => setShow(true)}>
-              Download
-            </Button>
-            <Button className="!w-32" color="lightBlue">
-              Run
-            </Button>
-            <Button className="!w-32" color="red">
-              Stop
-            </Button>
-          </div>
+          <h1 className="text-3xl font-medium flex items-center">
+            <button className="hover:opacity-80" onClick={() => router.back()}>
+              <ChevronLeftIcon className="w-6 h-6" />
+            </button>{' '}
+            <a className="hover:opacity-80 flex" href="/project/experiments">
+              {`${experiment.name}`}
+            </a>
+            <ChevronLeftIcon className="w-6 h-6" />
+            Deploy
+          </h1>
         </div>
         <div className="relative mt-12">
           <div

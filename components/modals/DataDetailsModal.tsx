@@ -129,9 +129,7 @@ const DataDetailsModal: React.FC<Props> = ({
                       <p>{`0000${imageIndex + 1}.jpg`}</p>
                     </div>
                     <div>
-                      <h6 className="text-sm text-gray-500">
-                        Assigned Project:
-                      </h6>
+                      <h6 className="text-sm text-gray-500">AI:</h6>
                       <p>{`0000${imageIndex + 1}.jpg`}</p>
                     </div>
                     <div>

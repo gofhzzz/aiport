@@ -310,7 +310,9 @@ const DatasetProcessingPage = () => {
             <Button onClick={() => handleSave()}>Save</Button>
             <Button
               className="ml-4"
-              onClick={() => showNoti({ title: '준비중이 기능입니다.' })}
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
             >
               Save As
             </Button>

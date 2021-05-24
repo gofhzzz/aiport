@@ -19,7 +19,7 @@ const SearchItem = ({ className, initialDropdownItem = 'ai' }: Props) => {
   >(initialDropdownItem);
   const [searchInput, setSearchInput] = React.useState<string>('');
   const DropdownItems = [
-    { label: 'Ai', onClick: () => setSearchCategory('ai') },
+    { label: 'AI', onClick: () => setSearchCategory('ai') },
     { label: 'Dataset', onClick: () => setSearchCategory('dataset') },
     { label: 'Model', onClick: () => setSearchCategory('model') },
   ];
@@ -29,7 +29,7 @@ const SearchItem = ({ className, initialDropdownItem = 'ai' }: Props) => {
       <Dropdown
         button={
           <div className="capitalize border-2 w-40 justify-between rounded-md mr-2 flex items-center px-4 h-[42px] mt-1">
-            {searchCategory}
+            {searchCategory === 'ai' ? 'AI' : searchCategory}
             <ChevronDownIcon className="w-6 h-6" />
           </div>
         }

@@ -169,6 +169,18 @@ const ProjectExperimentsPage = () => {
         >
           Tensorboard
         </Button>
+        <Button
+          size="sm"
+          color="red"
+          disabled={
+            experiments === null || !experiments.find(({ checked }) => checked)
+          }
+          onClick={() => {
+            showNoti({ variant: 'alert', title: '준비중인 기능입니다.' });
+          }}
+        >
+          Delete
+        </Button>
       </section>
 
       {/* model list section */}
@@ -278,9 +290,14 @@ const ProjectExperimentsPage = () => {
                               }}
                             />
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
-                            <AIIcon className="w-6 h-6" />
-                            <span>{experiment.name}</span>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <a
+                              className="flex items-center space-x-4 hover:opacity-80 hover:underline"
+                              href="/project/experiments/deploy"
+                            >
+                              <AIIcon className="w-6 h-6" />
+                              <span>{experiment.name}</span>
+                            </a>
                           </td>
                           <td
                             className={cn(
@@ -312,10 +329,10 @@ const ProjectExperimentsPage = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
-                              href="/project/experiments/deploy"
+                              href="/project/experiments/details"
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
-                              View
+                              Detail
                             </Link>
                           </td>
                         </tr>

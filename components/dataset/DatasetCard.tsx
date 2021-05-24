@@ -38,7 +38,7 @@ const DatasetCard = ({ className, dataset, idx }: Props) => {
           {dataset.name}
         </h5>
         <p className="mt-2 text-sm truncate">{dataset.type}</p>
-        <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm">
+        <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm mb-2">
           <div className="flex items-center space-x-1">
             <EyeIcon className="w-5 h-5" />
             <span>{dataset.watch.toLocaleString()}</span>

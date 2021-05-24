@@ -18,12 +18,13 @@ import getModels from '@lib/model/getModels';
 
 // icons
 import Spinner from '@components/icons/Spinner';
-import { XIcon } from '@heroicons/react/outline';
+import { ChevronRightIcon, XIcon } from '@heroicons/react/outline';
 
 // types
 import { SampleProjectInfo } from 'types/project';
 import { DatasetInfo } from 'types/dataset';
 import { ModelInfo } from 'types/model';
+import { Disclosure } from '@headlessui/react';
 
 const categoryItems = [
   {
@@ -43,13 +44,17 @@ const categoryItems = [
   },
 ];
 
-const TASK_ITEMS = [
-  'img classfication',
-  'object detection',
-  'img multi-label claassification',
-  'text pasentiment analysis',
-  'Text Classification',
-  'text question answering',
+const TEXT_TASK = [
+  'Sentiment Classification',
+  'Translation',
+  'Paraphrase Classification',
+  'Question Answering',
+];
+
+const IMAGE_TASK = [
+  'Classification',
+  'Multi-label Classification',
+  'Object Detection',
 ];
 
 const PRICE_ITEMS = [
@@ -89,7 +94,9 @@ const MarketplacePage = () => {
   const totalDatasets = React.useRef<DatasetInfo[]>([]);
   const totalModels = React.useRef<ModelInfo[]>([]);
 
-  const [taskFilter, setTaskFilter] = React.useState<typeof TASK_ITEMS>([]);
+  const [taskFilter, setTaskFilter] = React.useState<
+    typeof TEXT_TASK | typeof IMAGE_TASK
+  >([]);
 
   const [priceFilter, setPriceFilter] = React.useState<
     typeof PRICE_ITEMS[number]
@@ -193,28 +200,86 @@ const MarketplacePage = () => {
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Task</p>
-          {TASK_ITEMS.map((item, idx) => (
-            <label
-              htmlFor={item}
-              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5')}
-              key={`${item}-${idx}`}
-            >
-              <input
-                type="checkBox"
-                id={item}
-                className="mr-2"
-                checked={taskFilter.includes(item)}
-                onChange={() => {
-                  setTaskFilter((prev) =>
-                    taskFilter.includes(item)
-                      ? prev.filter((val) => val !== item)
-                      : [...prev, item],
-                  );
-                }}
-              />
-              <p className="text-md ml-2 font-medium capitalize">{item}</p>
-            </label>
-          ))}
+          <Disclosure>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="py-2 flex items-center">
+                  <ChevronRightIcon
+                    className={cn('w-4 h-4 mr-2', {
+                      'transform rotate-90': open,
+                    })}
+                  />
+                  Image
+                </Disclosure.Button>
+                <Disclosure.Panel>
+                  {IMAGE_TASK.map((item, idx) => (
+                    <label
+                      htmlFor={item}
+                      className={cn(
+                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer',
+                      )}
+                      key={`${item}-${idx}`}
+                    >
+                      <input
+                        type="checkBox"
+                        id={item}
+                        className="mr-2 cursor-pointer"
+                        checked={taskFilter.includes(item)}
+                        onChange={() => {
+                          setTaskFilter((prev) =>
+                            taskFilter.includes(item)
+                              ? prev.filter((val) => val !== item)
+                              : [...prev, item],
+                          );
+                        }}
+                      />
+                      <p className="text-md ml-2 font-medium">{item}</p>
+                    </label>
+                  ))}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+          <Disclosure>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="py-2 flex items-center">
+                  <ChevronRightIcon
+                    className={cn('w-4 h-4 mr-2', {
+                      'transform rotate-90': open,
+                    })}
+                  />
+                  Text
+                </Disclosure.Button>
+                <Disclosure.Panel>
+                  {TEXT_TASK.map((item, idx) => (
+                    <label
+                      htmlFor={item}
+                      className={cn(
+                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer',
+                      )}
+                      key={`${item}-${idx}`}
+                    >
+                      <input
+                        type="checkBox"
+                        id={item}
+                        className="mr-2 cursor-pointer"
+                        checked={taskFilter.includes(item)}
+                        onChange={() => {
+                          setTaskFilter((prev) =>
+                            taskFilter.includes(item)
+                              ? prev.filter((val) => val !== item)
+                              : [...prev, item],
+                          );
+                        }}
+                      />
+                      <p className="text-md ml-2 font-medium">{item}</p>
+                    </label>
+                  ))}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Price</p>

@@ -123,7 +123,19 @@ const DatasetDataListPage = () => {
           <div className="flex items-center flex-shrink-0 space-x-4">
             <Button
               size="sm"
-              color="white"
+              disabled={
+                dataList === null || !dataList.find(({ checked }) => checked)
+              }
+              onClick={() => {
+                showNoti({ variant: 'alert', title: '준비중인 기능입니다.' });
+              }}
+            >
+              <TrashIcon className="w-5 h-5 mr-2" />
+              <span>Edit</span>
+            </Button>
+            <Button
+              size="sm"
+              color="red"
               disabled={
                 dataList === null || !dataList.find(({ checked }) => checked)
               }
@@ -183,13 +195,13 @@ const DatasetDataListPage = () => {
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Data Name
+                          Name
                         </th>
                         <th
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Project
+                          AI
                         </th>
                         <th
                           scope="col"

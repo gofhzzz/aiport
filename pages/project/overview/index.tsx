@@ -72,24 +72,18 @@ const ProjectOverviewPage = () => {
 
         {/* stats section */}
         <section className="mt-5">
-          <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">
-                Experiments
+                Total Experiments
               </dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">2</dd>
             </div>
             <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">
-                Deployments
+                Deploy
               </dt>
               <dd className="mt-1 text-3xl font-semibold text-gray-900">4</dd>
-            </div>
-            <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-              <dt className="text-sm font-medium text-gray-500 truncate">
-                Running
-              </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">8</dd>
             </div>
           </dl>
         </section>
@@ -129,7 +123,11 @@ const ProjectOverviewPage = () => {
           </div>
 
           <div className="rounded-lg shadow p-4 bg-white col-span-7 2xl:col-span-8">
-            <h4 className="text-lg font-medium">Running Experiments</h4>
+            <h4 className="text-lg font-medium">{`Running Experiments ${
+              runningExperiments.length === 0
+                ? ''
+                : `(${runningExperiments.length})`
+            }`}</h4>
             {runningExperiments.length === 0 ? (
               <div className="h-[400px] grid place-items-center">
                 There is no experiments yet!
@@ -186,7 +184,12 @@ const ProjectOverviewPage = () => {
                               }
                             >
                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 max-w-[120px] xl:max-w-none truncate">
-                                {experiment.name}
+                                <a
+                                  className="hover:opacity-80 hover:underline"
+                                  href={`/project/experiments/deploy?projectId=${project._id}&projectName=${project.name}`}
+                                >
+                                  {experiment.name}
+                                </a>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {experiment.epoch.current} /{' '}
@@ -203,10 +206,10 @@ const ProjectOverviewPage = () => {
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <Link
-                                  href={`/project/experiments/deploy?projectId=${project._id}&projectName=${project.name}`}
+                                  href="/project/experiments/details"
                                   className="text-lightBlue-600 hover:text-lightBlue-900"
                                 >
-                                  View
+                                  Detail
                                 </Link>
                               </td>
                             </tr>

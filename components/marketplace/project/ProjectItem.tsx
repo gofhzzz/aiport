@@ -1,5 +1,5 @@
 import React from 'react';
-import { EyeIcon, MenuIcon, StarIcon } from '@heroicons/react/solid';
+import { EyeIcon, StarIcon } from '@heroicons/react/solid';
 import {
   ChartSquareBarIcon,
   CurrencyDollarIcon,
@@ -57,10 +57,6 @@ const ProjectItem = ({ project, className, src }: Props) => {
               <div className="flex items-center ml-4">
                 <UserCircleIcon className="w-6 h-6" color="gray" />
                 <p className="text-gray-600 pl-1">{project.owner}</p>
-              </div>
-              <div className="flex items-center ml-4">
-                <MenuIcon className="w-6 h-6" color="gray" />
-                <p className="text-gray-600 pl-1">{'Ai'}</p>
               </div>
             </div>
           </div>

@@ -22,11 +22,16 @@ import Spinner from '@components/icons/Spinner';
 // types
 import { DatasetInfo } from 'types/dataset';
 import { Processing } from 'types/processing';
+import { Disclosure } from '@headlessui/react';
 
-const selectTypes = [
-  { label: 'image1', value: 'image1' },
-  { label: 'image2', value: 'image2' },
-  { label: 'image3', value: 'image3' },
+const PROCESSING_TYPE = [
+  'audio',
+  'image',
+  'tabular',
+  'text',
+  'signal',
+  'time-series',
+  'video',
 ];
 
 const ProcessingPage = () => {
@@ -38,7 +43,9 @@ const ProcessingPage = () => {
   const [datasets, setDatasets] = React.useState<DatasetInfo[] | null>(null);
   const [variant, setVariant] = React.useState<'new' | 'load'>('new');
   const [templateName, setTemplateName] = React.useState<string>('');
-  const [type, setType] = React.useState<string>('image1');
+  const [type, setType] = React.useState<typeof PROCESSING_TYPE[number]>(
+    PROCESSING_TYPE[0],
+  );
   const [processings, setProcessings] = React.useState<Processing[] | null>(
     null,
   );
@@ -88,21 +95,44 @@ const ProcessingPage = () => {
           {variant === 'load' ? (
             <div className="flex flex-col justify-between h-full py-8">
               <div>
-                {processings.map((processing) => (
-                  <div key={processing._id}>
-                    <button
-                      onClick={() => {
-                        setSelectedTemplate(processing);
-                      }}
-                      className={cn('flex', {
-                        'text-lightBlue-400':
-                          selectedTemplate?._id === processing._id,
-                      })}
-                    >
-                      <ChevronRightIcon className="w-6 h-6" />
-                      <p>{processing.templateName}</p>
-                    </button>
-                  </div>
+                {PROCESSING_TYPE.map((processing) => (
+                  <Disclosure key={processing}>
+                    {({ open }) => (
+                      <div className="mb-2">
+                        <Disclosure.Button className="flex items-center">
+                          <ChevronRightIcon
+                            className={cn('w-4 h-4 mr-2', {
+                              'transform rotate-90': open,
+                            })}
+                          />
+                          <p className="text-xl font-semibold capitalize">
+                            {processing}
+                          </p>
+                        </Disclosure.Button>
+                        <Disclosure.Panel>
+                          {open &&
+                            processings.map((item) => {
+                              if (item.templateType === processing)
+                                return (
+                                  <div className="pl-6" key={item._id}>
+                                    <button
+                                      onClick={() => {
+                                        setSelectedTemplate(item);
+                                      }}
+                                      className={cn('flex', {
+                                        'text-lightBlue-400':
+                                          selectedTemplate?._id === item._id,
+                                      })}
+                                    >
+                                      <p>{item.templateName}</p>
+                                    </button>
+                                  </div>
+                                );
+                            })}
+                        </Disclosure.Panel>
+                      </div>
+                    )}
+                  </Disclosure>
                 ))}
               </div>
               <div>
@@ -134,9 +164,10 @@ const ProcessingPage = () => {
                 <Select
                   className="mt-6"
                   label="Data Type"
-                  items={selectTypes.map((type) => ({
-                    ...type,
-                    key: type.label,
+                  items={PROCESSING_TYPE.map((type) => ({
+                    label: type,
+                    value: type,
+                    key: type,
                   }))}
                   selectedValue={type}
                   onSelect={(item) => setType(item.value as string)}

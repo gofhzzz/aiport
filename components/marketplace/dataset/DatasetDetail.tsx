@@ -124,7 +124,6 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
                 <p>Owner</p>
                 <p>Type</p>
                 <p>Size</p>
-                <p>isOriginal</p>
                 <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
                   <p>See More</p>
                   <ChevronDownIcon className="w-6 h-6" />
@@ -137,7 +136,6 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
                 <p>{dataset.owner}</p>
                 <p>{dataset.type}</p>
                 <p>{dataset.size}</p>
-                <p>{String(dataset.isOriginal)}</p>
               </div>
             </div>
             <div>
