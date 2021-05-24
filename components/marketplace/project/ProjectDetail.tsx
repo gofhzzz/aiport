@@ -8,7 +8,7 @@ import SectionTitle from '@components/core/SectionTitle';
 import { useUI } from '@components/ui/context';
 
 // labraries
-// import addToMyAiById from '@lib/addToMyAiById';
+// import addToMyAiById from '@lib/ai/addToMyAiById';
 
 // icons
 import {
@@ -18,6 +18,9 @@ import {
   StarIcon,
 } from '@heroicons/react/solid';
 import { HeartIcon } from '@heroicons/react/outline';
+
+// types
+import { SampleProjectInfo } from 'types/project';
 
 interface Props {
   className?: string;
@@ -80,8 +83,8 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
       <div className={cn(className, 'divide-y-2')}>
         <div className="flex py-4">
           <img
-            src="/images/project/cover1.jpg"
-            className="object-cover w-80 h-80 rounded-md"
+            src={project.src}
+            className="object-contain w-80 h-80 rounded-md"
           />
           <div className="divide-y-2 px-4 w-full">
             <div className="flex justify-between pb-2 w-full">
@@ -115,6 +118,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
               <div className="w-[100px] space-y-2 text-md font-semibold">
                 <p className="text-red-500">Price</p>
                 <p>Owner</p>
+                <p>Data Type</p>
                 <p>Task</p>
                 <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
                   <p>See More</p>
@@ -126,6 +130,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
                   {project.isPublic ? 'FREE' : project.price.toLocaleString()}
                 </p>
                 <p>{project.owner}</p>
+                <p>{project.dataType}</p>
                 <p>{project.task}</p>
               </div>
             </div>
@@ -143,7 +148,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
                   title: 'Success',
                   content: 'It has been added to your Ai',
                   actionButton: {
-                    label: 'Go to Ai',
+                    label: 'Go to AI',
                     onClick: () => {
                       router.push(`/project/overview?projectId=${project._id}`);
                       closeModal();
@@ -181,10 +186,13 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
           <p className="mt-2 text-lg font-semibold">People also viewed</p>
           <div className="flex gap-16 pt-2">
             {otherProject.map((project, idx) => (
-              <button key={`otherProject-${project._id}-${idx}`}>
-                <div className="relative w-48 h-48 overflow-hidden rounded-md">
+              <button
+                className="w-36"
+                key={`otherProject-${project._id}-${idx}`}
+              >
+                <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
-                    src={`/images/dataset/data/${idx + 1}.jpg`}
+                    src={project.src}
                     className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"
                   />
                 </div>

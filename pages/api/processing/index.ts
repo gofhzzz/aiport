@@ -13,7 +13,7 @@ const handler: (
       .find({})
       .sort({ lastUpdated: -1 });
 
-    const processings = (await cursor.toArray()) as Processing[];
+    const processings = await cursor.toArray();
 
     await cursor.close();
 

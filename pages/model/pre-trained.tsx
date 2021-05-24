@@ -247,7 +247,7 @@ const Sidebar = (
   <div className="py-4 flex flex-col">
     <h2 className="px-4 font-semibold text-xl">Faster R-CNN</h2>
     <div className="mt-16 space-y-1">
-      <Link className="flex px-4 py-2  hover:bg-gray-50" href="/model/jupyter">
+      <Link className="flex px-4 py-2  hover:bg-gray-50" href="/model/overview">
         <span>Overview</span>
       </Link>
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">

@@ -10,7 +10,7 @@ const handler: (
 
     const cursor = db.collection('project').find({}).sort({ lastUpdated: -1 });
 
-    const projects = (await cursor.toArray()) as ProjectInfo[];
+    const projects = await cursor.toArray();
 
     await cursor.close();
 

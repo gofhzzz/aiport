@@ -2,8 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 // libraries
-import getSampleProject from '@lib/getSampleProject';
-import getSampleProjects from '@lib/getSampleProjects';
+import getSampleProject from '@lib/ai/getSampleProject';
+import getSampleProjects from '@lib/ai/getSampleProjects';
 
 // components
 import SearchItem from '@components/marketplace/SearchItem';
@@ -13,6 +13,9 @@ import ProjectDetail from '@components/marketplace/project/ProjectDetail';
 // icons
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+
 const ProjectDetailPage = () => {
   const router = useRouter();
   const [project, setProject] = React.useState<SampleProjectInfo | null>(null);
@@ -21,7 +24,11 @@ const ProjectDetailPage = () => {
   >(null);
 
   React.useEffect(() => {
-    if (router.query.id && typeof router.query.id === 'string') {
+    if (
+      router.query.id &&
+      typeof router.query.id === 'string' &&
+      project === null
+    ) {
       getSampleProject(router.query.id).then((sample) => setProject(sample));
     }
     if (project !== null)

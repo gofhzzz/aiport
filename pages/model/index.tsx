@@ -18,7 +18,7 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 
 // libraries
-import getModels from '@lib/getModels';
+import getModels from '@lib/model/getModels';
 
 // utilities
 import formatDate from '@utils/formatDate';
@@ -27,6 +27,9 @@ import formatDate from '@utils/formatDate';
 import { AIIcon } from '@components/icons';
 import LockIcon from '@components/icons/LockIcon';
 import Spinner from '@components/icons/Spinner';
+
+// types
+import { ModelInfo } from 'types/model';
 
 interface ModelInfoWithChecked extends ModelInfo {
   checked: boolean;
@@ -253,7 +256,7 @@ const ModelListPage = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
-                              href={`/model/jupyter?modelId=${model._id}`}
+                              href={`/model/overview?modelId=${model._id}`}
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
                               Edit

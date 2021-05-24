@@ -7,11 +7,14 @@ import SearchItem from '@components/marketplace/SearchItem';
 import DatasetDetail from '@components/marketplace/dataset/DatasetDetail';
 
 // labraries
-import getDataset from '@lib/getDataset';
+import getDataset from '@lib/dataset/getDataset';
 
 // icons
 import Spinner from '@components/icons/Spinner';
-import getDatasets from '@lib/getDatasets';
+import getDatasets from '@lib/dataset/getDatasets';
+
+// types
+import { DatasetInfo } from 'types/dataset';
 
 const DatasetDetailPage = () => {
   const router = useRouter();
@@ -21,7 +24,11 @@ const DatasetDetailPage = () => {
   );
 
   React.useEffect(() => {
-    if (router.query.id && typeof router.query.id === 'string') {
+    if (
+      dataset === null &&
+      router.query.id &&
+      typeof router.query.id === 'string'
+    ) {
       getDataset(router.query.id).then((dataset) => setDataset(dataset));
     }
     if (dataset !== null)

@@ -10,7 +10,7 @@ const handler: (
 
     const cursor = db.collection('feed').find({});
 
-    const feeds = (await cursor.toArray()) as FeedInfo[];
+    const feeds = await cursor.toArray();
 
     await cursor.close();
 

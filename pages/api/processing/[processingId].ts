@@ -9,11 +9,13 @@ const handler: (
   if (req.method === 'GET') {
     const { processingId } = req.query;
 
+    if (typeof processingId !== 'string') return res.status(400).end();
+
     const { db } = await connectMongo();
 
     const processing = await db
       .collection('processing')
-      .findOne({ _id: new ObjectId(String(processingId)) });
+      .findOne({ _id: new ObjectId(processingId) });
 
     return res.json({ processing });
   }

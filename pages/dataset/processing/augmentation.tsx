@@ -11,12 +11,15 @@ import Button from '@components/ui/Button';
 import AddProcessingModal from '@components/modals/AddProcessingModal';
 
 // libs
-import getProcessing from '@lib/getProcessing';
-import uploadProcessing from '@lib/uploadProcessing';
+import getProcessing from '@lib/processing/getProcessing';
+import uploadProcessing from '@lib/processing/uploadProcessing';
 
 // icons
 import { PlusIcon } from '@heroicons/react/outline';
 import Spinner from '@components/icons/Spinner';
+
+// types
+import { ProcessingStep } from 'types/processing';
 
 const DatasetProcessingPage = () => {
   const router = useRouter();
@@ -307,7 +310,9 @@ const DatasetProcessingPage = () => {
             <Button onClick={() => handleSave()}>Save</Button>
             <Button
               className="ml-4"
-              onClick={() => showNoti({ title: '준비중이 기능입니다.' })}
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
             >
               Save As
             </Button>

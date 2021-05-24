@@ -8,6 +8,9 @@ import Link from '@components/ui/Link';
 import { EyeIcon, StarIcon } from '@heroicons/react/solid';
 import { HeartIcon } from '@heroicons/react/outline';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 interface Props {
   className?: string;
   dataset: DatasetInfo;
@@ -34,14 +37,14 @@ const DatasetCard = ({ className, dataset, idx }: Props) => {
         <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
           {dataset.name}
         </h5>
-        <p className="mt-2 text-sm truncate">{dataset.type}</p>
-        <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm">
+        <p className="mt-2 text-sm truncate">{dataset.dataType}</p>
+        <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm mb-2">
           <div className="flex items-center space-x-1">
             <EyeIcon className="w-5 h-5" />
             <span>{dataset.watch.toLocaleString()}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <StarIcon className="w-5 h-5" />
+            <StarIcon className="w-5 h-5" color="orange" />
             <span>{dataset.star.toLocaleString()}</span>
           </div>
         </div>

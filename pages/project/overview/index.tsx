@@ -8,17 +8,22 @@ import Link from '@components/ui/Link';
 import Button from '@components/ui/Button';
 
 // libs
-import getRunningExperiments from '@lib/getRunningExperiments';
+import getRunningExperiments from '@lib/experiment/getRunningExperiments';
 import getFeeds from '@lib/getFeeds';
-import getSampleProject from '@lib/getSampleProject';
 
 // icons
 import { PlusIcon } from '@heroicons/react/outline';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { MySampleProjectInfo } from 'types/project';
+import { FeedInfo } from 'types/feed';
+import { ExperimentInfo } from 'types/experiment';
+import getMySampleProject from '@lib/ai/getMySampleProject';
+
 const ProjectOverviewPage = () => {
   const router = useRouter();
-  const [project, setProject] = useState<SampleProjectInfo | null>(null);
+  const [project, setProject] = useState<MySampleProjectInfo | null>(null);
   const [feeds, setFeeds] = useState<FeedInfo[] | null>(null);
   const [runningExperiments, setRunningExperiments] = useState<
     ExperimentInfo[] | null
@@ -26,7 +31,7 @@ const ProjectOverviewPage = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getSampleProject('6083a1ecd7f0a9318ae5bc81')
+    getMySampleProject('60ab72950fb5890a912f41fa')
       .then((project) => setProject(project))
       .catch((err) => setError(err.message));
     getFeeds()
@@ -49,7 +54,7 @@ const ProjectOverviewPage = () => {
   return (
     <div className="pb-32">
       <div className="aspect-h-6 md:aspect-h-3 aspect-w-16">
-        <img className="object-cover" src="/images/project/cover1.jpg" />
+        <img className="object-cover" src={project.src} />
       </div>
       <div className="max-w-screen-xl mx-auto pt-8 px-4 md:px-6">
         {/* title section */}
@@ -67,24 +72,22 @@ const ProjectOverviewPage = () => {
 
         {/* stats section */}
         <section className="mt-5">
-          <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">
-                Experiments
+                Total Experiments
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">2</dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">
+                {project.totalExperiments}
+              </dd>
             </div>
             <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
               <dt className="text-sm font-medium text-gray-500 truncate">
-                Deployments
+                Deploy
               </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">4</dd>
-            </div>
-            <div className="px-4 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-              <dt className="text-sm font-medium text-gray-500 truncate">
-                Running
-              </dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">8</dd>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">
+                {project.deploy}
+              </dd>
             </div>
           </dl>
         </section>
@@ -124,7 +127,11 @@ const ProjectOverviewPage = () => {
           </div>
 
           <div className="rounded-lg shadow p-4 bg-white col-span-7 2xl:col-span-8">
-            <h4 className="text-lg font-medium">Running Experiments</h4>
+            <h4 className="text-lg font-medium">{`Running Experiments ${
+              runningExperiments.length === 0
+                ? ''
+                : `(${runningExperiments.length})`
+            }`}</h4>
             {runningExperiments.length === 0 ? (
               <div className="h-[400px] grid place-items-center">
                 There is no experiments yet!
@@ -181,11 +188,15 @@ const ProjectOverviewPage = () => {
                               }
                             >
                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 max-w-[120px] xl:max-w-none truncate">
-                                {experiment.name}
+                                <a
+                                  className="hover:opacity-80 hover:underline"
+                                  href={`/project/experiments/deploy?projectId=${project._id}&projectName=${project.name}`}
+                                >
+                                  {experiment.name}
+                                </a>
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {experiment.epoch.current} /{' '}
-                                {experiment.epoch.total}
+                                {experiment.epoch}
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell xl:hidden 2xl:table-cell">
                                 {experiment.trainLoss}
@@ -198,10 +209,10 @@ const ProjectOverviewPage = () => {
                               </td>
                               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <Link
-                                  href={`/project/experiments/details?projectId=${project._id}&projectName=${project.name}`}
+                                  href="/project/experiments/details"
                                   className="text-lightBlue-600 hover:text-lightBlue-900"
                                 >
-                                  View
+                                  Detail
                                 </Link>
                               </td>
                             </tr>
@@ -222,7 +233,9 @@ const ProjectOverviewPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Text Sentiment Analysis</h2>
+    <h2 className="px-4 font-semibold text-xl">
+      Celebrity Look-alike Recommender
+    </h2>
     <div className="mt-16 space-y-1">
       <Link className="flex px-4 py-2 bg-gray-200" href="/project/overview">
         <span>Overview</span>

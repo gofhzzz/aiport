@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import { useDebounce } from 'react-use';
@@ -12,13 +12,19 @@ import SectionTitle from '@components/core/SectionTitle';
 import Input from '@components/ui/Input';
 
 // libraries
-import getSampleProjects from '@lib/getSampleProjects';
-import getDatasets from '@lib/getDatasets';
-import getModels from '@lib/getModels';
+import getSampleProjects from '@lib/ai/getSampleProjects';
+import getDatasets from '@lib/dataset/getDatasets';
+import getModels from '@lib/model/getModels';
 
 // icons
 import Spinner from '@components/icons/Spinner';
-import { XIcon } from '@heroicons/react/outline';
+import { ChevronRightIcon, XIcon } from '@heroicons/react/outline';
+
+// types
+import { SampleProjectInfo } from 'types/project';
+import { DatasetInfo } from 'types/dataset';
+import { ModelInfo } from 'types/model';
+import { Disclosure } from '@headlessui/react';
 
 const categoryItems = [
   {
@@ -38,21 +44,46 @@ const categoryItems = [
   },
 ];
 
-const taskItems = [
-  'img classfication',
+const IMAGE_TASK = [
+  'classification',
+  'multi-label classification',
   'object detection',
-  'img multi-label claassification',
-  'text pasentiment analysis',
-  'Text Classification',
-  'text question answering',
 ];
 
-const proceItems = ['all', 'free', 'Under $25', '$25 to $50', '$50 and Above'];
+const TEXT_TASK = [
+  'sentiment classification',
+  'Translation',
+  'paraphrase classification',
+  'question answering',
+  'language modeling',
+];
+
+const PRICE_ITEMS = [
+  'all',
+  'free',
+  'Under $25',
+  '$25 to $50',
+  '$50 and Above',
+] as const;
+
+const CATEGORY = ['ai', 'dataset', 'model'] as const;
+
 const MarketplacePage = () => {
   const router = useRouter();
+
+  // const categoryItem = React.useMemo(() => {
+  //   if (
+  //     router.query.category === 'ai' ||
+  //     router.query.category === 'dataset' ||
+  //     router.query.category === 'model'
+  //   )
+  //     return router.query.category;
+  //   return 'ai';
+  // }, [router]);
+
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [category, setCategory] = React.useState<'ai' | 'dataset' | 'model'>(
-    'ai',
+  const [category, setCategory] = React.useState<typeof CATEGORY[number]>(
+    CATEGORY[0],
   );
   const [projects, setProjects] = React.useState<SampleProjectInfo[] | null>(
     null,
@@ -64,12 +95,16 @@ const MarketplacePage = () => {
   const totalDatasets = React.useRef<DatasetInfo[]>([]);
   const totalModels = React.useRef<ModelInfo[]>([]);
 
-  const [taskFilter, setTaskFilter] = React.useState<string[]>([]);
-  const [priceFilter, setPriceFilter] = React.useState<string>('all');
+  const [taskFilter, setTaskFilter] = React.useState<
+    typeof TEXT_TASK | typeof IMAGE_TASK
+  >([]);
+
+  const [priceFilter, setPriceFilter] = React.useState<
+    typeof PRICE_ITEMS[number]
+  >(PRICE_ITEMS[0]);
 
   React.useEffect(() => {
     if (
-      projects === null &&
       router.query.category &&
       (router.query.category === 'ai' ||
         router.query.category === 'dataset' ||
@@ -82,48 +117,100 @@ const MarketplacePage = () => {
         setSearchInput(router.query.searchInput);
       setCategory(router.query.category);
     }
-
-    if (projects === null)
-      getSampleProjects().then((sampleProjects) => {
-        totalProjects.current = sampleProjects;
-        setProjects(sampleProjects);
-      });
-    if (datasets === null)
-      getDatasets().then((datasets) => {
-        totalDatasets.current = datasets;
-        setDatasets(datasets);
-      });
-    if (models === null)
-      getModels().then((models) => {
-        totalModels.current = models;
-        setModels(models);
-      });
-
-    if (projects === null || datasets === null || models === null) return;
-
-    //TODO: 데이터 받으면 필터링
-
-    setProjects((prev) => {
-      if (prev === null) return null;
-      if (taskFilter.length === 0) return totalProjects.current;
-      return prev.filter((project) => {
-        return taskFilter.includes(project.task);
-      });
+    getSampleProjects().then((sampleProjects) => {
+      totalProjects.current = sampleProjects;
+      setProjects(sampleProjects);
     });
-  }, [taskFilter, router]);
+    getDatasets().then((datasets) => {
+      totalDatasets.current = datasets;
+      setDatasets(datasets);
+    });
+    getModels().then((models) => {
+      totalModels.current = models;
+      setModels(models);
+    });
+  }, [router]);
 
-  const getDataArray = React.useCallback(
-    async (variant: 'ai' | 'dataset' | 'model') => {
-      try {
-        if (variant === 'ai') setProjects(await getSampleProjects());
-        else if (variant === 'dataset') setDatasets(await getDatasets());
-        else setModels(await getModels());
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [],
-  );
+  const changeTaskFilter = useCallback((tasks: string[]) => {
+    if (tasks.length === 0) {
+      setProjects(totalProjects.current);
+      setDatasets(totalDatasets.current);
+      setModels(totalModels.current);
+      return;
+    }
+
+    setProjects(
+      totalProjects.current.filter((project) => tasks.includes(project.task)),
+    );
+    setDatasets(
+      totalDatasets.current.filter((dataset) => tasks.includes(dataset.task)),
+    );
+    setModels(
+      totalModels.current.filter((model) => tasks.includes(model.task)),
+    );
+  }, []);
+
+  const changePriceFilter = useCallback((price: string) => {
+    if (price === 'all') {
+      setProjects(totalProjects.current);
+      setDatasets(totalDatasets.current);
+      setModels(totalModels.current);
+      return;
+    }
+
+    setProjects(
+      totalProjects.current.filter((project) => {
+        switch (price) {
+          case 'free':
+            return project.price === 0;
+          case 'Under $25':
+            return project.price < 25;
+          case '$25 to $50':
+            return 25 <= project.price && project.price <= 50;
+          default:
+            return project.price;
+        }
+      }),
+    );
+
+    setDatasets(
+      totalDatasets.current.filter((dataset) => {
+        switch (price) {
+          case 'free':
+            return dataset.price === 0;
+          case 'Under $25':
+            return dataset.price < 25;
+          case '$25 to $50':
+            return 25 <= dataset.price && dataset.price <= 50;
+          default:
+            return dataset.price;
+        }
+      }),
+    );
+
+    setModels(
+      totalModels.current.filter((model) => {
+        switch (price) {
+          case 'free':
+            return model.price === 0;
+          case 'Under $25':
+            return model.price < 25;
+          case '$25 to $50':
+            return 25 <= model.price && model.price <= 50;
+          default:
+            return model.price;
+        }
+      }),
+    );
+  }, []);
+
+  React.useEffect(() => {
+    changePriceFilter(priceFilter);
+  }, [priceFilter, changePriceFilter]);
+
+  React.useEffect(() => {
+    changeTaskFilter(taskFilter);
+  }, [taskFilter, changeTaskFilter]);
 
   useDebounce(
     () => {
@@ -171,7 +258,6 @@ const MarketplacePage = () => {
                 className="mr-4"
                 checked={category === item.value}
                 onChange={() => {
-                  getDataArray(item.value as never);
                   setCategory(item.value as never);
                 }}
               />
@@ -182,41 +268,93 @@ const MarketplacePage = () => {
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Task</p>
-          {taskItems.map((item, idx) => (
-            <label
-              htmlFor={item}
-              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
-                'bg-gray-300 rounded-md': category === item,
-                'hover:opacity-80 cursor-pointer': category !== item,
-              })}
-              key={`${item}-${idx}`}
-            >
-              <input
-                type="checkBox"
-                id={item}
-                className="mr-2"
-                checked={taskFilter.includes(item)}
-                onChange={() => {
-                  setTaskFilter((prev) =>
-                    taskFilter.includes(item)
-                      ? prev.filter((val) => val !== item)
-                      : [...prev, item],
-                  );
-                }}
-              />
-              <p className="text-md ml-2 font-medium capitalize">{item}</p>
-            </label>
-          ))}
+          <Disclosure defaultOpen={true}>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="flex items-center">
+                  <ChevronRightIcon
+                    className={cn('w-4 h-4 mr-2', {
+                      'transform rotate-90': open,
+                    })}
+                  />
+                  Image
+                </Disclosure.Button>
+                <Disclosure.Panel>
+                  {IMAGE_TASK.map((item, idx) => (
+                    <label
+                      htmlFor={item}
+                      className={cn(
+                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer capitalize',
+                      )}
+                      key={`${item}-${idx}`}
+                    >
+                      <input
+                        type="checkBox"
+                        id={item}
+                        className="mr-2 cursor-pointer"
+                        checked={taskFilter.includes(item)}
+                        onChange={() => {
+                          setTaskFilter((prev) =>
+                            taskFilter.includes(item)
+                              ? prev.filter((val) => val !== item)
+                              : [...prev, item],
+                          );
+                        }}
+                      />
+                      <p className="text-md ml-2 font-medium">{item}</p>
+                    </label>
+                  ))}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+          <Disclosure defaultOpen={true}>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="py-2 flex items-center">
+                  <ChevronRightIcon
+                    className={cn('w-4 h-4 mr-2', {
+                      'transform rotate-90': open,
+                    })}
+                  />
+                  Text
+                </Disclosure.Button>
+                <Disclosure.Panel>
+                  {TEXT_TASK.map((item, idx) => (
+                    <label
+                      htmlFor={item}
+                      className={cn(
+                        'flex items-center ml-2 mt-2 px-2 py-0.5 cursor-pointer capitalize',
+                      )}
+                      key={`${item}-${idx}`}
+                    >
+                      <input
+                        type="checkBox"
+                        id={item}
+                        className="mr-2 cursor-pointer"
+                        checked={taskFilter.includes(item)}
+                        onChange={() => {
+                          setTaskFilter((prev) =>
+                            taskFilter.includes(item)
+                              ? prev.filter((val) => val !== item)
+                              : [...prev, item],
+                          );
+                        }}
+                      />
+                      <p className="text-md ml-2 font-medium">{item}</p>
+                    </label>
+                  ))}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
         </div>
         <div className="py-4">
           <p className="text-lg font-semibold">Price</p>
-          {proceItems.map((item, idx) => (
+          {PRICE_ITEMS.map((item, idx) => (
             <label
               htmlFor={item}
-              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5', {
-                'bg-gray-300 rounded-md': category === item,
-                'hover:opacity-80 cursor-pointer': category !== item,
-              })}
+              className={cn('flex items-center ml-2 mt-2 px-2 py-0.5')}
               key={`${item}-${idx}`}
             >
               <input

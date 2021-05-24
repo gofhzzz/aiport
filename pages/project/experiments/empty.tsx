@@ -20,6 +20,9 @@ import Link from '@components/ui/Link';
 import { AIIcon } from '@components/icons';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { ExperimentInfo } from 'types/experiment';
+
 interface ExperimentInfoWithChecked extends ExperimentInfo {
   checked: boolean;
 }
@@ -28,16 +31,26 @@ const ProjectExperimentsPage = () => {
   const [experiments, setExperiments] = useState<ExperimentInfoWithChecked[]>([
     {
       _id: '-',
-      name: 'exp1',
-      status: 'Running',
-      user: 'Ahn',
-      epoch: {
-        current: 0,
-        total: 100,
-      },
+      name: 'new_exp',
+      status: 'Not Started',
+      user: 'Admin',
+      epoch: '0/50',
       trainLoss: 0,
       validationLoss: 0,
       score: 0,
+      dataset: 'CelebA',
+      model: 'Faster R-CNN',
+      loss: '[Cross Entroph]',
+      optimizer: 'Adam',
+      batchSize: 32,
+      parameter: 'num_classes: 10177',
+      initialization: 'He',
+      framework: 'Pytorch  1.8.1',
+      createdTime: 'Just now',
+      startTime: '-',
+      lastRunTime: '-',
+      runningTime: '-',
+      deploy: false,
       checked: false,
     },
   ]);
@@ -147,7 +160,7 @@ const ProjectExperimentsPage = () => {
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg overflow-x-scroll">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
@@ -211,6 +224,85 @@ const ProjectExperimentsPage = () => {
                         >
                           Score
                         </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Dataset
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Model
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Loss
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Optimizer
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Batch-Size
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Parameter
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Initialization
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Framework
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Created-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Start-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          LastRun-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Running-Time
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Deploy
+                        </th>
+
                         <th scope="col" className="relative px-6 py-3">
                           <span className="sr-only">View</span>
                         </th>
@@ -264,8 +356,7 @@ const ProjectExperimentsPage = () => {
                             {experiment.user}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {experiment.epoch.current} /{' '}
-                            {experiment.epoch.total}
+                            {experiment.epoch}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {experiment.trainLoss}
@@ -276,9 +367,48 @@ const ProjectExperimentsPage = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {experiment.score}
                           </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.dataset}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.model}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.loss}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.optimizer}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.batchSize}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.parameter}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.initialization}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.framework}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.createdTime}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.startTime}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.lastRunTime}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {experiment.runningTime}
+                          </td>
+                          <td className="capitalize px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            {String(experiment.deploy)}
+                          </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <Link
-                              href="/project/experiments/details"
+                              href="/project/experiments/deploy"
                               className="text-lightBlue-600 hover:text-lightBlue-900"
                             >
                               View

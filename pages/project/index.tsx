@@ -11,12 +11,13 @@ import Button from '@components/ui/Button';
 import Link from '@components/ui/Link';
 
 // libraries
-import getSampleProjects from '@lib/getSampleProjects';
+import getMySampleProjects from '@lib/ai/getMySampleProjects';
 
-const lastActiveText = ['2 min', '4 days', '10 days'];
+// types
+import { MySampleProjectInfo } from 'types/project';
 
 const ProjectListPage = () => {
-  const [projects, setProjects] = useState<SampleProjectInfo[] | null>(null);
+  const [projects, setProjects] = useState<MySampleProjectInfo[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
 
@@ -32,7 +33,7 @@ const ProjectListPage = () => {
   );
 
   useEffect(() => {
-    getSampleProjects()
+    getMySampleProjects()
       .then((projects) => {
         setProjects(
           projects.map((model) => ({
@@ -94,7 +95,7 @@ const ProjectListPage = () => {
           <p className="text-center font-medium mt-12">loading...</p>
         ) : (
           <div className="md:mt-12 py-6 gap-6 grid-cols-2 md:grid lg:grid-cols-3 lg:gap-10 max-w-screen-xl mx-auto">
-            {projects.map((project, idx) => (
+            {projects.map((project) => (
               <Link
                 key={project._id}
                 className="w-full rounded-md overflow-hidden shadow-md group flex flex-col max-w-md md:max-w-none mx-auto my-8 lg:my-0"
@@ -103,7 +104,7 @@ const ProjectListPage = () => {
                 <div className="relative aspect-w-16 aspect-h-9 overflow-hidden">
                   <img
                     className="object-cover transform duration-300 transition-transform group-hover:scale-110"
-                    src={`/images/project/img${idx + 1}.png`}
+                    src={project.src}
                     loading="lazy"
                   />
                 </div>
@@ -118,7 +119,7 @@ const ProjectListPage = () => {
                         aria-hidden="true"
                       />
                       <span className="font-medium">
-                        {idx + (3 % 3)} Experiments
+                        {project.totalExperiments} Experiments
                       </span>
                     </li>
                     <li className="flex items-center space-x-3">
@@ -127,7 +128,7 @@ const ProjectListPage = () => {
                         aria-hidden="true"
                       />
                       <span className="font-medium">
-                        {idx + (5 % 3)} Deployments
+                        {project.deploy} Deployments
                       </span>
                     </li>
                     <li className="flex items-center space-x-3">
@@ -136,25 +137,13 @@ const ProjectListPage = () => {
                         aria-hidden="true"
                       />
                       <span className="font-medium">
-                        {idx + (4 % 3)} Running
+                        {project.running} Running
                       </span>
                     </li>
                   </ul>
                 </div>
-                <div className="flex justify-end items-center p-4 space-x-2">
-                  {project.collaborators.map((name) => (
-                    <span
-                      key={name}
-                      className="uppercase font-semibold text-gray-700 w-8 h-8 rounded-full border border-gray-300 flex justify-center items-center shadow"
-                    >
-                      {name[0]}
-                    </span>
-                  ))}
-                </div>
                 <div className="border-t border-gray-300 py-2 flex items-center px-4">
-                  <span className="text-sm">
-                    Active {lastActiveText[idx]} ago
-                  </span>
+                  <span className="text-sm">{project.lastActive}</span>
                 </div>
               </Link>
             ))}

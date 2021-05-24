@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withErrorHandler } from '@utils/index';
-import { removeTokenOnCookie } from '@lib/cookie';
+import { removeTokenOnCookie } from '@lib/auth/cookie';
 
 const handler: (
   req: NextApiRequest,
