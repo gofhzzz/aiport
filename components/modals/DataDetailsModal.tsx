@@ -10,6 +10,9 @@ import {
 // components
 import Button from '@components/ui/Button';
 
+// types
+import { DataInfo } from 'types/data';
+
 interface Props {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;

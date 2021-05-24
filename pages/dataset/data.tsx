@@ -22,6 +22,9 @@ import getDatasetDataList from '@lib/getDatasetDataList';
 // icons
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { DataInfo } from 'types/data';
+
 interface DataInfoWithChecked extends DataInfo {
   checked: boolean;
 }

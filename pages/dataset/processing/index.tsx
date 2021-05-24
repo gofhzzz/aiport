@@ -19,6 +19,10 @@ import getProcessings from '@lib/getProcessings';
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+import { Processing } from 'types/processing';
+
 const selectTypes = [
   { label: 'image1', value: 'image1' },
   { label: 'image2', value: 'image2' },

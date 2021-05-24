@@ -17,6 +17,9 @@ import Link from '@components/ui/Link';
 import getModels from '@lib/getModels';
 // import uploadModel from '@lib/uploadModel';
 
+// types
+import { ModelInfo, ModelInput } from 'types/model';
+
 const frameworkList = [
   {
     label: 'Select',

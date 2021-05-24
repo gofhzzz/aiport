@@ -2,6 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 import DatasetItem from './DatasetItem';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 interface Props {
   className?: string;
   datasets: DatasetInfo[];

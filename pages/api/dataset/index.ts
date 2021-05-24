@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import isNumeric from 'validator/lib/isNumeric';
 import { withErrorHandler, connectMongo } from '@utils/index';
+import { DatasetInfo } from 'types/dataset';
 
 const handler: (
   req: NextApiRequest,
@@ -9,9 +10,12 @@ const handler: (
   if (req.method === 'GET') {
     const { db } = await connectMongo();
 
-    const cursor = db.collection('dataset').find({}).sort({ created: -1 });
+    const cursor = db
+      .collection<DatasetInfo>('dataset')
+      .find({})
+      .sort({ created: -1 });
 
-    const datasets = (await cursor.toArray()) as DatasetInfo[];
+    const datasets = await cursor.toArray();
 
     await cursor.close();
 

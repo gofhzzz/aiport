@@ -10,6 +10,9 @@ import {
 // components
 import Link from '@components/ui/Link';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 interface Props {
   className?: string;
   dataset: DatasetInfo;

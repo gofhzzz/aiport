@@ -1,4 +1,4 @@
-interface ProjectInfo {
+export interface ProjectInfo {
   _id: string;
   name: string;
   isPublic: boolean;
@@ -11,7 +11,7 @@ interface ProjectInfo {
   lastUpdated: string;
 }
 
-interface SampleProjectInfo {
+export interface SampleProjectInfo {
   _id: string;
   name: string;
   task: string;
@@ -25,7 +25,14 @@ interface SampleProjectInfo {
   lastUpdated: string;
 }
 
-interface ProjectInput {
+export interface ProjectInput {
   name: string;
   description: string;
 }
+
+export const initialProjectInput: ProjectInput = {
+  name: '',
+  description: '',
+};
+
+export {};

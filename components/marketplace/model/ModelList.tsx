@@ -2,6 +2,9 @@ import React from 'react';
 import cn from 'classnames';
 import ModelItem from './ModelItem';
 
+// types
+import { ModelInfo } from 'types/model';
+
 interface Props {
   className?: string;
   models: ModelInfo[];

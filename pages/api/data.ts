@@ -10,7 +10,7 @@ const handler: (
 
     const cursor = db.collection('data').find({}).sort({ created: 1 });
 
-    const dataList = (await cursor.toArray()) as DataInfo[];
+    const dataList = await cursor.toArray();
 
     await cursor.close();
 

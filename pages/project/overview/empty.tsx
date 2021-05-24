@@ -7,6 +7,11 @@ import Link from '@components/ui/Link';
 import Button from '@components/ui/Button';
 import { PlusIcon } from '@heroicons/react/outline';
 
+// types
+import { ProjectInfo } from 'types/project';
+import { FeedInfo } from 'types/feed';
+import { ExperimentInfo } from 'types/experiment';
+
 const ProjectOverviewPage = () => {
   const project: ProjectInfo = {
     _id: '-',

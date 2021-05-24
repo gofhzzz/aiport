@@ -13,6 +13,9 @@ import getDataset from '@lib/getDataset';
 import Spinner from '@components/icons/Spinner';
 import getDatasets from '@lib/getDatasets';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 const DatasetDetailPage = () => {
   const router = useRouter();
   const [dataset, setDataset] = React.useState<DatasetInfo | null>(null);

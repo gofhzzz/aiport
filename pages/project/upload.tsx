@@ -16,6 +16,9 @@ import getSampleProjects from '@lib/getSampleProjects';
 import Spinner from '@components/icons/Spinner';
 import TextArea from '@components/ui/TextArea';
 
+// types
+import { ProjectInput, SampleProjectInfo } from 'types/project';
+
 const ProjectUploadPage = () => {
   const router = useRouter();
   const [sampleProjects, setSampleProjects] = useState<

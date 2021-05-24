@@ -1,4 +1,6 @@
 import fetcher from './fetcher';
+// types
+import { ProjectInput } from 'types/project';
 
 const uploadProject: (project: ProjectInput) => Promise<string> = async (
   project,

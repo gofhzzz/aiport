@@ -2,6 +2,9 @@ import React from 'react';
 import ProjectItem from './ProjectItem';
 import cn from 'classnames';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+
 interface Props {
   className?: string;
   projects: SampleProjectInfo[];

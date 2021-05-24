@@ -28,6 +28,9 @@ import { AIIcon } from '@components/icons';
 import LockIcon from '@components/icons/LockIcon';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { ModelInfo } from 'types/model';
+
 interface ModelInfoWithChecked extends ModelInfo {
   checked: boolean;
 }

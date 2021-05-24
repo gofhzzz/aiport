@@ -10,8 +10,7 @@ const handler: (
 
     const cursor = db.collection('experiment').find({});
 
-    const experiments = (await cursor.toArray()) as ExperimentInfo[];
-
+    const experiments = await cursor.toArray();
     await cursor.close();
 
     return res.json({ experiments });

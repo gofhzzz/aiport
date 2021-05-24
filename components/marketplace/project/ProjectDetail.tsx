@@ -19,6 +19,9 @@ import {
 } from '@heroicons/react/solid';
 import { HeartIcon } from '@heroicons/react/outline';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+
 interface Props {
   className?: string;
   project: SampleProjectInfo;

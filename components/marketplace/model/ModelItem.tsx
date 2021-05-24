@@ -10,6 +10,9 @@ import {
 // components
 import Link from '@components/ui/Link';
 
+// types
+import { ModelInfo } from 'types/model';
+
 interface Props {
   className?: string;
   model: ModelInfo;

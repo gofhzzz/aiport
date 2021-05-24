@@ -13,6 +13,9 @@ import ProjectDetail from '@components/marketplace/project/ProjectDetail';
 // icons
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+
 const ProjectDetailPage = () => {
   const router = useRouter();
   const [project, setProject] = React.useState<SampleProjectInfo | null>(null);

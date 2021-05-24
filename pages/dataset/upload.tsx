@@ -17,6 +17,9 @@ import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
 import Select from '@components/ui/Select';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 const selectTypes = [
   { label: 'image', value: 'image' },
   { label: 'image2', value: 'image2' },

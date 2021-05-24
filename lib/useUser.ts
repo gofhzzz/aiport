@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+// types
+import { UserInfo } from 'types/user';
 
 interface UseUserOptions {
   redirectTo?: string;

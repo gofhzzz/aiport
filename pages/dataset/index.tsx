@@ -31,6 +31,9 @@ import { DatabaseIcon } from '@components/icons';
 import MedalIcon from '@components/icons/MedalIcon';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 interface DatasetInfoWithChecked extends DatasetInfo {
   checked: boolean;
 }

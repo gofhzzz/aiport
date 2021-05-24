@@ -16,6 +16,11 @@ import getSampleProject from '@lib/getSampleProject';
 import { PlusIcon } from '@heroicons/react/outline';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+import { FeedInfo } from 'types/feed';
+import { ExperimentInfo } from 'types/experiment';
+
 const ProjectOverviewPage = () => {
   const router = useRouter();
   const [project, setProject] = useState<SampleProjectInfo | null>(null);

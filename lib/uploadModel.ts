@@ -1,4 +1,6 @@
 import fetcher from './fetcher';
+// types
+import { ModelInput } from 'types/model';
 
 const uploadModel: (model: ModelInput) => Promise<string> = async (model) => {
   const { modelId } = await fetcher('/api/model', {

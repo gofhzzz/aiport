@@ -1,4 +1,4 @@
-interface DatasetInfo {
+export interface DatasetInfo {
   _id: string;
   name: string;
   type: string;
@@ -12,10 +12,20 @@ interface DatasetInfo {
   created: string;
 }
 
-interface DatasetInput {
+export interface DatasetInput {
   name: string;
   type: string;
   size: string;
   isOriginal: boolean;
   isPublic: boolean;
 }
+
+export const initialDatasetInput: DatasetInput = {
+  name: '',
+  type: '',
+  size: '',
+  isOriginal: true,
+  isPublic: true,
+};
+
+export {};

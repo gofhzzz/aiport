@@ -20,6 +20,9 @@ import Link from '@components/ui/Link';
 import { AIIcon } from '@components/icons';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { ExperimentInfo } from 'types/experiment';
+
 interface ExperimentInfoWithChecked extends ExperimentInfo {
   checked: boolean;
 }

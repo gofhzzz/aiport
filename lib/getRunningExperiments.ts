@@ -1,11 +1,14 @@
 import fetcher from './fetcher';
 
-const getRunningExperiments: () => Promise<ExperimentInfo[]> = async () => {
-  const { experiments } = await fetcher('/api/experiment');
+// types
+import { ExperimentInfo } from 'types/experiment';
 
-  return experiments.filter(
-    (experiment: ExperimentInfo) => experiment.status === 'Running',
+const getRunningExperiments: () => Promise<ExperimentInfo[]> = async () => {
+  const { experiments } = await fetcher<{ experiments: ExperimentInfo[] }>(
+    '/api/experiment',
   );
+
+  return experiments.filter((experiment) => experiment.status === 'Running');
 };
 
 export default getRunningExperiments;

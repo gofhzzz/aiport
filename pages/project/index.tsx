@@ -13,6 +13,9 @@ import Link from '@components/ui/Link';
 // libraries
 import getSampleProjects from '@lib/getSampleProjects';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+
 const lastActiveText = ['2 min', '4 days', '10 days'];
 
 const ProjectListPage = () => {

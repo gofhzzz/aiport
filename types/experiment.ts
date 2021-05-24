@@ -1,4 +1,4 @@
-interface ExperimentInfo {
+export interface ExperimentInfo {
   _id: string;
   name: string;
   status: 'Running' | 'Done';
@@ -11,3 +11,5 @@ interface ExperimentInfo {
   validationLoss: number;
   score: number;
 }
+
+export {};

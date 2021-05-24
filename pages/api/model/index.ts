@@ -10,7 +10,7 @@ const handler: (
 
     const cursor = db.collection('model').find({}).sort({ created: -1 });
 
-    const models = (await cursor.toArray()) as ModelInfo[];
+    const models = await cursor.toArray();
 
     await cursor.close();
 

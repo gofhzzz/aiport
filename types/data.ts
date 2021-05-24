@@ -1,4 +1,4 @@
-interface DataInfo {
+export interface DataInfo {
   _id: string;
   name: string;
   project: string[];
@@ -7,3 +7,5 @@ interface DataInfo {
   uploader: string;
   created: string;
 }
+
+export {};

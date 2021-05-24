@@ -21,6 +21,9 @@ import Spinner from '@components/icons/Spinner';
 import { SearchIcon } from '@heroicons/react/solid';
 import { PlusIcon } from '@heroicons/react/outline';
 
+// types
+import { ModelInfo } from 'types/model';
+
 const initialCodeItems = [
   { name: '__init__.py', model: [], checked: false },
   {

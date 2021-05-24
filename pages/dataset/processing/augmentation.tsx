@@ -18,6 +18,9 @@ import uploadProcessing from '@lib/uploadProcessing';
 import { PlusIcon } from '@heroicons/react/outline';
 import Spinner from '@components/icons/Spinner';
 
+// types
+import { ProcessingStep } from 'types/processing';
+
 const DatasetProcessingPage = () => {
   const router = useRouter();
   const [template, setTemplate] = useState<{

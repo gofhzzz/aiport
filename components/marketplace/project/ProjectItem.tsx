@@ -10,6 +10,9 @@ import {
 // components
 import Link from '@components/ui/Link';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+
 interface Props {
   className?: string;
   project: SampleProjectInfo;

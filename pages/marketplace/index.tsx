@@ -20,6 +20,11 @@ import getModels from '@lib/getModels';
 import Spinner from '@components/icons/Spinner';
 import { XIcon } from '@heroicons/react/outline';
 
+// types
+import { SampleProjectInfo } from 'types/project';
+import { DatasetInfo } from 'types/dataset';
+import { ModelInfo } from 'types/model';
+
 const categoryItems = [
   {
     name: 'Ai',

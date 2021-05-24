@@ -1,4 +1,4 @@
-interface ModelInfo {
+export interface ModelInfo {
   _id: string;
   name: string;
   framework: string;
@@ -10,8 +10,10 @@ interface ModelInfo {
   created: string;
 }
 
-interface ModelInput {
+export interface ModelInput {
   name: string;
   framework: string;
   isPublic: boolean;
 }
+
+export {};

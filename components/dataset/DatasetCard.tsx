@@ -8,6 +8,9 @@ import Link from '@components/ui/Link';
 import { EyeIcon, StarIcon } from '@heroicons/react/solid';
 import { HeartIcon } from '@heroicons/react/outline';
 
+// types
+import { DatasetInfo } from 'types/dataset';
+
 interface Props {
   className?: string;
   dataset: DatasetInfo;

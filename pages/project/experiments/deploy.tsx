@@ -15,6 +15,9 @@ import Spinner from '@components/icons/Spinner';
 import { ArrowRightIcon } from '@heroicons/react/solid';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 
+// types
+import { ExperimentInfo } from 'types/experiment';
+
 const outputItems: { name: string; idx: number; per: number }[] = [
   { name: 'Lee Jun Ho', idx: 1, per: 94.4 },
   { name: 'Ken Jeong', idx: 2, per: 4.8 },

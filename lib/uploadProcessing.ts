@@ -1,4 +1,6 @@
 import fetcher from './fetcher';
+//types
+import { ProcessingStep } from 'types/processing';
 
 const uploadProcessing: (
   augmentations: ProcessingStep[][],

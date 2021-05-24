@@ -13,7 +13,7 @@ const handler: (
       .find({})
       .sort({ lastUpdated: -1 });
 
-    const projects = (await cursor.toArray()) as SampleProjectInfo[];
+    const projects = await cursor.toArray();
 
     await cursor.close();
 

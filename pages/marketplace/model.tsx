@@ -13,6 +13,9 @@ import getModel from '@lib/getModel';
 import Spinner from '@components/icons/Spinner';
 import getModels from '@lib/getModels';
 
+// types
+import { ModelInfo } from 'types/model';
+
 const ModelDetailPage = () => {
   const router = useRouter();
   const [model, setModel] = React.useState<ModelInfo | null>(null);

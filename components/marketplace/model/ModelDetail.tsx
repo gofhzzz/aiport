@@ -19,6 +19,9 @@ import {
 } from '@heroicons/react/solid';
 import { HeartIcon } from '@heroicons/react/outline';
 
+// types
+import { ModelInfo } from 'types/model';
+
 interface Props {
   className?: string;
   model: ModelInfo;

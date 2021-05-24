@@ -9,11 +9,13 @@ const handler: (
   if (req.method === 'GET') {
     const { sampleId } = req.query;
 
+    if (typeof sampleId !== 'string') return res.status(400).end();
+
     const { db } = await connectMongo();
 
     const sample = await db
       .collection('projectSample')
-      .findOne({ _id: new ObjectId(String(sampleId)) });
+      .findOne({ _id: new ObjectId(sampleId) });
 
     return res.json({ sample });
   }

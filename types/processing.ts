@@ -1,10 +1,10 @@
-interface ProcessingStep {
+export interface ProcessingStep {
   imageUrl: string;
   name: string;
   description: string;
 }
 
-interface Processing {
+export interface Processing {
   _id: string;
   templateName: string;
   templateType: string;
@@ -13,3 +13,5 @@ interface Processing {
   created: Date;
   lastUpdated: Date;
 }
+
+export {};
