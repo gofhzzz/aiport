@@ -423,17 +423,17 @@ const ProjectExperimentsPage = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {formatDate(experiment.runningTime)}
                           </td>
-                          <td className="capitalize px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {String(experiment.deploy)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <Link
-                              href="/project/experiments/deploy"
-                              className="text-lightBlue-600 hover:text-lightBlue-900"
-                            >
-                              View
-                            </Link>
-                          </td>
+
+                          {experiment.deploy && (
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <Link
+                                href="/project/experiments/deploy"
+                                className="text-lightBlue-600 hover:text-lightBlue-900"
+                              >
+                                View
+                              </Link>
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
