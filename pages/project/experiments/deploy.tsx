@@ -71,9 +71,9 @@ const ProjectExperimentsDetailsPage = () => {
       if (imageFlag === 1) {
         setTimeout(() => {
           setLoading(false);
-          setOutputInfo(secondOutputItems[0]);
+          setOutputInfo(outputItems[0]);
           setImageFlag(0);
-          setHistory((prev) => [secondOutputItems, ...prev]);
+          setHistory((prev) => [outputItems, ...prev]);
         }, 3000);
         setHistoryInfo((prev) => [
           { name: 'IMG_0002', src: '/images/deploy/upload/2.JPG' },
@@ -82,9 +82,9 @@ const ProjectExperimentsDetailsPage = () => {
       } else {
         setTimeout(() => {
           setLoading(false);
-          setOutputInfo(outputItems[0]);
+          setOutputInfo(secondOutputItems[0]);
           setImageFlag(1);
-          setHistory((prev) => [outputItems, ...prev]);
+          setHistory((prev) => [secondOutputItems, ...prev]);
           setHistoryInfo((prev) => [
             { name: 'choinsung', src: '/images/deploy/upload/1.png' },
             ...prev,
