@@ -19,21 +19,22 @@ import { SearchIcon } from '@heroicons/react/solid';
 import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
 
 const initialCodeItems = [
-  { name: '__init__.py', model: [], checked: false },
+  { name: '__init__.py', model: [], modelList: [], checked: false },
   {
     name: 'maskrcnn.py',
     model: [],
+    modelList: [],
     checked: false,
   },
-  { name: 'mlphead.ph', model: [], checked: false },
-  { name: 'predictor.py', model: [], checked: false },
+  { name: 'mlphead.ph', model: [], modelList: [], checked: false },
+  { name: 'predictor.py', model: [], modelList: [], checked: false },
 ];
 
 const ModelOverviewEmptyPage = () => {
   const router = useRouter();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [codeItems, setCodeItems] = React.useState<
-    { name: string; model: string[]; checked: boolean }[]
+    { name: string; model: string[]; modelList: string[]; checked: boolean }[]
   >(initialCodeItems);
   const [editIndex, setEditIndex] = React.useState<number>(0);
   const [searchKey, setSearchKey] = useState<string>('');
@@ -47,7 +48,7 @@ const ModelOverviewEmptyPage = () => {
     pretrained: 1,
   };
   const totalCodes = useRef<
-    { name: string; model: string[]; checked: boolean }[]
+    { name: string; model: string[]; modelList: string[]; checked: boolean }[]
   >([]);
 
   useEffect(() => {
@@ -251,6 +252,7 @@ const ModelOverviewEmptyPage = () => {
         show={openModal}
         setShow={setOpenModal}
         data={codeItems[editIndex]}
+        modelItems={codeItems[editIndex].modelList}
         setChange={setCodeItems}
       />
     </div>
