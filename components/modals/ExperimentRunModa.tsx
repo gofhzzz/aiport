@@ -12,7 +12,7 @@ import { XIcon } from '@heroicons/react/outline';
 interface Props {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  onRunning: () => void;
+  onRunning?: () => void;
 }
 
 const selectItems = [
@@ -168,7 +168,7 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow, onRunning }) => {
                 <Button
                   className="w-28"
                   onClick={() => {
-                    onRunning();
+                    if (onRunning) onRunning();
                     setShow(false);
                   }}
                 >
