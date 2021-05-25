@@ -41,11 +41,15 @@ const selectItems = {
     'Tensorflow 2.1.3',
     'Tensorflow 2.1.0',
   ],
-  container: ['Docker', 'Kubernetes'],
+  container: [
+    'Docker',
+    'Docker + Source Code',
+    'Kubernetes',
+    'Kubernetes + Source Code',
+  ],
 };
 
 const ExperimentDownloadModal: React.FC<Props> = ({ show, setShow }) => {
-  const [selectedNode, setSelectedNode] = useState<string>(selectItems.node[0]);
   const [selectedFramework, setSelectedFramework] = useState<string>(
     selectItems.framework[0],
   );

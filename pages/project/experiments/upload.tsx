@@ -11,7 +11,7 @@ import Link from '@components/ui/Link';
 const selectItems = {
   dataset: [
     {
-      name: 'COCO',
+      name: 'CelevA',
       id: 'efwa-cvze-zdss',
       public: false,
       owner: 'James',
@@ -24,17 +24,17 @@ const selectItems = {
       created_at: '2021-04-22',
     },
     {
-      name: 'CIFAR10_processed',
+      name: 'COCO',
       id: 'efwa-cvze-zdss',
-      public: true,
-      owner: 'Admin',
-      collaborators: ['Admin'],
-      watch: 1212,
-      star: 141,
+      public: false,
+      owner: 'James',
+      collaborators: ['Ahn'],
+      watch: 1111,
+      star: 222,
       type: 'Image/BBox',
-      original: true,
-      size: 2000000,
-      created_at: '2021-03-27',
+      original: false,
+      size: 13500,
+      created_at: '2021-04-22',
     },
     {
       name: 'CIFAR10',
@@ -50,46 +50,7 @@ const selectItems = {
       created_at: '2021-03-28',
     },
     {
-      name: 'CIFAR100_fine',
-      id: 'efwa-cvze-zdss',
-      public: false,
-      owner: 'James',
-      collaborators: ['ahn'],
-      watch: 1155,
-      star: 433,
-      type: 'Image/BBox',
-      original: false,
-      size: 2000000,
-      created_at: '2021-03-28',
-    },
-    {
-      name: 'CIFAR100_coarse',
-      id: 'efwa-cvze-zdss',
-      public: false,
-      owner: 'James',
-      collaborators: ['ahn'],
-      watch: 1155,
-      star: 433,
-      type: 'Image/BBox',
-      original: false,
-      size: 2000000,
-      created_at: '2021-03-28',
-    },
-    {
-      name: 'DirtyMNIST',
-      id: 'efwa-cvze-zdss',
-      public: false,
-      owner: 'James',
-      collaborators: ['ahn'],
-      watch: 1155,
-      star: 433,
-      type: 'Image/BBox',
-      original: false,
-      size: 2000000,
-      created_at: '2021-03-28',
-    },
-    {
-      name: 'FinancialPhraseBank',
+      name: 'Financial Phrase Bank',
       id: 'efwa-cvze-zdss',
       public: false,
       owner: 'James',
@@ -115,32 +76,6 @@ const selectItems = {
       created_at: '2021-03-28',
     },
     {
-      name: 'NSMC',
-      id: 'efwa-cvze-zdss',
-      public: false,
-      owner: 'James',
-      collaborators: ['ahn'],
-      watch: 1155,
-      star: 433,
-      type: 'Image/BBox',
-      original: false,
-      size: 2000000,
-      created_at: '2021-03-28',
-    },
-    {
-      name: 'PAWS_Wiki',
-      id: 'efwa-cvze-zdss',
-      public: false,
-      owner: 'James',
-      collaborators: ['ahn'],
-      watch: 1155,
-      star: 433,
-      type: 'Image/BBox',
-      original: false,
-      size: 2000000,
-      created_at: '2021-03-28',
-    },
-    {
       name: 'SQUAD2',
       id: 'efwa-cvze-zdss',
       public: false,
@@ -154,20 +89,7 @@ const selectItems = {
       created_at: '2021-03-28',
     },
     {
-      name: 'WikiText2',
-      id: 'efwa-cvze-zdss',
-      public: false,
-      owner: 'James',
-      collaborators: ['ahn'],
-      watch: 1155,
-      star: 433,
-      type: 'Image/BBox',
-      original: false,
-      size: 2000000,
-      created_at: '2021-03-28',
-    },
-    {
-      name: 'EMNIST',
+      name: 'MNIST',
       id: 'efwa-cvze-zdss',
       public: false,
       owner: 'James',
@@ -678,6 +600,21 @@ const ProjectExperimentUploadPage = () => {
                   />
                 </div>
               </div>
+              <Select
+                label="Initialization"
+                items={[
+                  { key: '-', label: 'Select', value: '' },
+                  ...(selectItems.model
+                    .find((model) => selectedModel === model.name)
+                    ?.class_function.map((functionName) => ({
+                      key: functionName,
+                      label: functionName,
+                      value: functionName,
+                    })) ?? []),
+                ]}
+                selectedValue={selectedFunction}
+                onSelect={(item) => setSelectedFunction(item.value as string)}
+              />
             </div>
           </div>
         </div>

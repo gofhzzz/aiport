@@ -171,6 +171,16 @@ const logItem = [
   },
 ];
 
+const srcList = [
+  '/images/visualization/detail/1.png',
+  '/images/visualization/detail/2.png',
+  '/images/visualization/detail/3.png',
+  '/images/visualization/detail/4.png',
+  '/images/visualization/detail/5.png',
+  '/images/visualization/detail/6.png',
+  '/images/visualization/detail/7.png',
+];
+
 const ProjectExperimentsDetailsPage = () => {
   const [selectedItem, setSelectedItem] = useState<string>('overview');
   const [show, setShow] = useState<boolean>(false);
@@ -374,7 +384,13 @@ const ProjectExperimentsDetailsPage = () => {
           </div>
         </div>
       ) : (
-        <div>text</div>
+        <div>
+          {srcList.map((src, idx) => (
+            <div className="mt-8 w-full" key={`${idx}-${src}`}>
+              <img src={src} />
+            </div>
+          ))}
+        </div>
       )}
 
       <ExperimentDownloadModal show={show} setShow={setShow} />

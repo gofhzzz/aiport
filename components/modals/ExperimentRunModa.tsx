@@ -130,15 +130,15 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow, onRunning }) => {
                     </div>
                     <div className="flex justify-between">
                       <p>vGPUs:</p>
-                      <p>24</p>
+                      <p>{4 * gpuNum}</p>
                     </div>
                     <div className="flex justify-between">
                       <p>Memory:</p>
-                      <p>72GB</p>
+                      <p>{24 * gpuNum}GB</p>
                     </div>
                     <div className="flex justify-between">
                       <p>Storage</p>
-                      <p>480GB</p>
+                      <p>{80 * gpuNum}GB</p>
                     </div>
                   </div>
                 </div>
@@ -148,11 +148,11 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow, onRunning }) => {
                   <p className="text-xl font-semibold mb-2 text-left">Cost</p>
                   <div className="flex justify-between mb-4">
                     <p>Expected Hourly Costs:</p>
-                    <p>3.60 USD</p>
+                    <p>{(0.6 * gpuNum).toFixed(2)} USD</p>
                   </div>
                   <div className="flex justify-between">
                     <p>Expected Monthly Costs:</p>
-                    <p>{(3.6 * gpuNum).toFixed(2)} USD</p>
+                    <p>{(0.6 * 24 * 30 * gpuNum).toFixed(2)} USD</p>
                   </div>
                 </div>
               </div>

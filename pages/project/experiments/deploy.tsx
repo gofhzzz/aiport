@@ -22,6 +22,12 @@ const outputItems: { name: string; idx: number; per: number }[] = [
   { name: 'Kim bum', idx: 3, per: 0.48 },
 ];
 
+const secondOutputItems: { name: string; idx: number; per: number }[] = [
+  { name: 'Jo In Sung', idx: 1, per: 54 },
+  { name: 'Cha Seung Won', idx: 2, per: 23.3 },
+  { name: 'Lee Jin Wook', idx: 3, per: 19.7 },
+];
+
 const pages = [
   { name: 'Exp_1', href: '/project/experiments', current: false },
   { name: 'Deploy', href: '#', current: true },
@@ -31,9 +37,16 @@ const ProjectExperimentsDetailsPage = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [dragOverFlag, setDragOverFlag] = React.useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
+  const [imageFlag, setImageFlag] = useState<number>(0);
   const [previewUrl, setPreviewUrl] = React.useState<string>('');
   const [previewName, setPreviewName] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [history, setHistory] = React.useState<
+    { name: string; idx: number; per: number }[][]
+  >([]);
+  const [historyInfo, setHistoryInfo] = React.useState<
+    { name: string; src: string }[]
+  >([]);
 
   const [outputInfo, setOutputInfo] = React.useState<{
     name: string;
@@ -41,24 +54,46 @@ const ProjectExperimentsDetailsPage = () => {
     per: number;
   } | null>(null);
 
-  const handleImage = React.useCallback(async (file: File) => {
-    setPreviewName(file.name);
-    await new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewUrl(String(reader.result));
+  const handleImage = React.useCallback(
+    async (file: File) => {
+      setPreviewName(file.name);
+      await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewUrl(String(reader.result));
+          resolve('');
+        };
 
-        resolve('');
-      };
+        reader.readAsDataURL(file);
+      });
+      setLoading(true);
 
-      reader.readAsDataURL(file);
-    });
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOutputInfo(outputItems[0]);
-    }, 3000);
-  }, []);
+      if (imageFlag === 1) {
+        setTimeout(() => {
+          setLoading(false);
+          setOutputInfo(secondOutputItems[0]);
+          setImageFlag(0);
+          setHistory((prev) => [secondOutputItems, ...prev]);
+        }, 3000);
+        setHistoryInfo((prev) => [
+          { name: 'IMG_0002', src: '/images/deploy/upload/2.JPG' },
+          ...prev,
+        ]);
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          setOutputInfo(outputItems[0]);
+          setImageFlag(1);
+          setHistory((prev) => [outputItems, ...prev]);
+          setHistoryInfo((prev) => [
+            { name: 'choinsung', src: '/images/deploy/upload/1.png' },
+            ...prev,
+          ]);
+        }, 3000);
+      }
+    },
+    [imageFlag],
+  );
 
   return (
     <>
@@ -214,7 +249,9 @@ const ProjectExperimentsDetailsPage = () => {
                         <p className="text-lg text-center mb-2 -mt-4 font-semibold">{`${outputInfo.idx}.${outputInfo.name}`}</p>
                         <div className="flex items-center justify-center relative">
                           <img
-                            src={`/images/deploy/${outputInfo.idx}.png`}
+                            src={`/images/deploy/${
+                              imageFlag ? outputInfo.idx : outputInfo.idx + 3
+                            }.png`}
                             className="object-cover w-72 h-72"
                           />
                         </div>
@@ -253,41 +290,33 @@ const ProjectExperimentsDetailsPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th className="pt-4 flex justify-center items-center">
-                      <img
-                        src={previewUrl}
-                        className="object-cover w-20 h-20"
-                      />
-                    </th>
-                    <th>
-                      <p>{previewName}</p>
-                    </th>
-                    <th>
-                      <p>
-                        <span className="mr-2 text-lightBlue-400">
-                          {outputItems[0].name}
-                        </span>
-                        {outputItems[0].per}%
-                      </p>
-                    </th>
-                    <th>
-                      <p>
-                        <span className="mr-2 text-lightBlue-400">
-                          {outputItems[1].name}
-                        </span>
-                        {outputItems[1].per}%
-                      </p>
-                    </th>
-                    <th>
-                      <p>
-                        <span className="mr-2 text-lightBlue-400">
-                          {outputItems[2].name}
-                        </span>
-                        {outputItems[2].per}%
-                      </p>
-                    </th>
-                  </tr>
+                  {history.map((val, idx) => {
+                    return (
+                      <tr key={`array-${idx}`}>
+                        <th className="pt-4 flex justify-center items-center">
+                          <img
+                            src={historyInfo[idx]?.src}
+                            className="object-cover w-20 h-20"
+                          />
+                        </th>
+                        <th>
+                          <p>{historyInfo[idx]?.name}</p>
+                        </th>
+                        {val.map((item, index) => {
+                          return (
+                            <th key={`value-${index}`}>
+                              <p>
+                                <span className="mr-2 text-lightBlue-400">
+                                  {item.name}
+                                </span>
+                                {item.per}%
+                              </p>
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             )}
