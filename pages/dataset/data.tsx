@@ -23,23 +23,17 @@ import getDatasetDataList from '@lib/dataset/getDatasetDataList';
 import Spinner from '@components/icons/Spinner';
 
 // types
-import { DataInfo } from 'types/data';
+import { DatasetDataInfo } from 'types/data';
+import formatDate from '@utils/formatDate';
 
-interface DataInfoWithChecked extends DataInfo {
+export interface DataInfoWithChecked extends DatasetDataInfo {
   checked: boolean;
 }
 
 const DatasetDataListPage = () => {
   const [dataList, setDataList] = useState<DataInfoWithChecked[] | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [selected, setSelected] = useState<DataInfoWithChecked | null>(null);
-  const [label, setLabel] = useState<{
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    label: number;
-  }>({ x: 72, y: 32, h: 49, w: 32, label: 2490 });
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
   const totalDataList = useRef<DataInfoWithChecked[]>([]);
@@ -76,6 +70,13 @@ const DatasetDataListPage = () => {
   }, []);
 
   if (error !== null) return <div>{error}</div>;
+
+  if (dataList === null)
+    return (
+      <div className="h-[404px] flex justify-center items-center">
+        <Spinner className="w-12 h-12 animate-spin" />
+      </div>
+    );
 
   return (
     <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
@@ -161,134 +162,146 @@ const DatasetDataListPage = () => {
 
       {/* model list section */}
       <section className="mt-8">
-        {dataList === null ? (
-          <div className="h-[404px] flex justify-center items-center">
-            <Spinner className="w-12 h-12 animate-spin" />
-          </div>
-        ) : (
-          <div className="flex flex-col">
-            <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
+        <div className="flex flex-col">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        <input
+                          id="check-all-input"
+                          className="rounded-sm"
+                          type="checkbox"
+                          onChange={(e) => {
+                            setDataList(
+                              dataList.map((data) => ({
+                                ...data,
+                                checked: e.target.checked,
+                              })),
+                            );
+                          }}
+                        />
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        AI
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Label
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Created Date
+                      </th>
+                      <th scope="col" className="relative px-6 py-3">
+                        <span className="sr-only">View</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {dataList.map((data, idx) => (
+                      <tr key={data._id}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           <input
-                            id="check-all-input"
                             className="rounded-sm"
                             type="checkbox"
+                            checked={data.checked}
                             onChange={(e) => {
+                              if (!e.target.checked) {
+                                const elem = document.getElementById(
+                                  'check-all-input',
+                                ) as HTMLInputElement;
+                                elem.checked = false;
+                              }
                               setDataList(
-                                dataList.map((data) => ({
-                                  ...data,
-                                  checked: e.target.checked,
-                                })),
+                                dataList.map((prev, idx2) =>
+                                  idx !== idx2
+                                    ? prev
+                                    : {
+                                        ...prev,
+                                        checked: e.target.checked,
+                                      },
+                                ),
                               );
                             }}
                           />
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Name
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          AI
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Type
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                        >
-                          Created Date
-                        </th>
-                        <th scope="col" className="relative px-6 py-3">
-                          <span className="sr-only">View</span>
-                        </th>
+                        </td>
+                        <td className="px-6 justify-center py-4 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
+                          <PhotographIcon className="w-6 h-6" />
+                          <span>{`0000${idx + 1}.jpg`}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-pre-line text-center text-sm text-gray-500">
+                          {'-'}
+                        </td>
+                        <td className="px-6 py-4 capitalize whitespace-nowrap text-center text-sm text-gray-500">
+                          {data.split}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                          <div className="flex justify-center">
+                            <p className="mr-2">x: {data.x_1}</p>
+                            <p>y: {data.y_1}</p>
+                          </div>
+                          <div className="flex justify-center">
+                            <p className="mr-2">w: {data.width}</p>
+                            <p>h: {data.height}</p>
+                          </div>
+                          <p>label: {data.label}</p>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                          {formatDate(String(new Date()))}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <button
+                            className="text-lightBlue-600 hover:text-lightBlue-900"
+                            onClick={() => {
+                              setShowModal(true);
+                              setSelectedIndex(idx);
+                            }}
+                          >
+                            View
+                          </button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {dataList.map((data, idx) => (
-                        <tr key={data._id}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            <input
-                              className="rounded-sm"
-                              type="checkbox"
-                              checked={data.checked}
-                              onChange={(e) => {
-                                if (!e.target.checked) {
-                                  const elem = document.getElementById(
-                                    'check-all-input',
-                                  ) as HTMLInputElement;
-                                  elem.checked = false;
-                                }
-                                setDataList(
-                                  dataList.map((prev, idx2) =>
-                                    idx !== idx2
-                                      ? prev
-                                      : {
-                                          ...prev,
-                                          checked: e.target.checked,
-                                        },
-                                  ),
-                                );
-                              }}
-                            />
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
-                            <PhotographIcon className="w-6 h-6" />
-                            <span>{data.name}</span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-pre-line text-center text-sm text-gray-500">
-                            {data.project.join('\n')}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {data.type}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {new Date(data.created).toLocaleDateString()}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button
-                              className="text-lightBlue-600 hover:text-lightBlue-900"
-                              onClick={() => {
-                                setSelected(data);
-                                setShowModal(true);
-                              }}
-                            >
-                              View
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </section>
       {/* details modal */}
+
       <DataDetailsModal
-        onChangeLabel={(val) => setLabel(val)}
-        label={label}
         show={showModal}
+        setCangeData={setDataList}
         setShow={setShowModal}
-        data={selected}
+        data={dataList}
+        selectedIndex={selectedIndex}
       />
     </div>
   );
