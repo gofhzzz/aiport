@@ -219,11 +219,18 @@ const ProjectExperimentsDetailsPage = () => {
                         <button
                           className="disabled:text-gray-400 disabled:cursor-default"
                           disabled={outputInfo.idx === 1}
-                          onClick={() =>
-                            setOutputInfo(
-                              (prev) => prev && outputItems[prev.idx - 2],
-                            )
-                          }
+                          onClick={() => {
+                            if (imageFlag === 1)
+                              setOutputInfo(
+                                (prev) =>
+                                  prev && secondOutputItems[prev.idx - 2],
+                              );
+                            else {
+                              setOutputInfo(
+                                (prev) => prev && outputItems[prev.idx - 2],
+                              );
+                            }
+                          }}
                         >
                           <ChevronLeftIcon
                             className={cn(
@@ -234,11 +241,17 @@ const ProjectExperimentsDetailsPage = () => {
                         <button
                           className="disabled:text-gray-400 disabled:cursor-default"
                           disabled={outputInfo.idx === 3}
-                          onClick={() =>
-                            setOutputInfo(
-                              (prev) => prev && outputItems[prev.idx],
-                            )
-                          }
+                          onClick={() => {
+                            if (imageFlag === 1)
+                              setOutputInfo(
+                                (prev) => prev && secondOutputItems[prev.idx],
+                              );
+                            else {
+                              setOutputInfo(
+                                (prev) => prev && outputItems[prev.idx],
+                              );
+                            }
+                          }}
                         >
                           <ChevronRightIcon
                             className={cn(
