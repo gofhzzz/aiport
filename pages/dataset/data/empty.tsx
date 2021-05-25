@@ -51,17 +51,17 @@ const DatasetDataListPage = () => {
 
   const { showNoti } = useUI();
 
-  useDebounce(
-    () => {
-      setDataList((prev) => {
-        if (prev === null) return null;
-        if (!searchKey) return totalDataList.current;
-        return prev.filter(({ name }) => name.includes(searchKey));
-      });
-    },
-    1000,
-    [searchKey],
-  );
+  // useDebounce(
+  //   () => {
+  //     setDataList((prev) => {
+  //       if (prev === null) return null;
+  //       if (!searchKey) return totalDataList.current;
+  //       return prev.filter(({ name }) => name.includes(searchKey));
+  //     });
+  //   },
+  //   1000,
+  //   [searchKey],
+  // );
 
   useEffect(() => {
     getDatasetDataList()

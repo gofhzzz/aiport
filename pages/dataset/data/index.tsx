@@ -46,17 +46,17 @@ const DatasetDataListPage = () => {
 
   const { showNoti } = useUI();
 
-  useDebounce(
-    () => {
-      setDataList((prev) => {
-        if (prev === null) return null;
-        if (!searchKey) return totalDataList.current;
-        return prev.filter(({ name }) => name.includes(searchKey));
-      });
-    },
-    1000,
-    [searchKey],
-  );
+  // useDebounce(
+  //   () => {
+  //     setDataList((prev) => {
+  //       if (prev === null) return null;
+  //       if (!searchKey) return totalDataList.current;
+  //       return prev.filter(({ name }) => name.includes(searchKey));
+  //     });
+  //   },
+  //   1000,
+  //   [searchKey],
+  // );
 
   useEffect(() => {
     getDataset('60ab75a30fb5890a912f41fe').then((dataset) =>
