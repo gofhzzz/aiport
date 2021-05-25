@@ -211,14 +211,16 @@ const ModalUploadPage = () => {
               className="mt-6"
               label="Task"
               items={[
-                { key: 'public', label: 'Public', value: true },
-                { key: 'private', label: 'Private', value: false },
+                { key: 'Img BB', label: 'Img BB', value: 'Img BB' },
+                { key: 'Text Clf', label: 'Text Clf', value: 'Text Clf' },
+                { key: 'LM', label: 'LM', value: 'LM' },
+                { key: 'Image Clf', label: 'Image Clf', value: 'Image Clf' },
               ]}
-              selectedValue={modelInput.isPublic}
+              selectedValue={modelInput.task}
               onSelect={(item) =>
                 setModelInput((prev) => ({
                   ...prev,
-                  isPublic: item.value as boolean,
+                  task: item.value as string,
                 }))
               }
             />
@@ -248,6 +250,7 @@ const ModalUploadPage = () => {
                   // handleSubmit(modelInput);
                   handleSubmit2();
                 }}
+                disabled={!modelInput.name || !modelInput.framework}
                 // disabled={
                 //   !modelInput.name ||
                 //   !modelInput.framework ||

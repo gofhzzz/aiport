@@ -37,7 +37,9 @@ const ProjectCard = ({ className, project, idx }: Props) => {
         <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
           {project.name}
         </h5>
-        <p className="mt-2 text-sm truncate">{project.task}</p>
+        <p className="mt-2 text-sm font-semibold capitalize truncate">
+          Task: {project.task}
+        </p>
         <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm mb-2">
           <div className="flex items-center space-x-1">
             <EyeIcon className="w-5 h-5" />

@@ -16,6 +16,9 @@ import Link from '@components/ui/Link';
 import Button from '@components/ui/Button';
 import DataDetailsModal from '@components/modals/DataDetailsModal';
 
+// utils
+import formatDate from '@utils/formatDate';
+
 // libraries
 import getDatasetDataList from '@lib/dataset/getDatasetDataList';
 
@@ -24,7 +27,6 @@ import Spinner from '@components/icons/Spinner';
 
 // types
 import { DatasetDataInfo } from 'types/data';
-import formatDate from '@utils/formatDate';
 
 export interface DataInfoWithChecked extends DatasetDataInfo {
   checked: boolean;
@@ -32,11 +34,20 @@ export interface DataInfoWithChecked extends DatasetDataInfo {
 
 const DatasetDataListPage = () => {
   const [dataList, setDataList] = useState<DataInfoWithChecked[] | null>(null);
+
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState<string>('');
+  const [editFalg, setEditFalg] = useState<boolean>(false);
   const totalDataList = useRef<DataInfoWithChecked[]>([]);
+
+  const dataset = {
+    name: 'CIFAR10',
+    type: 'Image',
+    task: 'Bounding Box',
+    created: new Date(),
+  };
 
   const { showNoti } = useUI();
 
@@ -80,19 +91,21 @@ const DatasetDataListPage = () => {
 
   return (
     <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6">
-      <h1 className="text-3xl font-medium">CelebA</h1>
+      <h1 className="text-3xl font-medium">{dataset.name}</h1>
 
       {/* search and buttons section */}
       <section className="mt-8">
         <div className="py-4 mt-10 max-w-7xl mx-auto shadow-lg rounded-md mb-8">
           <div className="justify-around flex text-md font-semibold">
             <div className="text-left pl-4 flex-grow">
-              <p className="pb-4">Data type: Image</p>
-              <p>Task: Bounding Box</p>
+              <p className="pb-4">Data type: {dataset.type}</p>
+              <p>Task: {dataset.task}</p>
             </div>
             <div className="border-r border-gray-300" />
             <div className="flex-grow pl-4">
-              <p className="pb-4">Created Time: 2021-04-20 12:31 PM</p>
+              <p className="pb-4">
+                Created Time: {formatDate(String(dataset.created))}
+              </p>
             </div>
           </div>
         </div>
@@ -128,11 +141,10 @@ const DatasetDataListPage = () => {
                 dataList === null || !dataList.find(({ checked }) => checked)
               }
               onClick={() => {
-                showNoti({ variant: 'alert', title: '준비중인 기능입니다.' });
+                setEditFalg((prev) => !prev);
               }}
             >
-              <TrashIcon className="w-5 h-5 mr-2" />
-              <span>Edit</span>
+              <span>{editFalg ? 'Save' : 'Edit'}</span>
             </Button>
             <Button
               size="sm"
@@ -250,7 +262,7 @@ const DatasetDataListPage = () => {
                             }}
                           />
                         </td>
-                        <td className="px-6 justify-center py-4 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
+                        <td className="px-6 justify-center pb-4 pt-8 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
                           <PhotographIcon className="w-6 h-6" />
                           <span>{`0000${idx + 1}.jpg`}</span>
                         </td>
@@ -261,14 +273,6 @@ const DatasetDataListPage = () => {
                           {data.split}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                          <div className="flex justify-center">
-                            <p className="mr-2">x: {data.x_1}</p>
-                            <p>y: {data.y_1}</p>
-                          </div>
-                          <div className="flex justify-center">
-                            <p className="mr-2">w: {data.width}</p>
-                            <p>h: {data.height}</p>
-                          </div>
                           <p>label: {data.label}</p>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
@@ -309,7 +313,7 @@ const DatasetDataListPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">CelebA</h2>
+    <h2 className="px-4 font-semibold text-xl">CIFAR10</h2>
     <div className="mt-16 space-y-1">
       <Link className="flex px-4 py-2 bg-gray-200" href="/dataset/data">
         <span>Data</span>

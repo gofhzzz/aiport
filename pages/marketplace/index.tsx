@@ -131,86 +131,87 @@ const MarketplacePage = () => {
     });
   }, [router]);
 
-  const changeTaskFilter = useCallback((tasks: string[]) => {
-    if (tasks.length === 0) {
-      setProjects(totalProjects.current);
-      setDatasets(totalDatasets.current);
-      setModels(totalModels.current);
-      return;
-    }
+  const handleFiletering = useCallback(
+    (taskFilter: string[], price: string) => {
+      if (price === 'all' && taskFilter.length === 0) {
+        setProjects(totalProjects.current);
+        setDatasets(totalDatasets.current);
+        setModels(totalModels.current);
+        return;
+      }
 
-    setProjects(
-      totalProjects.current.filter((project) => tasks.includes(project.task)),
-    );
-    setDatasets(
-      totalDatasets.current.filter((dataset) => tasks.includes(dataset.task)),
-    );
-    setModels(
-      totalModels.current.filter((model) => tasks.includes(model.task)),
-    );
-  }, []);
+      setProjects(
+        totalProjects.current
+          .filter((project) => {
+            switch (price) {
+              case 'free':
+                return project.price === 0;
+              case 'Under $25':
+                return project.price < 25;
+              case '$25 to $50':
+                return 25 <= project.price && project.price <= 50;
+              case '$50 and Above':
+                return project.price > 50;
+              default:
+                return true;
+            }
+          })
+          .filter((project) => {
+            if (taskFilter.length === 0) return true;
+            return taskFilter.includes(project.task);
+          }),
+      );
+      setDatasets(
+        totalDatasets.current
+          .filter((dataset) => {
+            switch (price) {
+              case 'free':
+                return dataset.price === 0;
+              case 'Under $25':
+                return dataset.price < 25;
+              case '$25 to $50':
+                return 25 <= dataset.price && dataset.price <= 50;
+              case '$50 and Above':
+                return dataset.price > 50;
+              default:
+                return true;
+            }
+          })
+          .filter((dataset) => {
+            if (taskFilter.length === 0) return true;
 
-  const changePriceFilter = useCallback((price: string) => {
-    if (price === 'all') {
-      setProjects(totalProjects.current);
-      setDatasets(totalDatasets.current);
-      setModels(totalModels.current);
-      return;
-    }
+            return taskFilter.includes(dataset.task);
+          }),
+      );
+      setModels(
+        totalModels.current
+          .filter((model) => {
+            switch (price) {
+              case 'free':
+                return model.price === 0;
+              case 'Under $25':
+                return model.price < 25;
+              case '$25 to $50':
+                return 25 <= model.price && model.price <= 50;
+              case '$50 and Above':
+                return model.price > 50;
+              default:
+                return true;
+            }
+          })
+          .filter((model) => {
+            if (taskFilter.length === 0) return true;
 
-    setProjects(
-      totalProjects.current.filter((project) => {
-        switch (price) {
-          case 'free':
-            return project.price === 0;
-          case 'Under $25':
-            return project.price < 25;
-          case '$25 to $50':
-            return 25 <= project.price && project.price <= 50;
-          default:
-            return project.price;
-        }
-      }),
-    );
-
-    setDatasets(
-      totalDatasets.current.filter((dataset) => {
-        switch (price) {
-          case 'free':
-            return dataset.price === 0;
-          case 'Under $25':
-            return dataset.price < 25;
-          case '$25 to $50':
-            return 25 <= dataset.price && dataset.price <= 50;
-          default:
-            return dataset.price;
-        }
-      }),
-    );
-
-    setModels(
-      totalModels.current.filter((model) => {
-        switch (price) {
-          case 'free':
-            return model.price === 0;
-          case 'Under $25':
-            return model.price < 25;
-          case '$25 to $50':
-            return 25 <= model.price && model.price <= 50;
-          default:
-            return model.price;
-        }
-      }),
-    );
-  }, []);
+            return taskFilter.includes(model.task);
+          }),
+      );
+    },
+    [],
+  );
 
   React.useEffect(() => {
-    changePriceFilter(priceFilter);
-  }, [priceFilter, changePriceFilter]);
-
-  React.useEffect(() => {
-    changeTaskFilter(taskFilter);
-  }, [taskFilter, changeTaskFilter]);
+    handleFiletering(taskFilter, priceFilter);
+  }, [priceFilter, taskFilter, handleFiletering]);
 
   useDebounce(
     () => {

@@ -150,7 +150,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
                   actionButton: {
                     label: 'Go to AI',
                     onClick: () => {
-                      router.push(`/project/overview?projectId=${project._id}`);
+                      router.push('/project/overview');
                       closeModal();
                     },
                   },
@@ -185,29 +185,32 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
         <div className="py-4 overflow-x-scroll">
           <p className="mt-2 text-lg font-semibold">People also viewed</p>
           <div className="flex gap-16 pt-2">
-            {otherProject.map((project, idx) => (
+            {otherProject.map((other, idx) => (
               <button
+                onClick={() => {
+                  showNoti({ title: '준비중인 기능입니다', variant: 'alert' });
+                }}
                 className="w-36"
-                key={`otherProject-${project._id}-${idx}`}
+                key={`otherProject-${other._id}-${idx}`}
               >
                 <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
-                    src={project.src}
+                    src={other.src}
                     className="inset-0 w-full h-full absolute object-cover rounded-md transform duration-300 hover:scale-110 overflow-hidden"
                   />
                 </div>
-                <p className="text-left">{project.name}</p>
+                <p className="text-left">{other.name}</p>
                 <div className="flex">
                   <div className="flex items-center">
                     <StarIcon color="orange" className="w-6 h-6" />
                     <p className="text-gray-600 pl-1">
-                      {project.star.toLocaleString()}
+                      {other.star.toLocaleString()}
                     </p>
                   </div>
                   <div className="flex items-center ml-4">
                     <EyeIcon className="w-6 h-6" color="gray" />
                     <p className="text-gray-600 pl-1">
-                      {project.star.toLocaleString()}
+                      {other.star.toLocaleString()}
                     </p>
                   </div>
                 </div>

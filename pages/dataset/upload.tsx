@@ -177,10 +177,11 @@ const DatasetUploadPage = () => {
                 Back
               </Button>
               <Button
+                disabled={!datasetName}
                 onClick={() => {
                   setLoading(true);
                   setTimeout(() => {
-                    router.push('/dataset/data');
+                    router.push('/dataset/data/empty');
                   }, 2000);
                 }}
                 // disabled={!datasetName || !fileInfo || loading}

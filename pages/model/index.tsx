@@ -6,6 +6,7 @@ import {
   // CubeTransparentIcon,
   DocumentDuplicateIcon,
   PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/outline';
 
 // contexts
@@ -76,7 +77,7 @@ const ModelListPage = () => {
 
   return (
     <div className="mx-auto max-w-screen-xl pt-8 md:pt-16 px-4 md:px-6">
-      <SectionTitle picture="/icon/model.png" title="AI Model" />
+      <SectionTitle picture="/icon/model.png" title="Model" />
 
       {/* search and buttons section */}
       <section className="mt-8 md:mt-12">
@@ -106,6 +107,19 @@ const ModelListPage = () => {
           </div>
           {/* button groups */}
           <div className="flex items-center flex-shrink-0 space-x-4">
+            <Button
+              size="sm"
+              color="red"
+              disabled={
+                models === null || !models.find(({ checked }) => checked)
+              }
+              onClick={() => {
+                showNoti({ variant: 'alert', title: '준비중인 기능입니다.' });
+              }}
+            >
+              <TrashIcon className="w-5 h-5 mr-2" />
+              <span>Delete</span>
+            </Button>
             <Button
               size="sm"
               color="white"

@@ -155,7 +155,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
                   actionButton: {
                     label: 'Go to Model',
                     onClick: () => {
-                      router.push(`/model/overview?modelId=${model._id}`);
+                      router.push(`/model/overview`);
                       closeModal();
                     },
                   },
@@ -191,7 +191,13 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
           <p className="mt-2 text-lg font-semibold">People also viewed</p>
           <div className="flex gap-16 pt-2">
             {otherModel.map((model, idx) => (
-              <button className="w-36" key={`othermodel-${model._id}-${idx}`}>
+              <button
+                className="w-36"
+                key={`othermodel-${model._id}-${idx}`}
+                onClick={() => {
+                  showNoti({ title: '준비중인 기능입니다', variant: 'alert' });
+                }}
+              >
                 <div className="relative w-36 h-36 overflow-hidden rounded-md">
                   <img
                     src={model.src}

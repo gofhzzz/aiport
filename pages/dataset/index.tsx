@@ -28,7 +28,6 @@ import formatDate from '@utils/formatDate';
 
 // icons
 import { DatabaseIcon } from '@components/icons';
-import MedalIcon from '@components/icons/MedalIcon';
 import Spinner from '@components/icons/Spinner';
 
 // types
@@ -247,15 +246,15 @@ const DatasetListPage = () => {
                                 <span>Image</span>
                               </div>
                             ) : (
-                              <div className="flex justify-center items-center space-x-2 transform -translate-x-1">
+                              <div className="flex justify-center items-center space-x-2 transform -translate-x-4">
                                 <DocumentTextIcon className="w-6 h-6" />
-                                <span>Language</span>
+                                <span>Text</span>
                               </div>
                             )}
                           </td>
 
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            1.3GB items
+                            {dataset.size} items
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {formatDate(String(dataset.created))}

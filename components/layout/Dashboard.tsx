@@ -181,6 +181,7 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                         {sidebarNavigation
                           .map((item) => ({
                             ...item,
+                            //TODO: fix filter method
                             current: router.asPath.includes(item.key),
                           }))
                           .map((item) => (
