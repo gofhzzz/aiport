@@ -28,7 +28,7 @@ import { Disclosure } from '@headlessui/react';
 
 const categoryItems = [
   {
-    name: 'Ai',
+    name: 'AI',
     value: 'ai',
     image: '/icon/project.png',
   },
@@ -97,7 +97,7 @@ const MarketplacePage = () => {
 
   const [taskFilter, setTaskFilter] = React.useState<
     typeof TEXT_TASK | typeof IMAGE_TASK
-  >([]);
+  >([...TEXT_TASK, ...IMAGE_TASK]);
 
   const [priceFilter, setPriceFilter] = React.useState<
     typeof PRICE_ITEMS[number]
@@ -133,7 +133,7 @@ const MarketplacePage = () => {
 
   const handleFiletering = useCallback(
     (taskFilter: string[], price: string) => {
-      if (price === 'all' && taskFilter.length === 0) {
+      if (price === 'all' && taskFilter.length === 8) {
         setProjects(totalProjects.current);
         setDatasets(totalDatasets.current);
         setModels(totalModels.current);
@@ -157,7 +157,6 @@ const MarketplacePage = () => {
             }
           })
           .filter((project) => {
-            if (taskFilter.length === 0) return true;
             return taskFilter.includes(project.task);
           }),
       );
@@ -178,8 +177,6 @@ const MarketplacePage = () => {
             }
           })
           .filter((dataset) => {
-            if (taskFilter.length === 0) return true;
-
             return taskFilter.includes(dataset.task);
           }),
       );
@@ -200,8 +197,6 @@ const MarketplacePage = () => {
             }
           })
           .filter((model) => {
-            if (taskFilter.length === 0) return true;
-
             return taskFilter.includes(model.task);
           }),
       );
@@ -382,7 +377,7 @@ const MarketplacePage = () => {
                 ? '/icon/dataset.png'
                 : '/icon/model.png'
             }
-            title={category ? category.toUpperCase() : ''}
+            title={category === 'ai' ? 'AI' : category}
             className="mb-8"
           />
           <div className="flex ml-6 relative items-center">

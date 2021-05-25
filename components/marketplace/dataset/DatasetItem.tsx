@@ -44,7 +44,7 @@ const DatasetItem = ({ dataset, className }: Props) => {
               <div className="flex items-center ml-4">
                 <EyeIcon className="w-6 h-6" color="gray" />
                 <p className="text-gray-600 pl-1">
-                  {dataset.star.toLocaleString()}
+                  {dataset.watch.toLocaleString()}
                 </p>
               </div>
               <div className="flex items-center ml-4">

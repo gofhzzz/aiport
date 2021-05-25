@@ -135,7 +135,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
               </div>
             </div>
             <div>
-              <p className="mt-2 text-lg font-semibold">About</p>
+              <p className="mt-2 text-lg font-semibold">Description</p>
               <div className=" line-clamp-4">
                 This application will find celebrity that look like you!
               </div>
@@ -146,7 +146,7 @@ const ProjectDetail = ({ className, project, otherProject }: Props) => {
               onClick={() => {
                 showModal({
                   title: 'Success',
-                  content: 'It has been added to your Ai',
+                  content: 'It has been added to your AI',
                   actionButton: {
                     label: 'Go to AI',
                     onClick: () => {

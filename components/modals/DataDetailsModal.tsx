@@ -102,7 +102,7 @@ const DataDetailsModal: React.FC<Props> = ({
                 </button>
                 <div>
                   <img
-                    className="shadow rounded-md object-contain"
+                    className="shadow w-[267px] h-[327px] rounded-md object-contain"
                     src={`/dataset/data/${imageIndex}.jpg`}
                   />
                 </div>
@@ -118,7 +118,7 @@ const DataDetailsModal: React.FC<Props> = ({
                       <h6 className="text-sm text-gray-500">
                         Data Key (Name):
                       </h6>
-                      <p>{`0000${imageIndex + 1}.jpg`}</p>
+                      <p>{data[imageIndex].name}</p>
                     </div>
                     <div>
                       <h6 className="text-sm text-gray-500">AI:</h6>

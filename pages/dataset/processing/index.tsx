@@ -105,7 +105,7 @@ const ProcessingPage = () => {
                               'transform rotate-90': open,
                             })}
                           />
-                          <p className="text-lg">{processing}</p>
+                          <p className="text-lg font-bold">{processing}</p>
                         </Disclosure.Button>
                         <Disclosure.Panel>
                           {open &&
@@ -138,12 +138,14 @@ const ProcessingPage = () => {
                   Selected Template: {selectedTemplate?.templateName}
                 </p>
                 <div className="flex justify-end">
+                  <Button>Back</Button>
                   <Link
                     href={`/dataset/processing/augmentation?processingId=${selectedTemplate?._id}`}
                   >
-                    <Button className="mr-4">Load</Button>
+                    <Button disabled={!selectedTemplate} className="ml-4">
+                      Load
+                    </Button>
                   </Link>
-                  <Button>Back</Button>
                 </div>
               </div>
             </div>

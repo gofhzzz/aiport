@@ -138,7 +138,7 @@ const ModelDetail = ({ className, model, otherModel }: Props) => {
               </div>
             </div>
             <div>
-              <p className="mt-2 text-lg font-semibold">About</p>
+              <p className="mt-2 text-lg font-semibold">Description</p>
               <div className="line-clamp-4">
                 Sota object detection networks depend on region proposal
                 algorithm to hypothesize object locations. Advances like SPPnet

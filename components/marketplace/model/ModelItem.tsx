@@ -44,7 +44,7 @@ const ModelItem = ({ model, className }: Props) => {
               <div className="flex items-center ml-4">
                 <EyeIcon className="w-6 h-6" color="gray" />
                 <p className="text-gray-600 pl-1">
-                  {model.star.toLocaleString()}
+                  {model.watch.toLocaleString()}
                 </p>
               </div>
               <div className="flex items-center ml-4">

@@ -228,9 +228,6 @@ const DatasetDataListPage = () => {
                       >
                         Created Date
                       </th>
-                      <th scope="col" className="relative px-6 py-3">
-                        <span className="sr-only">View</span>
-                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -261,9 +258,19 @@ const DatasetDataListPage = () => {
                             }}
                           />
                         </td>
-                        <td className="px-6 justify-center pb-4 pt-8 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
-                          <PhotographIcon className="w-6 h-6" />
-                          <span>{`0000${idx + 1}.jpg`}</span>
+                        <td className="flex justify-center items-center mt-8">
+                          <button
+                            className="px-6 hover:opa justify-center whitespace-nowrap text-sm flex items-center space-x-4"
+                            onClick={() => {
+                              setShowModal(true);
+                              setSelectedIndex(idx);
+                            }}
+                          >
+                            <PhotographIcon className="w-6 h-6" />
+                            <span className="text-lightBlue-500">{`0000${
+                              idx + 1
+                            }.jpg`}</span>
+                          </button>
                         </td>
                         <td className="px-6 py-4 whitespace-pre-line text-center text-sm text-gray-500">
                           {'-'}
@@ -400,17 +407,6 @@ const DatasetDataListPage = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                           {formatDate(String(new Date()))}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <button
-                            className="text-lightBlue-600 hover:text-lightBlue-900"
-                            onClick={() => {
-                              setShowModal(true);
-                              setSelectedIndex(idx);
-                            }}
-                          >
-                            View
-                          </button>
                         </td>
                       </tr>
                     ))}

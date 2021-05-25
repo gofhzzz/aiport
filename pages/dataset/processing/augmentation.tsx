@@ -107,11 +107,28 @@ const DatasetProcessingPage = () => {
   return (
     <>
       <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
-        <h1 className="text-3xl font-medium">Processing</h1>
-        <p className="text-gray-600">
-          {template.name}
-          &#62; {template.type}
-        </p>
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-3xl font-medium">Processing</h1>
+            <p className="text-gray-600">TemplateName: {template.name}</p>
+            <p className="text-gray-600">Data-Type: {template.type}</p>
+          </div>
+          <div className="pt-4 text-right">
+            <Button onClick={() => handleSave()}>Save</Button>
+            <Button
+              className="ml-4"
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
+              }
+            >
+              Save As
+            </Button>
+
+            <Link href="/dataset/processing">
+              <Button className="ml-4">New</Button>
+            </Link>
+          </div>
+        </div>
         <div className="mt-8 gap-8 space-y-6 md:space-y-0 max-w-md md:max-w-none mx-auto">
           <section className="p-4 bg-white rounded-lg shadow-md mb-4">
             <div className="flex items-center">
@@ -306,21 +323,6 @@ const DatasetProcessingPage = () => {
               </div>
             </div>
           </section>
-          <div className="pt-4 text-right">
-            <Button onClick={() => handleSave()}>Save</Button>
-            <Button
-              className="ml-4"
-              onClick={() =>
-                showNoti({ title: '준비중인 기능입니다.', variant: 'alert' })
-              }
-            >
-              Save As
-            </Button>
-
-            <Link href="/dataset/processing">
-              <Button className="ml-4">New</Button>
-            </Link>
-          </div>
         </div>
       </div>
       <AddProcessingModal
@@ -351,7 +353,7 @@ const DatasetProcessingPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">CIFAR10</h2>
+    <h2 className="px-4 font-semibold text-xl">CelebA</h2>
     <div className="mt-16 space-y-1">
       <Link className="flex px-4 py-2 hover:bg-gray-50" href="/dataset/data">
         <span>Data</span>

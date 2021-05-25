@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+
 import cn from 'classnames';
 // components
 import Dashboard from '@components/layout/Dashboard';
@@ -10,7 +10,11 @@ import ExperimentDownloadModal from '@components/modals/ExperimentDownloadModal'
 // icons
 import Spinner from '@components/icons/Spinner';
 import { ArrowRightIcon } from '@heroicons/react/solid';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  HomeIcon,
+} from '@heroicons/react/outline';
 
 const outputItems: { name: string; idx: number; per: number }[] = [
   { name: 'Lee Jun Ho', idx: 1, per: 94.4 },
@@ -18,10 +22,14 @@ const outputItems: { name: string; idx: number; per: number }[] = [
   { name: 'Kim bum', idx: 3, per: 0.48 },
 ];
 
+const pages = [
+  { name: 'Exp_1', href: '/project/experiments', current: false },
+  { name: 'Deploy', href: '#', current: true },
+];
+
 const ProjectExperimentsDetailsPage = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [dragOverFlag, setDragOverFlag] = React.useState<boolean>(false);
-  const router = useRouter();
   const [show, setShow] = useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = React.useState<string>('');
   const [previewName, setPreviewName] = React.useState<string>('');
@@ -55,19 +63,40 @@ const ProjectExperimentsDetailsPage = () => {
   return (
     <>
       <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
-        <div className="md:flex items-center justify-between">
-          <h1 className="text-3xl font-medium flex items-center">
-            <button className="hover:opacity-80" onClick={() => router.back()}>
-              <ChevronLeftIcon className="w-6 h-6" />
-            </button>{' '}
-            <a className="hover:opacity-80 flex" href="/project/experiments">
-              Exp_1
-            </a>
-            <ChevronLeftIcon className="w-6 h-6" />
-            Deploy
-          </h1>
-        </div>
-        <div className="relative mt-12">
+        <nav className="flex" aria-label="Breadcrumb">
+          <ol className="flex items-center space-x-4">
+            <li>
+              <div>
+                <a href="/" className="text-gray-400 hover:text-gray-500">
+                  <HomeIcon
+                    className="flex-shrink-0 h-5 w-5"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Home</span>
+                </a>
+              </div>
+            </li>
+            {pages.map((page) => (
+              <li key={page.name}>
+                <div className="flex items-center">
+                  <ChevronRightIcon
+                    className="flex-shrink-0 h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  <a
+                    href={page.href}
+                    className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                    aria-current={page.current ? 'page' : undefined}
+                  >
+                    {page.name}
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <div className="relative mt-4">
           <div
             className="absolute inset-0 flex items-center"
             aria-hidden="true"
@@ -182,7 +211,7 @@ const ProjectExperimentsDetailsPage = () => {
                             )}
                           />
                         </button>
-                        <p className="text-lg pl-8 mb-2 -mt-4 font-semibold">{`${outputInfo.idx}.${outputInfo.name}`}</p>
+                        <p className="text-lg text-center mb-2 -mt-4 font-semibold">{`${outputInfo.idx}.${outputInfo.name}`}</p>
                         <div className="flex items-center justify-center relative">
                           <img
                             src={`/images/deploy/${outputInfo.idx}.png`}

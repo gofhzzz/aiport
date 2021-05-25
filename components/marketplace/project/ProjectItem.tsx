@@ -44,7 +44,7 @@ const ProjectItem = ({ project, className }: Props) => {
               <div className="flex items-center ml-4">
                 <EyeIcon className="w-6 h-6" color="gray" />
                 <p className="text-gray-600 pl-1">
-                  {project.star.toLocaleString()}
+                  {project.watch.toLocaleString()}
                 </p>
               </div>
               <div className="flex items-center ml-4">

@@ -122,8 +122,8 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
               <div className="w-[100px] space-y-2 text-md font-semibold">
                 <p className="text-red-500">Price</p>
                 <p>Owner</p>
-                <p>Task</p>
                 <p>Data Type</p>
+                <p>Task</p>
                 <p>Size</p>
                 <button className="w-full text-left items-center flex text-lightBlue-400 mt-2">
                   <p>See More</p>
@@ -135,13 +135,13 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
                   {dataset.isPublic ? 'FREE' : '120.65'}
                 </p>
                 <p>{dataset.owner}</p>
-                <p>{dataset.task}</p>
                 <p>{dataset.dataType}</p>
-                <p>{(dataset.size / 1024 / 1024).toFixed(2)}GB</p>
+                <p>{dataset.task}</p>
+                <p>{dataset.size}</p>
               </div>
             </div>
             <div>
-              <p className="mt-2 text-lg font-semibold">About</p>
+              <p className="mt-2 text-lg font-semibold">Description</p>
               <div className=" line-clamp-4">
                 Over 200k images of celebrities with 40 binary attribute
                 annotations

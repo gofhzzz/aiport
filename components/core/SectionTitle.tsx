@@ -19,7 +19,7 @@ const SectionTitle: React.FC<Props> = ({ className, picture, title }) => {
         height={64}
         sizes="64px"
       />
-      <h1 className="text-3xl font-medium">{title}</h1>
+      <h1 className="text-3xl font-medium capitalize">{title}</h1>
     </div>
   );
 };

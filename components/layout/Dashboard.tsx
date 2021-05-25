@@ -79,7 +79,11 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                     key={item.name}
                     href={item.href}
                     className={cn(
-                      item.current
+                      item.current &&
+                        !(
+                          (item.key === 'dataset' || item.key === 'model') &&
+                          router.asPath.includes('marketplace')
+                        )
                         ? 'bg-lightBlue-800 text-white'
                         : 'text-lightBlue-100 hover:bg-lightBlue-800 hover:text-white',
                       'group w-full p-3 rounded-md flex flex-col items-center text-xs font-medium',
@@ -88,7 +92,11 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                   >
                     <item.icon
                       className={cn(
-                        item.current
+                        item.current &&
+                          !(
+                            (item.key === 'dataset' || item.key === 'model') &&
+                            router.asPath.includes('marketplace')
+                          )
                           ? 'text-white'
                           : 'text-lightBlue-300 group-hover:text-white',
                         'h-6 w-6',
@@ -181,7 +189,6 @@ const Dashboard: React.FC<Props> = ({ sidebar, children }) => {
                         {sidebarNavigation
                           .map((item) => ({
                             ...item,
-                            //TODO: fix filter method
                             current: router.asPath.includes(item.key),
                           }))
                           .map((item) => (

@@ -307,7 +307,7 @@ const ProjectExperimentsPage = () => {
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          LastRun-Time
+                          Last-Run-Time
                         </th>
                         <th
                           scope="col"
@@ -412,13 +412,13 @@ const ProjectExperimentsPage = () => {
                             {experiment.framework}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {formatDate(experiment.createdTime)}
+                            {formatDate(experiment.createdTime, true)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {formatDate(experiment.startTime)}
+                            {formatDate(experiment.startTime, true)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
-                            {formatDate(experiment.lastRunTime)}
+                            {formatDate(experiment.lastRunTime, true)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {experiment.runningTime}
