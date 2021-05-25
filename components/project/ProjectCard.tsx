@@ -14,10 +14,9 @@ import { SampleProjectInfo } from 'types/project';
 interface Props {
   className?: string;
   project: SampleProjectInfo;
-  idx: number;
 }
 
-const ProjectCard = ({ className, project, idx }: Props) => {
+const ProjectCard = ({ className, project }: Props) => {
   return (
     <Link
       href="/project/overview"
@@ -29,12 +28,12 @@ const ProjectCard = ({ className, project, idx }: Props) => {
       <div className="relative aspect-w-16 aspect-h-7 overflow-hidden">
         <img
           className="object-cover transform duration-300 transition-transform group-hover:scale-110"
-          src={`/images/dataset/data/${idx + 1}.jpg`}
+          src={project.src}
           loading="lazy"
         />
       </div>
       <div className="px-4 flex-grow">
-        <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
+        <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300 truncate">
           {project.name}
         </h5>
         <p className="mt-2 text-sm font-semibold capitalize truncate">

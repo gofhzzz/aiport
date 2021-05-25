@@ -14,10 +14,9 @@ import { DatasetInfo } from 'types/dataset';
 interface Props {
   className?: string;
   dataset: DatasetInfo;
-  idx: number;
 }
 
-const DatasetCard = ({ className, dataset, idx }: Props) => {
+const DatasetCard = ({ className, dataset }: Props) => {
   return (
     <Link
       href="/dataset/data"
@@ -29,12 +28,12 @@ const DatasetCard = ({ className, dataset, idx }: Props) => {
       <div className="relative aspect-w-16 aspect-h-7 overflow-hidden">
         <img
           className="object-cover transform duration-300 transition-transform group-hover:scale-110"
-          src={`/images/dataset/data/${idx + 1}.jpg`}
+          src={dataset.src}
           loading="lazy"
         />
       </div>
       <div className="px-4 flex-grow">
-        <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
+        <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300 truncate">
           {dataset.name}
         </h5>
         <p className="mt-2 capitalize text-sm font-semibold truncate">

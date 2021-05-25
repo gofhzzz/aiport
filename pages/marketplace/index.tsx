@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import { useDebounce } from 'react-use';
+import { Disclosure } from '@headlessui/react';
 
 // components
 import Dashboard from '@components/layout/Dashboard';
@@ -10,6 +11,8 @@ import DatasetList from '@components/marketplace/dataset/DatasetList';
 import ModelList from '@components/marketplace/model/ModelList';
 import SectionTitle from '@components/core/SectionTitle';
 import Input from '@components/ui/Input';
+import Button from '@components/ui/Button';
+import { useUI } from '@components/ui/context';
 
 // libraries
 import getSampleProjects from '@lib/ai/getSampleProjects';
@@ -24,7 +27,6 @@ import { ChevronRightIcon, XIcon } from '@heroicons/react/outline';
 import { SampleProjectInfo } from 'types/project';
 import { DatasetInfo } from 'types/dataset';
 import { ModelInfo } from 'types/model';
-import { Disclosure } from '@headlessui/react';
 
 const categoryItems = [
   {
@@ -80,6 +82,7 @@ const MarketplacePage = () => {
   //     return router.query.category;
   //   return 'ai';
   // }, [router]);
+  const { showNoti } = useUI();
 
   const [searchInput, setSearchInput] = React.useState<string>('');
   const [category, setCategory] = React.useState<typeof CATEGORY[number]>(
@@ -380,7 +383,7 @@ const MarketplacePage = () => {
             title={category === 'ai' ? 'AI' : category}
             className="mb-8"
           />
-          <div className="flex ml-6 relative items-center">
+          <div className="flex ml-6 relative items-center justify-between">
             <Input
               className="w-[600px]"
               placeholder="Search Items"
@@ -397,6 +400,13 @@ const MarketplacePage = () => {
                 <XIcon className="w-5 h-5 text-gray-700" />
               </button>
             )}
+            <Button
+              onClick={() =>
+                showNoti({ title: '준비중인 기능입니다', variant: 'alert' })
+              }
+            >
+              Upload
+            </Button>
           </div>
           {category === 'ai' &&
             (projects ? (

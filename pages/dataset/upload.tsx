@@ -25,7 +25,7 @@ const selectTypes = [
   { label: 'text', value: 'text' },
 ];
 
-const selectTasks = [
+const imageTasks = [
   {
     label: 'classification',
     value: 'classification',
@@ -39,6 +39,9 @@ const selectTasks = [
     label: 'object detection',
     value: 'object detection',
   },
+];
+
+const textTasks = [
   {
     label: 'sentiment classification',
     value: 'sentiment classification',
@@ -75,7 +78,7 @@ const DatasetUploadPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [datasets, setDatasets] = React.useState<DatasetInfo[] | null>(null);
   const [variant, setVariant] = React.useState<string>('local');
-  const [type, setType] = React.useState<string>('image1');
+  const [type, setType] = React.useState<string>('image');
   const [datasetName, setDatasetName] = React.useState<string>('');
   const [task, setTask] = React.useState<string>('classification');
   const { showNoti } = useUI();
@@ -147,10 +150,17 @@ const DatasetUploadPage = () => {
               <Select
                 className="mt-6"
                 label="Task"
-                items={selectTasks.map((task) => ({
-                  ...task,
-                  key: task.label,
-                }))}
+                items={
+                  type === 'image'
+                    ? imageTasks.map((task) => ({
+                        ...task,
+                        key: task.label,
+                      }))
+                    : textTasks.map((task) => ({
+                        ...task,
+                        key: task.label,
+                      }))
+                }
                 selectedValue={task}
                 onSelect={(item) => setTask(item.value as string)}
               />
@@ -197,8 +207,8 @@ const DatasetUploadPage = () => {
             Choose public/private dataset
           </p>
           <div className="flex-grow py-6 grid grid-cols-2 gap-4">
-            {datasets.slice(0, 4).map((dataset, idx) => (
-              <DatasetCard key={dataset._id} dataset={dataset} idx={idx} />
+            {datasets.slice(0, 4).map((dataset) => (
+              <DatasetCard key={dataset._id} dataset={dataset} />
             ))}
           </div>
           <button

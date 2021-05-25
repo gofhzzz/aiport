@@ -16,7 +16,7 @@ import formatDate from '@utils/formatDate';
 // icons
 import Spinner from '@components/icons/Spinner';
 import { SearchIcon } from '@heroicons/react/solid';
-import { PlusIcon } from '@heroicons/react/outline';
+import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
 
 const initialCodeItems = [
   { name: '__init__.py', model: [], checked: false },
@@ -122,6 +122,14 @@ const ModelOverviewEmptyPage = () => {
           </div>
           {/* button groups */}
           <div className="flex items-center flex-shrink-0 space-x-4">
+            <Button
+              size="sm"
+              color="red"
+              disabled={!codeItems.find(({ checked }) => checked)}
+            >
+              <TrashIcon className="w-5 h-5 mr-2" />
+              <span>Delete</span>
+            </Button>
             <NextLink href="/model/upload">
               <Button size="sm">
                 <PlusIcon className="w-5 h-5 mr-2" />
@@ -134,6 +142,9 @@ const ModelOverviewEmptyPage = () => {
       <section className="flex flex-col mt-4">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <p className="text-sm text-lightBlue-400 ml-2 mb-2">
+              Please select classes or function that returns a model class
+            </p>
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -253,7 +264,11 @@ const Sidebar = (
       <Link className="flex px-4 py-2 bg-gray-200" href="/model/overview">
         <span>Overview</span>
       </Link>
-      <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
+      <Link
+        className="flex px-4 py-2 hover:bg-gray-50"
+        href="https://211.184.186.91:8888/lab"
+        target="blank"
+      >
         <span>Jupyter lab</span>
       </Link>
       <Link

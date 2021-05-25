@@ -250,7 +250,11 @@ const Sidebar = (
       <Link className="flex px-4 py-2  hover:bg-gray-50" href="/model/overview">
         <span>Overview</span>
       </Link>
-      <Link className="flex px-4 py-2 hover:bg-gray-50" href="#">
+      <Link
+        className="flex px-4 py-2 hover:bg-gray-50"
+        href="https://211.184.186.91:8888/lab"
+        target="blank"
+      >
         <span>Jupyter lab</span>
       </Link>
       <Link className="flex px-4 py-2 bg-gray-200" href="/model/pre-trained">

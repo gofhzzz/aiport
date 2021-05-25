@@ -54,9 +54,9 @@ const ProjectUploadPage = () => {
   return (
     <div className="relative mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16">
       <div className="w-full lg:grid gap-8 grid-cols-2 max-w-5xl mx-auto lg:px-16">
-        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[668px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
           <div className="flex justify-between items-center">
-            <h1 className="text-xl font-medium capitalize">New Project</h1>
+            <h1 className="text-xl font-medium capitalize">New AI</h1>
           </div>
 
           <div className="flex flex-col justify-between h-full pb-8">
@@ -64,8 +64,8 @@ const ProjectUploadPage = () => {
               <div className="mt-8">
                 <Input
                   containerClassName="my-4"
-                  label="Project Name"
-                  placeholder="My first project"
+                  label="AI Name"
+                  placeholder="My first AI"
                   value={projectInput.name}
                   onChange={(e) => {
                     setProjectInput((prev) => ({
@@ -85,7 +85,7 @@ const ProjectUploadPage = () => {
                   }));
                 }}
                 label="Description (Optional)"
-                placeholder="lease enter a short description of this application ..."
+                placeholder="Please enter a short description of this AI application"
               />
             </div>
             <div className="mt-6 flex justify-end space-x-4">
@@ -101,8 +101,8 @@ const ProjectUploadPage = () => {
             </div>
           </div>
         </section>
-        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
-          <h1 className="text-xl font-medium">Clone Project (optional)</h1>
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[668px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
+          <h1 className="text-xl font-medium">Clone AI (optional)</h1>
           <div className="flex-grow py-6 grid grid-cols-2 gap-4">
             {sampleProjects === null ? (
               <div className="h-[404px] flex justify-center items-center">
@@ -111,8 +111,8 @@ const ProjectUploadPage = () => {
             ) : (
               sampleProjects
                 .slice(0, 4)
-                .map((project, idx) => (
-                  <ProjectCard key={project._id} project={project} idx={idx} />
+                .map((project) => (
+                  <ProjectCard key={project._id} project={project} />
                 ))
             )}
           </div>

@@ -9,7 +9,6 @@ import Button from '@components/ui/Button';
 import { PlusIcon } from '@heroicons/react/outline';
 
 // types
-import { ProjectInfo } from 'types/project';
 import { FeedInfo } from 'types/feed';
 import { ExperimentInfo } from 'types/experiment';
 
@@ -21,8 +20,16 @@ const ProjectOverviewPage = () => {
 
   return (
     <div className="pb-32">
-      <div className="aspect-h-6 md:aspect-h-3 aspect-w-16">
-        <div className="bg-gray-400" aria-hidden="true" />
+      <div className="bg-gray-400">
+        <div
+          className="h-[240px] relative flex items-end justify-end"
+          aria-hidden="true"
+        >
+          <Button size="sm" className="mb-4 mr-4">
+            <PlusIcon className="w-6 h-6" />
+            Add Cover
+          </Button>
+        </div>
       </div>
       <div className="max-w-screen-xl mx-auto pt-8 px-4 md:px-6">
         {/* title section */}

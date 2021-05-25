@@ -12,9 +12,9 @@ const formatDate: (date: string, withDetails?: boolean) => string = (
 
   return `${[year, month, day].join('-')}${
     withDetails
-      ? `${d.getHours() >= 12 ? ' 오후' : ' 오전'} ${
+      ? `${d.getHours() >= 12 ? ' PM' : ' AM'} ${
           d.getHours() >= 12 ? d.getHours() - 12 : d.getHours()
-        }:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}분`
+        }:${d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes()}`
       : ''
   }`;
 };

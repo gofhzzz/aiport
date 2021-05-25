@@ -547,7 +547,7 @@ const ProjectExperimentUploadPage = () => {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-    setTimeout(() => router.push('/project/experiments/details'), 500);
+    setTimeout(() => router.push('/project/experiments/details/empty'), 500);
   }, [router]);
 
   return (

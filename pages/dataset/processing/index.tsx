@@ -189,8 +189,8 @@ const ProcessingPage = () => {
             Choose processing templates
           </p>
           <div className="flex-grow py-6 grid grid-cols-2 gap-4">
-            {datasets.slice(0, 4).map((dataset, idx) => (
-              <DatasetCard key={dataset._id} dataset={dataset} idx={idx} />
+            {datasets.slice(0, 4).map((dataset) => (
+              <DatasetCard key={dataset._id} dataset={dataset} />
             ))}
           </div>
           <button

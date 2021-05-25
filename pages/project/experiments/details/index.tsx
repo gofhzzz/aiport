@@ -30,9 +30,12 @@ const ProjectExperimentsDetailsPage = () => {
           <button onClick={() => router.back()}>
             <ChevronLeftIcon className="w-8 h-8" />
           </button>
-          Exp_new
+          exp1
         </h1>
         <div className="mt-4 md:mt-0 flex items-center space-x-4">
+          <Button>
+            <Link href="/project/experiments/deploy">Deploy</Link>
+          </Button>
           <Button color="white" onClick={() => setShow(true)}>
             Download
           </Button>
@@ -73,15 +76,24 @@ const ProjectExperimentsDetailsPage = () => {
           <div className="py-4 mt-10 max-w-7xl mx-auto shadow-lg rounded-md">
             <div className="justify-around flex text-md font-semibold">
               <div className="text-left pl-4 flex-grow">
-                <p className="pb-4">Start Time: {'-'}</p>
-                <p>Last Run Time: {'-'}</p>
+                <p className="pb-4">
+                  Start Time:{' '}
+                  <span className="font-normal">2021-05-25 PM 1:50 </span>
+                </p>
+                <p>
+                  Last Run Time:{' '}
+                  <span className="font-normal">2021-05-25 PM 2:52 </span>
+                </p>
               </div>
               <div className="border-r border-gray-300" />
               <div className="flex-grow pl-4">
                 <p className="pb-4">
-                  Created Time: {formatDate(String(new Date()))}
+                  Created Time:{' '}
+                  <span className="font-normal">2021-05-25 PM 1:48</span>
                 </p>
-                <p>Image: nvidia-pytorch-1.8.1</p>
+                <p>
+                  Image: <span className="font-normal">Pytorch 1.8.1</span>
+                </p>
               </div>
             </div>
           </div>
@@ -92,13 +104,21 @@ const ProjectExperimentsDetailsPage = () => {
             </div>
             <div className="justify-around flex text-md font-semibold">
               <div className="text-left pl-4 flex-grow">
-                <p className="pb-4">Train Loss:</p>
-                <p>Valid Loss:</p>
+                <p className="pb-4">
+                  Train Loss: <span className="font-normal">0.337</span>
+                </p>
+                <p>
+                  Valid Loss: <span className="font-normal">0.598</span>
+                </p>
               </div>
               <div className="border-r border-gray-300" />
               <div className="flex-grow pl-4">
-                <p className="pb-4">Score:</p>
-                <p>Epoch: 0/50</p>
+                <p className="pb-4">
+                  Score: <span className="font-normal">92.3</span>
+                </p>
+                <p>
+                  Epoch: <span className="font-normal">50/50</span>
+                </p>
               </div>
             </div>
           </div>
@@ -109,17 +129,34 @@ const ProjectExperimentsDetailsPage = () => {
             </div>
             <div className="justify-around flex text-md font-semibold">
               <div className="text-left pl-4 flex-grow">
-                <p className="pb-4">Dataset: CelebA</p>
-                <p>Processing: Processing_CelebA_1</p>
+                <p className="pb-4">
+                  Dataset: <span className="font-normal">CelebA</span>
+                </p>
+                <p>
+                  Processing:{' '}
+                  <span className="font-normal">Processing_CelebA_1</span>
+                </p>
               </div>
               <div className="border-r border-gray-300" />
               <div className="flex-grow pl-4">
-                <p className="pb-4">Model Name: Faster R-CNN</p>
-                <p className="pb-4">Model: fasterrcnn_mobilenet_v3_large_fpn</p>
-                <p className="pb-4">Pre-trained: epoch30_val91.pt</p>
+                <p className="pb-4">
+                  Model Name: <span className="font-normal">Faster R-CNN</span>
+                </p>
+                <p className="pb-4">
+                  Model:{' '}
+                  <span className="font-normal">
+                    fasterrcnn_mobilenet_v3_large_fpn
+                  </span>
+                </p>
+                <p className="pb-4">
+                  Pre-trained:{' '}
+                  <span className="font-normal"> epoch30_val91.pt</span>
+                </p>
                 <div>
                   <span className="border-b-2 border-black">Parameter</span>
-                  <p>num_class: 10117</p>
+                  <p>
+                    num_class: <span className="font-normal">10117</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -131,13 +168,22 @@ const ProjectExperimentsDetailsPage = () => {
             </div>
             <div className="justify-around flex text-md font-semibold">
               <div className="text-left pl-4 flex-grow">
-                <p className="pb-4">Initialization: He Initialization</p>
-                <p>Loss: [Cross Entropy]</p>
+                <p className="pb-4">
+                  Initialization:{' '}
+                  <span className="font-normal">He Initialization</span>
+                </p>
+                <p>
+                  Loss: <span className="font-normal">[Cross Entropy]</span>
+                </p>
               </div>
               <div className="border-r border-gray-300" />
               <div className="flex-grow pl-4">
-                <p className="pb-4">Optimizer: Adam</p>
-                <p>Batch size: 32</p>
+                <p className="pb-4">
+                  Optimizer: <span className="font-normal">Adam</span>
+                </p>
+                <p>
+                  Batch size: <span className="font-normal">32</span>
+                </p>
               </div>
             </div>
           </div>

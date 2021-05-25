@@ -79,6 +79,50 @@ const frameworkList = [
   },
 ];
 
+const selectTypes = [
+  { label: 'image', value: 'image' },
+  { label: 'text', value: 'text' },
+];
+
+const imageTasks = [
+  {
+    label: 'classification',
+    value: 'classification',
+  },
+  {
+    label: 'multi-label classification',
+
+    value: 'multi-label classification',
+  },
+  {
+    label: 'object detection',
+    value: 'object detection',
+  },
+];
+
+const textTasks = [
+  {
+    label: 'sentiment classification',
+    value: 'sentiment classification',
+  },
+  {
+    label: 'Translation',
+    value: 'Translation',
+  },
+  {
+    label: 'paraphrase classification',
+    value: 'paraphrase classification',
+  },
+  {
+    label: 'question answering',
+    value: 'question answering',
+  },
+  {
+    label: 'language modeling',
+    value: 'language modeling',
+  },
+];
+
 const ModalUploadPage = () => {
   const router = useRouter();
   const [modelInput, setModelInput] = useState<ModelInput>(initialModelInput);
@@ -89,6 +133,7 @@ const ModalUploadPage = () => {
   const [models, setModels] = useState<ModelInfo[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [type, setType] = useState<string>('image');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -159,7 +204,7 @@ const ModalUploadPage = () => {
   return (
     <div className="pb-32 lg:py-12 min-h-full flex flex-col justify-center items-stretch">
       <div className="w-full lg:grid gap-8 grid-cols-2 max-w-5xl mx-auto lg:px-16">
-        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[668px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
           <div className="flex flex-col h-full">
             <h2 className="text-center md:text-left text-2xl font-medium">
               Upload Model
@@ -207,15 +252,32 @@ const ModalUploadPage = () => {
                 }))
               }
             />
+
+            <Select
+              className="mt-6"
+              label="Data Type"
+              items={selectTypes.map((type) => ({
+                ...type,
+                key: type.label,
+              }))}
+              selectedValue={type}
+              onSelect={(item) => setType(item.value as string)}
+            />
+
             <Select
               className="mt-6"
               label="Task"
-              items={[
-                { key: 'Img BB', label: 'Img BB', value: 'Img BB' },
-                { key: 'Text Clf', label: 'Text Clf', value: 'Text Clf' },
-                { key: 'LM', label: 'LM', value: 'LM' },
-                { key: 'Image Clf', label: 'Image Clf', value: 'Image Clf' },
-              ]}
+              items={
+                type === 'image'
+                  ? imageTasks.map((task) => ({
+                      ...task,
+                      key: task.label,
+                    }))
+                  : textTasks.map((task) => ({
+                      ...task,
+                      key: task.label,
+                    }))
+              }
               selectedValue={modelInput.task}
               onSelect={(item) =>
                 setModelInput((prev) => ({
@@ -263,7 +325,7 @@ const ModalUploadPage = () => {
             </div>
           </div>
         </section>
-        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[640px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
+        <section className="md:my-8 px-4 py-6 w-full mx-auto sm:max-w-md lg:max-w-none h-[668px] md:border border-gray-300 md:rounded-md md:shadow-md md:bg-white">
           <div className="flex flex-col h-full">
             <h2 className="text-center md:text-left text-2xl font-medium">
               Browse AI Model
@@ -289,7 +351,7 @@ const ModalUploadPage = () => {
                       />
                     </div>
                     <div className="px-4 flex-grow">
-                      <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300">
+                      <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300 truncate">
                         {model.name}
                       </h5>
                       <p className="mt-2 text-sm truncate">{model.framework}</p>

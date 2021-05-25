@@ -103,7 +103,7 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
                 <div className="flex items-center ml-4">
                   <EyeIcon className="w-6 h-6" color="gray" />
                   <p className="text-gray-600 pl-1">
-                    {dataset.star.toLocaleString()}
+                    {dataset.watch.toLocaleString()}
                   </p>
                 </div>
                 <button
@@ -141,11 +141,8 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
               </div>
             </div>
             <div>
-              <p className="mt-2 text-lg font-semibold">Description</p>
-              <div className=" line-clamp-4">
-                Over 200k images of celebrities with 40 binary attribute
-                annotations
-              </div>
+              <p className="mt-2 text-lg font-semibold">About</p>
+              <div className=" line-clamp-4">{dataset.description}</div>
             </div>
           </div>
           <div className="w-96 ml-8 space-y-2">
@@ -217,7 +214,7 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
                   <div className="flex items-center ml-4">
                     <EyeIcon className="w-6 h-6" color="gray" />
                     <p className="text-gray-600 pl-1">
-                      {dataset.star.toLocaleString()}
+                      {dataset.watch.toLocaleString()}
                     </p>
                   </div>
                 </div>

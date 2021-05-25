@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { EyeIcon, StarIcon } from '@heroicons/react/solid';
 import {
   ChartSquareBarIcon,
@@ -66,7 +67,21 @@ const ModelItem = ({ model, className }: Props) => {
                 <UserCircleIcon className="w-6 h-6" color="gray" />
                 <p className="text-gray-600 pl-1">{model.owner}</p>
               </div>
-              <p className="text-gray-600 pl-1">{model.framework}</p>
+
+              <div className="flex items-center">
+                <img
+                  className={cn('h-6 w-auto', {
+                    'mx-2': !model.framework.includes('Pytorch'),
+                    'mb-2': model.framework.includes('Pytorch'),
+                  })}
+                  src={
+                    model.framework.includes('Pytorch')
+                      ? '/icon/pytorch_logo.png'
+                      : '/icon/tf_logo.png'
+                  }
+                />
+                <p className="text-gray-600">{model.framework}</p>
+              </div>
             </div>
           </div>
           <div className="mt-4 text-gray-700 line-clamp-2">

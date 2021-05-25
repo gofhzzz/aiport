@@ -102,28 +102,6 @@ const ExperimentDownloadModal: React.FC<Props> = ({ show, setShow }) => {
               <h5 className="text-xl text-left font-medium">Download</h5>
               <div className="mt-6 space-y-6 text-left">
                 <Select
-                  label="Processor CPU/GPU"
-                  items={selectItems.node.map((node) => ({
-                    label: node,
-                    value: node,
-                    key: node,
-                  }))}
-                  selectedValue={selectedNode}
-                  onSelect={(item) => setSelectedNode(item.value as string)}
-                />
-                <Select
-                  label="Framework"
-                  items={selectItems.framework.map((framework) => ({
-                    label: framework,
-                    value: framework,
-                    key: framework,
-                  }))}
-                  selectedValue={selectedFramework}
-                  onSelect={(item) =>
-                    setSelectedFramework(item.value as string)
-                  }
-                />
-                <Select
                   label="Container"
                   items={selectItems.container.map((container) => ({
                     label: container,
@@ -133,6 +111,19 @@ const ExperimentDownloadModal: React.FC<Props> = ({ show, setShow }) => {
                   selectedValue={selectedContainer}
                   onSelect={(item) =>
                     setSelectedContainer(item.value as string)
+                  }
+                />
+                <Select
+                  disabled={true}
+                  label="Framework (For subscribed user)"
+                  items={selectItems.framework.map((framework) => ({
+                    label: framework,
+                    value: framework,
+                    key: framework,
+                  }))}
+                  selectedValue={selectedFramework}
+                  onSelect={(item) =>
+                    setSelectedFramework(item.value as string)
                   }
                 />
               </div>
