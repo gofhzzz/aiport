@@ -157,10 +157,10 @@ const ProjectExperimentsPage = () => {
             <Spinner className="w-12 h-12 animate-spin" />
           </div>
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col overflow-x-hidden">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg overflow-x-scroll">
+                <div className="shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
@@ -302,10 +302,6 @@ const ProjectExperimentsPage = () => {
                         >
                           Deploy
                         </th>
-
-                        <th scope="col" className="relative px-6 py-3">
-                          <span className="sr-only">View</span>
-                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -402,6 +398,9 @@ const ProjectExperimentsPage = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
                             {experiment.runningTime}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                            -
                           </td>
                           {experiment.deploy && (
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

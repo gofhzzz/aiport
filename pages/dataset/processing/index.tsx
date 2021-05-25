@@ -7,12 +7,10 @@ import Dashboard from '@components/layout/Dashboard';
 import Dropdown from '@components/ui/Dropdown';
 import Input from '@components/ui/Input';
 import Button from '@components/ui/Button';
-import DatasetCard from '@components/dataset/DatasetCard';
 import Select from '@components/ui/Select';
 import { useUI } from '@components/ui/context';
 
 // libs
-import getDatasets from '@lib/dataset/getDatasets';
 import getProcessings from '@lib/processing/getProcessings';
 
 // icons
@@ -20,9 +18,9 @@ import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import Spinner from '@components/icons/Spinner';
 
 // types
-import { DatasetInfo } from 'types/dataset';
 import { Processing } from 'types/processing';
 import { Disclosure } from '@headlessui/react';
+import { EyeIcon, HeartIcon, StarIcon } from '@heroicons/react/outline';
 
 const PROCESSING_TYPE = [
   'audio',
@@ -34,13 +32,47 @@ const PROCESSING_TYPE = [
   'video',
 ];
 
+const processingTemplates = [
+  {
+    name: 'Image Processing',
+    type: 'image',
+    watch: 28051,
+    star: 4091,
+    price: 0,
+    src: '/processing/Image Processing.jpeg',
+  },
+  {
+    name: 'Korean Text Processing',
+    type: 'text',
+    watch: 18542,
+    star: 2108,
+    price: 0,
+    src: '/processing/Korean Text Processing.png',
+  },
+  {
+    name: 'Eng Text Processing',
+    type: 'text',
+    watch: 30189,
+    star: 5915,
+    price: 0,
+    src: '/processing/Eng Text Processing.jpeg',
+  },
+  {
+    name: 'Image Augmenting',
+    type: 'image',
+    watch: 19510,
+    star: 1859,
+    price: 0,
+    src: '/processing/Image Augmenting.png',
+  },
+];
+
 const ProcessingPage = () => {
   const DropdownItem = [
     { label: 'new', value: 'new', onClick: () => setVariant('new') },
     { label: 'load', value: 'load', onClick: () => setVariant('load') },
   ];
   const { showNoti } = useUI();
-  const [datasets, setDatasets] = React.useState<DatasetInfo[] | null>(null);
   const [variant, setVariant] = React.useState<'new' | 'load'>('new');
   const [templateName, setTemplateName] = React.useState<string>('');
   const [type, setType] = React.useState<typeof PROCESSING_TYPE[number]>(
@@ -58,13 +90,9 @@ const ProcessingPage = () => {
     getProcessings()
       .then((processings) => setProcessings(processings))
       .catch((err) => console.log(err));
-
-    getDatasets()
-      .then((datasets) => setDatasets(datasets))
-      .catch((err) => console.log(err));
   }, []);
 
-  if (datasets === null || processings === null)
+  if (processings === null)
     return (
       <div className="h-[404px] flex justify-center items-center">
         <Spinner className="w-12 h-12 animate-spin" />
@@ -189,8 +217,44 @@ const ProcessingPage = () => {
             Choose processing templates
           </p>
           <div className="flex-grow py-6 grid grid-cols-2 gap-4">
-            {datasets.slice(0, 4).map((dataset) => (
-              <DatasetCard key={dataset._id} dataset={dataset} />
+            {processingTemplates.slice(0, 4).map((processingTemplate, idx) => (
+              <Link
+                key={`${processingTemplate.name}-${idx}`}
+                href="/dataset/data"
+                className={cn(
+                  'rounded-md overflow-hidden shadow-md group flex flex-col',
+                )}
+              >
+                <div className="relative aspect-w-16 aspect-h-7 overflow-hidden">
+                  <img
+                    className="object-cover transform duration-300 transition-transform group-hover:scale-110"
+                    src={processingTemplate.src}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="px-4 flex-grow">
+                  <h5 className="mt-2 pb-2 text-center font-semibold border-b-2 border-gray-300 truncate">
+                    {processingTemplate.name}
+                  </h5>
+                  <p className="mt-2 capitalize text-sm font-semibold truncate">
+                    DataType: {processingTemplate.type}
+                  </p>
+                  <div className="mt-1.5 flex space-x-3 text-gray-500 text-sm mb-2">
+                    <div className="flex items-center space-x-1">
+                      <EyeIcon className="w-5 h-5" />
+                      <span>{processingTemplate.watch.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <StarIcon className="w-5 h-5" color="orange" />
+                      <span>{processingTemplate.star.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-t border-gray-300 py-1.5 flex justify-between items-center px-4">
+                  <HeartIcon className="w-5 h-5 text-red-400" />
+                  <span className="text-sm">Free</span>
+                </div>
+              </Link>
             ))}
           </div>
           <button

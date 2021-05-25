@@ -25,39 +25,45 @@ import { PlusIcon, TrashIcon } from '@heroicons/react/outline';
 import { ModelInfo } from 'types/model';
 
 const initialCodeItems = [
-  { name: '__init__.py', model: [], checked: false },
+  { name: '__init__.py', model: [], modelList: [], checked: false },
   {
     name: 'fasterrcnn.py',
     model: ['fasterrcnn_mobilenet_v3_large_fpn'],
+    modelList: [
+      'FasterRCNN',
+      'fasterrcnn_resnet50_fpn',
+      'fasterrcnn_mobilenet_v3_large_320_fpn',
+      'fasterrcnn_mobilenet_v3_large_fpn',
+    ],
     checked: false,
   },
-  { name: 'mlphead.ph', model: [], checked: false },
-  { name: 'predictor.py', model: [], checked: false },
+  { name: 'mlphead.ph', model: [], modelList: ['TwoMLPHead'], checked: false },
+  {
+    name: 'predictor.py',
+    model: [],
+    modelList: ['FastRCNNPredictor'],
+    checked: false,
+  },
 ];
 
 const ModelOverviewPage = () => {
   const router = useRouter();
   const [openModal, setOpenModal] = React.useState<boolean>(false);
   const [codeItems, setCodeItems] = React.useState<
-    { name: string; model: string[]; checked: boolean }[]
+    { name: string; model: string[]; modelList: string[]; checked: boolean }[]
   >(initialCodeItems);
   const [editIndex, setEditIndex] = React.useState<number>(0);
   const [searchKey, setSearchKey] = useState<string>('');
   const [model, setModel] = useState<ModelInfo | null>(null);
   const totalCodes = useRef<
-    { name: string; model: string[]; checked: boolean }[]
+    { name: string; model: string[]; modelList: string[]; checked: boolean }[]
   >([]);
 
   useEffect(() => {
-    if (router.query.modelId && typeof router.query.modelId === 'string')
-      getModel(router.query.modelId)
-        .then((model) => setModel(model))
-        .catch((err) => console.log(err));
-    else {
-      getModel('60ab6feb0fb5890a912f41f6')
-        .then((model) => setModel(model))
-        .catch((err) => console.log(err));
-    }
+    getModel('60ab6feb0fb5890a912f41f6')
+      .then((model) => setModel(model))
+      .catch((err) => console.log(err));
+
     totalCodes.current = codeItems.map((codeItem) => ({
       ...codeItem,
       checked: false,
@@ -234,15 +240,19 @@ const ModelOverviewPage = () => {
                       </td>
 
                       <td>
-                        <button
-                          className="text-lightBlue-400 hover:opacity-80 hover:underline"
-                          onClick={() => {
-                            setEditIndex(idx);
-                            setOpenModal(true);
-                          }}
-                        >
-                          <p>Edit</p>
-                        </button>
+                        {code.modelList.length !== 0 ? (
+                          <button
+                            className="text-lightBlue-400 text-center hover:opacity-80 hover:underline"
+                            onClick={() => {
+                              setEditIndex(idx);
+                              setOpenModal(true);
+                            }}
+                          >
+                            <p>Edit</p>
+                          </button>
+                        ) : (
+                          <p className="ml-2 text-gray-600">-</p>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -256,6 +266,7 @@ const ModelOverviewPage = () => {
         show={openModal}
         setShow={setOpenModal}
         data={codeItems[editIndex]}
+        modelItems={codeItems[editIndex].modelList}
         setChange={setCodeItems}
       />
     </div>

@@ -237,6 +237,13 @@ const MarketplacePage = () => {
     [searchInput, category],
   );
 
+  if (projects === null || datasets === null || models === null)
+    return (
+      <div className="h-[404px] flex justify-center items-center">
+        <Spinner className="w-12 h-12 animate-spin" />
+      </div>
+    );
+
   return (
     <div>
       <div className="fixed overflow-y-auto left-[112px] flex flex-col bg-gray-200 h-full w-72 p-2">

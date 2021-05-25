@@ -12,6 +12,7 @@ import { XIcon } from '@heroicons/react/outline';
 interface Props {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
+  onRunning: () => void;
 }
 
 const selectItems = [
@@ -29,7 +30,7 @@ const selectItems = [
   'CPU',
 ];
 
-const ExperimentRunModal: React.FC<Props> = ({ show, setShow }) => {
+const ExperimentRunModal: React.FC<Props> = ({ show, setShow, onRunning }) => {
   const [selectedNode, setSelectedNode] = useState<string>(selectItems[0]);
   const [gpuNum, setGpuNum] = useState<number>(1);
 
@@ -164,7 +165,13 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow }) => {
                   Cancel
                 </Button>
 
-                <Button className="w-28" onClick={() => setShow(false)}>
+                <Button
+                  className="w-28"
+                  onClick={() => {
+                    onRunning();
+                    setShow(false);
+                  }}
+                >
                   OK
                 </Button>
               </div>

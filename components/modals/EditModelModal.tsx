@@ -13,21 +13,18 @@ interface Props {
   className?: string;
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
+  modelItems: string[];
   data: { name: string; model: string[]; checked: boolean };
   setChange: Dispatch<
-    SetStateAction<{ name: string; model: string[]; checked: boolean }[]>
+    SetStateAction<
+      { name: string; model: string[]; modelList: string[]; checked: boolean }[]
+    >
   >;
 }
 
-const ModelItems = [
-  'FasterRCNN',
-  'fasterrcnn_resnet50_fpn',
-  'fasterrcnn_mobilenet_v3_large_320_fpn',
-  'fasterrcnn_mobilenet_v3_large_fpn',
-];
-
 const EditModelModal = ({
   className,
+  modelItems,
   show,
   setShow,
   data,
@@ -84,7 +81,7 @@ const EditModelModal = ({
 
               <div className="mt-4">
                 <div className="divide-y-2 my-4">
-                  {ModelItems.map((item, idx) => (
+                  {modelItems.map((item, idx) => (
                     <div
                       className="flex justify-between px-2 py-4"
                       key={`${item}-${idx}`}

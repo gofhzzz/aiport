@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
@@ -17,11 +17,184 @@ import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/outline';
 
 const navItems = ['overview', 'edit', 'visualization', 'tensorboard'];
 
+const logItem = [
+  {
+    time: 400,
+    text:
+      'admin@ubuntu_88:~/MLops/working/config_yaml_auto/outputs$ sudo docker build . --tag ayh2',
+  },
+  {
+    time: 300,
+    text: 'Sending build context to Docker daemon  377.9kB',
+  },
+  {
+    time: 300,
+    text:
+      'Step 1/11 : FROM pytorchlightning/pytorch_lightning:base-cuda-py3.8-torch1.7',
+  },
+  {
+    time: 800,
+    text: '---> bd4c8561a79e',
+  },
+  {
+    time: 400,
+    text:
+      'Step 2/11 : RUN apt-get update           && apt-get install -y python3-pip python3-dev           && cd /usr/local/bin           && ln -s /usr/bin/python3 python           && pip3 install --upgrade pip',
+  },
+  {
+    time: 800,
+    text: '---> Using cache',
+  },
+  {
+    time: 1200,
+    text: '---> 57f2482b1b7b',
+  },
+  {
+    time: 500,
+    text:
+      'Step 3/11 : RUN apt-get update &&             apt-get upgrade -y &&             apt-get install -y git',
+  },
+  {
+    time: 400,
+    text: '---> Using cache',
+  },
+  {
+    time: 2000,
+    text: '---> e51e5d69fda3',
+  },
+  {
+    time: 800,
+    text: 'Step 4/11 : WORKDIR /home/ubuntu',
+  },
+  {
+    time: 500,
+    text: '---> Using cache',
+  },
+  {
+    time: 1000,
+    text: '---> 72729adf3c97',
+  },
+  {
+    time: 600,
+    text:
+      'Step 5/11 : RUN git clone https://github.com/joowon-dm-snu/ais-client.git',
+  },
+  {
+    time: 500,
+    text: '---> Using cache',
+  },
+  {
+    time: 2500,
+    text: '---> 2a2042b46038',
+  },
+  {
+    time: 600,
+    text: 'Step 6/11 : WORKDIR /home/ubuntu/ais-client',
+  },
+  {
+    time: 600,
+    text: '---> Using cache',
+  },
+  {
+    time: 2000,
+    text: '---> 2ade1a5556cc',
+  },
+  {
+    time: 600,
+    text: 'Step 7/11 : RUN pip install -r requirements.txt',
+  },
+  {
+    time: 600,
+    text: '---> Using cache',
+  },
+  {
+    time: 2000,
+    text: '---> a06bf6de1d65',
+  },
+  {
+    time: 600,
+    text: 'Step 8/11 : RUN pip install -e . --user',
+  },
+  {
+    time: 600,
+    text: '---> Using cache',
+  },
+  {
+    time: 2500,
+    text: '---> a5513c058cf9',
+  },
+  {
+    time: 600,
+    text: 'Step 9/11 : RUN pip install pytorch-lightning',
+  },
+  {
+    time: 600,
+    text: '---> Using cache',
+  },
+  {
+    time: 2000,
+    text: '---> 5ff3a95e5795',
+  },
+  {
+    time: 600,
+    text:
+      'Step 10/11 : RUN python main.py --task 4e1b04c2-4dc8-4c69-91a9-cd413e1104d0',
+  },
+  {
+    time: 600,
+    text: '---> Using cache',
+  },
+  {
+    time: 2000,
+    text: '---> 40e67fb3a9c6',
+  },
+  {
+    time: 600,
+    text:
+      'Step 11/11 : CMD [python, /home/ubuntu/ais-client/from_server/user_train.py]',
+  },
+  {
+    time: 1000,
+    text: '---> Using cache',
+  },
+  {
+    time: 3000,
+    text: '---> f53b5ca3f691',
+  },
+  {
+    time: 500,
+    text: 'Successfully built f53b5ca3f691',
+  },
+  {
+    time: 600,
+    text: 'Successfully tagged ayh2:latest',
+  },
+];
+
 const ProjectExperimentsDetailsPage = () => {
   const [selectedItem, setSelectedItem] = useState<string>('overview');
   const [show, setShow] = useState<boolean>(false);
+  const [logText, setLogText] = useState<string[]>([]);
   const [showRunModal, setShowRunModal] = useState<boolean>(false);
   const router = useRouter();
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+  const handleLogging = React.useCallback(async () => {
+    for (const item of logItem) {
+      await new Promise((resolve) => {
+        timer.current = setTimeout(() => {
+          setLogText((prev) => [...prev, item.text]);
+          resolve(item.text);
+        }, item.time);
+      });
+    }
+  }, []);
+  const cancelTimer = React.useCallback(() => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
+  }, []);
+  useEffect(() => cancelTimer(), [cancelTimer]);
 
   return (
     <div className="mx-auto max-w-screen-xl pt-8 px-4 md:px-6 pb-16 w-full">
@@ -97,6 +270,18 @@ const ProjectExperimentsDetailsPage = () => {
               </div>
             </div>
           </div>
+          {logText.length !== 0 && (
+            <div className="mt-10">
+              <p className="text-xl font-semibold">Log</p>
+              <div className="rounded-sm bg-black overflow-y-scroll p-4 pb-16 mt-4">
+                {logText.map((text, idx) => (
+                  <p className="text-green-400 text-sm" key={`${text}-${idx}`}>
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="py-4 mt-10 max-w-7xl mx-auto shadow-lg rounded-md">
             <div className="flex items-center pl-4 pb-8">
               <ChevronDownIcon className="w-6 h-6 mr-2" />
@@ -193,7 +378,11 @@ const ProjectExperimentsDetailsPage = () => {
       )}
 
       <ExperimentDownloadModal show={show} setShow={setShow} />
-      <ExperimentRunModal show={showRunModal} setShow={setShowRunModal} />
+      <ExperimentRunModal
+        show={showRunModal}
+        setShow={setShowRunModal}
+        onRunning={() => handleLogging()}
+      />
     </div>
   );
 };
