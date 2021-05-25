@@ -1,6 +1,12 @@
-import React, { Dispatch, Fragment, SetStateAction } from 'react';
-import NextImage from 'next/image';
+import React, {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useLayoutEffect,
+} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+
+// icons
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -11,44 +17,31 @@ import {
 import Button from '@components/ui/Button';
 
 // types
-import { DataInfo } from 'types/data';
+import { DatasetDataInfo } from 'types/data';
+import { DataInfoWithChecked } from 'pages/dataset/data';
+import formatDate from '@utils/formatDate';
 
 interface Props {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
-  data: DataInfo | null;
-  label: {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    label: number;
-  };
-  onChangeLabel: (label: {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    label: number;
-  }) => void;
+  setCangeData: Dispatch<SetStateAction<DataInfoWithChecked[] | null>>;
+  data: DatasetDataInfo[];
+  selectedIndex: number;
 }
 
 const DataDetailsModal: React.FC<Props> = ({
   show,
   setShow,
   data,
-  label,
-  onChangeLabel,
+  selectedIndex,
+  setCangeData,
 }) => {
   const [edit, setEdit] = React.useState<boolean>(false);
-  const [imageIndex, setImageIndex] = React.useState<number>(0);
-  const [labelItems, setLabelItems] = React.useState<{
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    label: number;
-  }>(label);
+  const [imageIndex, setImageIndex] = React.useState<number>(selectedIndex);
+
+  useLayoutEffect(() => {
+    setImageIndex(selectedIndex);
+  }, [selectedIndex]);
 
   return (
     <Transition.Root show={show} as={Fragment}>
@@ -107,16 +100,15 @@ const DataDetailsModal: React.FC<Props> = ({
                 >
                   <ChevronLeftIcon className="w-6 h-6" />
                 </button>
-                <NextImage
-                  className="shadow rounded-md"
-                  src={`/images/dataset/data/${imageIndex + 4}.jpg`}
-                  width={400}
-                  height={400}
-                  objectFit="cover"
-                />
+                <div>
+                  <img
+                    className="shadow rounded-md object-contain"
+                    src={`/dataset/data/${imageIndex}.jpg`}
+                  />
+                </div>
                 <button
                   onClick={() => setImageIndex((prev) => prev + 1)}
-                  disabled={imageIndex === 5}
+                  disabled={imageIndex === 19}
                 >
                   <ChevronRightIcon className="w-6 h-6" />
                 </button>
@@ -130,19 +122,15 @@ const DataDetailsModal: React.FC<Props> = ({
                     </div>
                     <div>
                       <h6 className="text-sm text-gray-500">AI:</h6>
-                      <p>{`0000${imageIndex + 1}.jpg`}</p>
+                      <p>Celebrity Look-alike App</p>
                     </div>
                     <div>
-                      <h6 className="text-sm text-gray-500">Uploaded by:</h6>
-                      <p>{data?.uploader}</p>
+                      <h6 className="text-sm text-gray-500">Train/Test</h6>
+                      <p>{data[imageIndex].split}</p>
                     </div>
                     <div>
                       <h6 className="text-sm text-gray-500">Created Date:</h6>
-                      <p>
-                        {data?.created
-                          ? new Date(data.created).toDateString()
-                          : ''}
-                      </p>
+                      <p>{formatDate(String(new Date()))}</p>
                     </div>
                     <div className="h-[150px]">
                       <h6 className="text-sm text-gray-500">Label</h6>
@@ -152,29 +140,43 @@ const DataDetailsModal: React.FC<Props> = ({
                             <p className="w-20 flex">
                               X:
                               <input
-                                placeholder={String(labelItems.x)}
-                                value={String(labelItems.x)}
-                                onChange={(e) =>
-                                  setLabelItems({
-                                    ...labelItems,
-                                    x: Number(e.target.value),
-                                  })
-                                }
+                                value={String(data[imageIndex].x_1)}
                                 className="w-12 ml-1 px-1 border-2 border-lightBlue-400 rounded-md"
+                                onChange={(e) => {
+                                  setCangeData(
+                                    (prev) =>
+                                      prev &&
+                                      prev.map((item, idx) => {
+                                        if (idx === imageIndex)
+                                          return {
+                                            ...item,
+                                            x_1: Number(e.target.value),
+                                          };
+                                        return item;
+                                      }),
+                                  );
+                                }}
                               />
                             </p>
                             <p className="w-20 flex">
                               Y:
                               <input
-                                placeholder={String(labelItems.y)}
-                                value={String(labelItems.y)}
-                                onChange={(e) =>
-                                  setLabelItems({
-                                    ...labelItems,
-                                    y: Number(e.target.value),
-                                  })
-                                }
+                                value={String(data[imageIndex].y_1)}
                                 className="w-12 ml-1 px-1 border-2 border-lightBlue-400 rounded-md"
+                                onChange={(e) => {
+                                  setCangeData(
+                                    (prev) =>
+                                      prev &&
+                                      prev.map((item, idx) => {
+                                        if (idx === imageIndex)
+                                          return {
+                                            ...item,
+                                            y_1: Number(e.target.value),
+                                          };
+                                        return item;
+                                      }),
+                                  );
+                                }}
                               />
                             </p>
                           </div>
@@ -182,68 +184,88 @@ const DataDetailsModal: React.FC<Props> = ({
                             <p className="w-20 flex">
                               W:
                               <input
-                                placeholder={String(labelItems.w)}
-                                value={String(labelItems.w)}
-                                onChange={(e) =>
-                                  setLabelItems({
-                                    ...labelItems,
-                                    w: Number(e.target.value),
-                                  })
-                                }
+                                value={String(data[imageIndex].width)}
                                 className="w-12 ml-1 px-1 border-2 border-lightBlue-400 rounded-md"
+                                onChange={(e) => {
+                                  setCangeData(
+                                    (prev) =>
+                                      prev &&
+                                      prev.map((item, idx) => {
+                                        if (idx === imageIndex)
+                                          return {
+                                            ...item,
+                                            width: Number(e.target.value),
+                                          };
+                                        return item;
+                                      }),
+                                  );
+                                }}
                               />
                             </p>
                             <p className="w-20 flex">
                               H:
                               <input
-                                placeholder={String(labelItems.h)}
-                                value={String(labelItems.h)}
-                                onChange={(e) =>
-                                  setLabelItems({
-                                    ...labelItems,
-                                    h: Number(e.target.value),
-                                  })
-                                }
+                                value={String(data[imageIndex].height)}
                                 className="w-12 ml-1 px-1 border-2 border-lightBlue-400 rounded-md"
+                                onChange={(e) => {
+                                  setCangeData(
+                                    (prev) =>
+                                      prev &&
+                                      prev.map((item, idx) => {
+                                        if (idx === imageIndex)
+                                          return {
+                                            ...item,
+                                            height: Number(e.target.value),
+                                          };
+                                        return item;
+                                      }),
+                                  );
+                                }}
                               />
                             </p>
                           </div>
                           <p className="mt-4">
                             Label:
                             <input
-                              placeholder={String(labelItems.label)}
-                              value={String(labelItems.label)}
-                              onChange={(e) =>
-                                setLabelItems({
-                                  ...labelItems,
-                                  label: Number(e.target.value),
-                                })
-                              }
+                              value={String(data[imageIndex].label)}
                               className="w-20 ml-1 px-1 border-2 border-lightBlue-400 rounded-md"
+                              onChange={(e) => {
+                                setCangeData(
+                                  (prev) =>
+                                    prev &&
+                                    prev.map((item, idx) => {
+                                      if (idx === imageIndex)
+                                        return {
+                                          ...item,
+                                          label: Number(e.target.value),
+                                        };
+                                      return item;
+                                    }),
+                                );
+                              }}
                             />
                           </p>
                         </>
                       ) : (
                         <>
                           <div className="flex mt-2 items-center">
-                            <p className="w-20">X: {labelItems.x}</p>
-                            <p className="w-20">Y: {labelItems.y}</p>
+                            <p className="w-20">X: {data[imageIndex].x_1}</p>
+                            <p className="w-20">Y: {data[imageIndex].y_1}</p>
                           </div>
                           <div className="flex mt-4">
-                            <p className="w-20">W: {labelItems.w}</p>
-                            <p className="w-20">H: {labelItems.h}</p>
+                            <p className="w-20">W: {data[imageIndex].width}</p>
+                            <p className="w-20">H: {data[imageIndex].height}</p>
                           </div>
-                          <p className="mt-4">Label: {labelItems.label}</p>
+                          <p className="mt-4">
+                            Label: {data[imageIndex].label}
+                          </p>
                         </>
                       )}
                     </div>
                   </div>
                   <Button
                     className="ml-4 mt-4"
-                    onClick={() => {
-                      onChangeLabel(labelItems);
-                      setEdit((prev) => !prev);
-                    }}
+                    onClick={() => setEdit((prev) => !prev)}
                   >
                     {edit ? 'Save' : 'Edit'}
                   </Button>

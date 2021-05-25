@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withErrorHandler, connectMongo } from '@utils/index';
+import { DatasetDataInfo } from 'types/data';
 
 const handler: (
   req: NextApiRequest,
@@ -8,7 +9,10 @@ const handler: (
   if (req.method === 'GET') {
     const { db } = await connectMongo();
 
-    const cursor = db.collection('data').find({}).sort({ created: 1 });
+    const cursor = db
+      .collection<DatasetDataInfo>('datasetData')
+      .find({})
+      .sort({ _id: 1 });
 
     const dataList = await cursor.toArray();
 

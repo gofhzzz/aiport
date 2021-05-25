@@ -194,6 +194,9 @@ const DatasetDetail = ({ className, dataset, otherDataset }: Props) => {
           <div className="flex gap-16 pt-2">
             {otherDataset.map((dataset, idx) => (
               <button
+                onClick={() => {
+                  showNoti({ title: '준비중인 기능입니다', variant: 'alert' });
+                }}
                 className="w-36"
                 key={`otherDataset-${dataset._id}-${idx}`}
               >

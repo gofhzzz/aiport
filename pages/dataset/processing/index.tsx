@@ -171,11 +171,13 @@ const ProcessingPage = () => {
                   onSelect={(item) => setType(item.value as string)}
                 />
               </div>
-              <Link
-                href={`/dataset/processing/augmentation?name=${templateName}&type=${type}`}
-              >
-                <Button>Create Template</Button>
-              </Link>
+              <Button disabled={!templateName}>
+                <Link
+                  href={`/dataset/processing/augmentation?name=${templateName}&type=${type}`}
+                >
+                  Create Template
+                </Link>
+              </Button>
             </div>
           )}
         </section>

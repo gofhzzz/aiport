@@ -120,7 +120,7 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow }) => {
                 </div>
                 <div className="text-left">
                   <p className="text-gray-700 text-lg font-semibold">Config</p>
-                  <div className="w-80 bg-gray-200 rounded-md px-4 py-2">
+                  <div className="w-96 bg-gray-200 rounded-md px-4 py-2">
                     <div className="flex justify-between">
                       <p>GPUs:</p>
                       <p className="line-clamp-1">
@@ -151,7 +151,7 @@ const ExperimentRunModal: React.FC<Props> = ({ show, setShow }) => {
                   </div>
                   <div className="flex justify-between">
                     <p>Expected Monthly Costs:</p>
-                    <p>2592.00 USD</p>
+                    <p>{(3.6 * gpuNum).toFixed(2)} USD</p>
                   </div>
                 </div>
               </div>

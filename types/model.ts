@@ -20,12 +20,14 @@ export interface ModelInput {
   name: string;
   framework: string;
   isPublic: boolean;
+  task: string;
 }
 
 export const initialModelInput: ModelInput = {
   name: '',
   framework: '',
   isPublic: true,
+  task: '',
 };
 
 export {};

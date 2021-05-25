@@ -1,9 +1,9 @@
 import fetcher from '../fetcher';
 
 // types
-import { DataInfo } from 'types/data';
+import { DatasetDataInfo } from 'types/data';
 
-const getDatasetDataList: () => Promise<DataInfo[]> = async () => {
+const getDatasetDataList: () => Promise<DatasetDataInfo[]> = async () => {
   const { dataList } = await fetcher('/api/data');
 
   return dataList;

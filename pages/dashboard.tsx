@@ -28,11 +28,6 @@ const sections = [
         as: '/marketplace',
         icon: ShoppingCartIcon,
       },
-      {
-        name: 'Dashboard',
-        href: '#',
-        icon: TemplateIcon,
-      },
     ],
   },
   {

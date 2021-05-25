@@ -182,7 +182,7 @@ const ProjectExperimentsDetailsPage = () => {
                             )}
                           />
                         </button>
-                        <p className="text-lg -mt-4 font-semibold">{`${outputInfo.idx}.${outputInfo.name}`}</p>
+                        <p className="text-lg pl-8 mb-2 -mt-4 font-semibold">{`${outputInfo.idx}.${outputInfo.name}`}</p>
                         <div className="flex items-center justify-center relative">
                           <img
                             src={`/images/deploy/${outputInfo.idx}.png`}

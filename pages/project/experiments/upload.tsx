@@ -828,17 +828,17 @@ const ProjectExperimentUploadPage = () => {
               e.preventDefault();
               handleSubmit();
             }}
-            disabled={
-              loading ||
-              !selectedDataset ||
-              !selectedFile ||
-              !selectedFramework ||
-              !selectedFunction ||
-              !selectedLoss ||
-              !selectedModel ||
-              !selectedOptimizer ||
-              !selectedProccessor
-            }
+            // disabled={
+            //   loading ||
+            //   !selectedDataset ||
+            //   !selectedFile ||
+            //   !selectedFramework ||
+            //   !selectedFunction ||
+            //   !selectedLoss ||
+            //   !selectedModel ||
+            //   !selectedOptimizer ||
+            //   !selectedProccessor
+            // }
           >
             Create
           </Button>
