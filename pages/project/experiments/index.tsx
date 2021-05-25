@@ -357,7 +357,9 @@ const ProjectExperimentsPage = () => {
                               href="/project/experiments/details"
                             >
                               <AIIcon className="w-6 h-6" />
-                              <span>{experiment.name}</span>
+                              <span className="text-lightBlue-400">
+                                {experiment.name}
+                              </span>
                             </a>
                           </td>
                           <td

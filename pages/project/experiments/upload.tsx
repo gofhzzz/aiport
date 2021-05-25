@@ -11,7 +11,7 @@ import Link from '@components/ui/Link';
 const selectItems = {
   dataset: [
     {
-      name: 'CelevA',
+      name: 'CelebA',
       id: 'efwa-cvze-zdss',
       public: false,
       owner: 'James',
@@ -419,6 +419,64 @@ const selectItems = {
     },
   ],
 
+  Loss: [
+    'BCE with Logits Loss',
+    'Cross Entropy',
+    'Hinge',
+    'KL Loss',
+    'MAE',
+    'MSE',
+    'Multi-Label Soft Margin Loss',
+    'Poisson NLL Loss',
+    'Triplet Margin Loss',
+  ],
+
+  Optimizer: ['Ada Delta', 'Adam', 'Adamax', 'Sparse Adam', 'SGD', 'Rprop'],
+
+  Scheduler: [
+    'Constant LR',
+    'Cosine Annealing LR',
+    'Cyclic LR',
+    'Exponential LR',
+    'Lambda LR',
+    'Multiplicative LR',
+    'Multi-step LR',
+    'Step-wise LR',
+  ],
+
+  originalModel: [
+    'AlexNet',
+    'Bert for classification',
+    'EfficientNet',
+    'Faster R-CNN',
+    'GoogLeNet',
+    'GPT-2',
+    'VGG',
+    'DETR',
+    'ResNet',
+  ],
+
+  preTrain: ['epoch30_val91.pt'],
+
+  processing: ['new', 'processing_1'],
+
+  Model: [
+    'epoch30_val85.pt',
+    'epoch50_val93_adam_resnet.pt',
+    'epoch50_val93_adam_resnet.pt',
+    'epoch50_val86_adam_mobile.pt',
+    'epoch50_val94_adam_mobileLarge.pt',
+    'epoch30_val91.pt',
+  ],
+  ModelItem: [
+    'FasterRCNN',
+    'fasterrcnn_resnet50_fpn',
+    'fasterrcnn_mobilenet_v3_large_320_fpn',
+    'fasterrcnn_mobilenet_v3_large_fpn',
+  ],
+
+  newInitialization: ['He', 'Normal', 'Normalized Xavier', 'Xavier'],
+
   environment: {
     node: [
       'Nvidia GeForce RTX 3090',
@@ -457,13 +515,15 @@ const ProjectExperimentUploadPage = () => {
 
   const [selectedDataset, setSelectedDataset] = useState<string>('');
   const [selectedModel, setSelectedModel] = useState<string>('');
-  const [selectedFile, setSelectedFile] = useState<string>('');
-  const [selectedFunction, setSelectedFunction] = useState<string>('');
-  const [selectedLoss, setSelectedLoss] = useState<string>('');
+  const [selectedModelItem, setSelectedModelItem] = useState<string>('');
+  const [preTrained, setPreTrained] = useState<string>('');
+  const [selectedLoss, setSelectedLoss] = useState<string[]>(['']);
+  const [selectedInitialization, setSelectedInitialization] = useState<string>(
+    '',
+  );
   const [selectedOptimizer, setSelectedOptimizer] = useState<string>('');
-  const [selectedProccessor, setSelectedProccessor] = useState<string>('');
-  const [selectedFramework, setSelectedFramework] = useState<string>('');
-
+  const [selectedScheduler, setSelectedScheduler] = useState<string>('');
+  const [selectedProcessing, setSelectedProcessing] = useState<string>('');
   const [parameterLength, setParameterLength] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -485,7 +545,7 @@ const ProjectExperimentUploadPage = () => {
                 General
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                General experiment settings.
+                Experiment name and description
               </p>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
@@ -516,7 +576,7 @@ const ProjectExperimentUploadPage = () => {
                 Dataset
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                Choose dataset you want to use for this experiment.
+                Choose dataset you want to use for this experiment
               </p>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
@@ -533,6 +593,19 @@ const ProjectExperimentUploadPage = () => {
                 selectedValue={selectedDataset}
                 onSelect={(item) => setSelectedDataset(item.value as string)}
               />
+              <Select
+                label="Processing"
+                items={[
+                  { key: '-', label: 'Select', value: '' },
+                  ...selectItems.processing.map((val) => ({
+                    key: val,
+                    label: val,
+                    value: val,
+                  })),
+                ]}
+                selectedValue={selectedProcessing}
+                onSelect={(item) => setSelectedProcessing(item.value as string)}
+              />
             </div>
           </div>
         </div>
@@ -545,18 +618,19 @@ const ProjectExperimentUploadPage = () => {
                 AI Model
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                Choose a model you want to use for this experiment.
+                Choose AI model you want to use for this experiment. Also,
+                overwrite a parameter for this experiment
               </p>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
               <Select
-                label="Model"
+                label="Model Name"
                 items={[
                   { key: '-', label: 'Select', value: '' },
-                  ...selectItems.model.map((model) => ({
-                    key: model.id,
-                    label: model.name,
-                    value: model.name,
+                  ...selectItems.originalModel.map((val) => ({
+                    key: val,
+                    label: val,
+                    value: val,
                   })),
                 ]}
                 selectedValue={selectedModel}
@@ -565,56 +639,79 @@ const ProjectExperimentUploadPage = () => {
               <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
                 <div>
                   <Select
-                    label="File"
+                    label="Model"
                     items={[
                       { key: '-', label: 'Select', value: '' },
-                      ...(selectItems.model
-                        .find((model) => selectedModel === model.name)
-                        ?.files.map((file) => ({
-                          key: file,
-                          label: file,
-                          value: file,
-                        })) ?? []),
+                      ...selectItems.ModelItem.map((val) => ({
+                        key: val,
+                        label: val,
+                        value: val,
+                      })),
                     ]}
-                    selectedValue={selectedFile}
-                    onSelect={(item) => setSelectedFile(item.value as string)}
+                    selectedValue={selectedModelItem}
+                    onSelect={(item) =>
+                      setSelectedModelItem(item.value as string)
+                    }
                   />
                 </div>
                 <div>
                   <Select
-                    label="Model Class/Function"
+                    label="Pre-tranined"
                     items={[
                       { key: '-', label: 'Select', value: '' },
-                      ...(selectItems.model
-                        .find((model) => selectedModel === model.name)
-                        ?.class_function.map((functionName) => ({
-                          key: functionName,
-                          label: functionName,
-                          value: functionName,
-                        })) ?? []),
+                      ...selectItems.preTrain.map((val) => ({
+                        key: val,
+                        label: val,
+                        value: val,
+                      })),
                     ]}
-                    selectedValue={selectedFunction}
-                    onSelect={(item) =>
-                      setSelectedFunction(item.value as string)
-                    }
+                    selectedValue={preTrained}
+                    onSelect={(item) => setPreTrained(item.value as string)}
                   />
                 </div>
               </div>
+
               <Select
                 label="Initialization"
                 items={[
                   { key: '-', label: 'Select', value: '' },
-                  ...(selectItems.model
-                    .find((model) => selectedModel === model.name)
-                    ?.class_function.map((functionName) => ({
-                      key: functionName,
-                      label: functionName,
-                      value: functionName,
-                    })) ?? []),
+                  ...selectItems.newInitialization.map((val) => ({
+                    key: val,
+                    label: val,
+                    value: val,
+                  })),
                 ]}
-                selectedValue={selectedFunction}
-                onSelect={(item) => setSelectedFunction(item.value as string)}
+                selectedValue={selectedInitialization}
+                onSelect={(item) =>
+                  setSelectedInitialization(item.value as string)
+                }
               />
+              <h3 className="text-md font-medium leading-6 text-gray-900">
+                Parameter(Overwrite)
+              </h3>
+              <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+                {Array.from({ length: parameterLength }, (_, idx) => (
+                  <div
+                    key={`parameter-${idx}`}
+                    className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
+                  >
+                    <div>
+                      <Input label="Key" placeholder="Enter a variable name" />
+                    </div>
+                    <div>
+                      <Input label="Value" placeholder="Enter a value" />
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  size="sm"
+                  color="white"
+                  full
+                  onClick={() => setParameterLength((prev) => prev + 1)}
+                >
+                  Add Parameter
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -627,35 +724,57 @@ const ProjectExperimentUploadPage = () => {
                 Trainer
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                Trainer configurations like loss and optimizer functions.
+                Trainer configuration such as loss function and optimizer
               </p>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
               <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
-                <div>
-                  <Select
-                    label="Loss"
-                    items={[
-                      { key: '-', label: 'Select', value: '' },
-                      ...selectItems.trainer.loss.map((model) => ({
-                        key: model.name,
-                        label: model.name,
-                        value: model.name,
-                      })),
-                    ]}
-                    selectedValue={selectedLoss}
-                    onSelect={(item) => setSelectedLoss(item.value as string)}
-                  />
-                </div>
+                {
+                  <div>
+                    {selectedLoss.map((val, idx) => (
+                      <Select
+                        key={`${idx}`}
+                        label={`Loss ${idx + 1}`}
+                        className="mb-2"
+                        items={[
+                          { key: '-', label: 'Select', value: '' },
+                          ...selectItems.Loss.map((val) => ({
+                            key: val,
+                            label: val,
+                            value: val,
+                          })),
+                        ]}
+                        selectedValue={val}
+                        onSelect={(item) =>
+                          setSelectedLoss((prev) =>
+                            prev.map((value, index) => {
+                              if (index === idx) return item.value as string;
+                              return value;
+                            }),
+                          )
+                        }
+                      />
+                    ))}
+                    <Button
+                      size="sm"
+                      className="mt-2"
+                      color="white"
+                      full
+                      onClick={() => setSelectedLoss((prev) => [...prev, ''])}
+                    >
+                      Add Loss
+                    </Button>
+                  </div>
+                }
                 <div>
                   <Select
                     label="Optimizer"
                     items={[
                       { key: '-', label: 'Select', value: '' },
-                      ...selectItems.trainer.optimizer.map((model) => ({
-                        key: model.name,
-                        label: model.name,
-                        value: model.name,
+                      ...selectItems.Optimizer.map((val) => ({
+                        key: val,
+                        label: val,
+                        value: val,
                       })),
                     ]}
                     selectedValue={selectedOptimizer}
@@ -677,83 +796,41 @@ const ProjectExperimentUploadPage = () => {
           </div>
         </div>
 
-        {/* Parameter Section */}
-        <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-          <div className="md:grid md:grid-cols-3 md:gap-6">
-            <div className="md:col-span-1">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Parameter
-              </h3>
-              <p className="mt-1 text-sm text-gray-500">
-                You can override all kinds of training parameters in this
-                section
-              </p>
-            </div>
-            <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
-              {Array.from({ length: parameterLength }, (_, idx) => (
-                <div
-                  key={`parameter-${idx}`}
-                  className="sm:grid grid-cols-2 gap-6 space-y-2 sm:space-y-0"
-                >
-                  <div>
-                    <Input label="Key" placeholder="Enter a variable name" />
-                  </div>
-                  <div>
-                    <Input label="Value" placeholder="Enter a value" />
-                  </div>
-                </div>
-              ))}
-              <Button
-                size="sm"
-                color="white"
-                full
-                onClick={() => setParameterLength((prev) => prev + 1)}
-              >
-                Add Parameter
-              </Button>
-            </div>
-          </div>
-        </div>
-
         {/* Environment Section */}
         <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
               <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Environment
+                LR Scheduler
               </h3>
               <p className="mt-1 text-sm text-gray-500">
-                You can choose the environment in which your experiment will be
-                run.
+                Learning rate & Scheduler
               </p>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2 space-y-6">
+              <Input label="Learning Rate" placeholder="0.0001" />
+
               <Select
-                label="Processors (CPU/GPU)"
+                label="Scheduler"
                 items={[
                   { key: '-', label: 'Select', value: '' },
-                  ...selectItems.environment.node.map((node) => ({
-                    key: node,
-                    label: node,
-                    value: node,
+                  ...selectItems.Scheduler.map((val) => ({
+                    key: val,
+                    label: val,
+                    value: val,
                   })),
                 ]}
-                selectedValue={selectedProccessor}
-                onSelect={(item) => setSelectedProccessor(item.value as string)}
+                selectedValue={selectedScheduler}
+                onSelect={(item) => setSelectedScheduler(item.value as string)}
               />
-              <Select
-                label="Framework"
-                items={[
-                  { key: '-', label: 'Select', value: '' },
-                  ...selectItems.environment.framework.map((framework) => ({
-                    key: framework,
-                    label: framework,
-                    value: framework,
-                  })),
-                ]}
-                selectedValue={selectedFramework}
-                onSelect={(item) => setSelectedFramework(item.value as string)}
-              />
+              <div className="sm:grid grid-cols-2 gap-6 space-y-4 sm:space-y-0">
+                <div>
+                  <Input label="Step Size" placeholder="10" />
+                </div>
+                <div>
+                  <Input label="Gamma" placeholder="0.1" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -787,7 +864,7 @@ const ProjectExperimentUploadPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition AI</h2>
+    <h2 className="px-4 font-semibold text-xl">New Celebrity</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"

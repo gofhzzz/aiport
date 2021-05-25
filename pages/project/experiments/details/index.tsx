@@ -9,9 +9,6 @@ import Link from '@components/ui/Link';
 import ExperimentDownloadModal from '@components/modals/ExperimentDownloadModal';
 import ExperimentRunModal from '@components/modals/ExperimentRunModa';
 
-// utils
-import formatDate from '@utils/formatDate';
-
 // icons
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/outline';
 
@@ -405,7 +402,9 @@ const ProjectExperimentsDetailsPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition AI</h2>
+    <h2 className="px-4 font-semibold text-xl">
+      Celebrity Look-alike Recommender
+    </h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"

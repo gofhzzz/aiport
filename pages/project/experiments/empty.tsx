@@ -334,7 +334,9 @@ const ProjectExperimentsPage = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 flex items-center space-x-4">
                             <AIIcon className="w-6 h-6" />
-                            <span>{experiment.name}</span>
+                            <span className="text-lightBlue-400">
+                              {experiment.name}
+                            </span>
                           </td>
                           <td
                             className={cn(
@@ -428,7 +430,7 @@ const ProjectExperimentsPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">img_clf</h2>
+    <h2 className="px-4 font-semibold text-xl">New Celebrity</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 hover:bg-gray-50"

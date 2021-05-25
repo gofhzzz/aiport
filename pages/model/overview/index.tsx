@@ -37,7 +37,7 @@ const initialCodeItems = [
     ],
     checked: false,
   },
-  { name: 'mlphead.ph', model: [], modelList: ['TwoMLPHead'], checked: false },
+  { name: 'mlphead.py', model: [], modelList: ['TwoMLPHead'], checked: false },
   {
     name: 'predictor.py',
     model: [],

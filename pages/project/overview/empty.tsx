@@ -197,7 +197,7 @@ const ProjectOverviewPage = () => {
 
 const Sidebar = (
   <div className="py-4 flex flex-col">
-    <h2 className="px-4 font-semibold text-xl">Image Recognition AI</h2>
+    <h2 className="px-4 font-semibold text-xl">New Celebrity</h2>
     <div className="mt-16 space-y-1">
       <Link
         className="flex px-4 py-2 bg-gray-200"
